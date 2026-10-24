@@ -1,5 +1,7 @@
 # Deploying the manual on the VPS
 
+Commands are shown with `sudo`; when logged in as root (as on the hotel VPS), leave it out.
+
 The manual is served at `https://sunsetsamui.com/manual/` by the nginx that already runs on the host, behind one shared staff password.
 Nothing else on the server changes.
 
@@ -10,7 +12,7 @@ cd ~
 git clone git@github.com:vavilovnikita/sunset-manual.git   # or https, same as the other repos
 cd ~/sunset-manual
 ./deploy/publish.sh                                         # copies site/ to /var/www/sunset-manual
-sudo apt install -y apache2-utils                           # only if `htpasswd` is missing
+sudo apt install -y rsync apache2-utils                     # if rsync or htpasswd is missing
 sudo htpasswd -c /etc/nginx/sunset-manual.htpasswd staff    # type the password at the prompt
 ```
 
