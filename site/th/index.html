@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>คู่มือระบบ Sunset</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600&family=Work+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: hotel handbook. Sticky contents rail on the left (desktop), one reading column with full-width screenshots. Colours and faces are the Sunset Beach system's own (ink, coral, sea, sand; Fraunces + Work Sans). */
+:root {
+  --bg: #F7F2E6;
+  --paper: #FFFDF8;
+  --fg: #12282D;
+  --muted: #4E6267;
+  --line: #DCD3BE;
+  --accent: #C4521F;
+  --sea: #3F7468;
+  --amber: #8A5A00;
+  --note-bg: #EEF4F1;
+  --warn-bg: #FBEFE6;
+  --code-bg: #EFE8D6;
+  --shot-edge: #0F262B;
+  --display: "Fraunces", "Noto Serif Thai", Georgia, serif;
+  --body: "Work Sans", "Noto Sans Thai", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F262B; --paper: #153138; --fg: #F3ECDA; --muted: #A9B9B5; --line: #2A4A52;
+    --accent: #F07A47; --sea: #8FBFB2; --amber: #E8B44C; --note-bg: #183A3F; --warn-bg: #3A2A22; --code-bg: #1C3D45; --shot-edge: #2A4A52;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F262B; --paper: #153138; --fg: #F3ECDA; --muted: #A9B9B5; --line: #2A4A52;
+  --accent: #F07A47; --sea: #8FBFB2; --amber: #E8B44C; --note-bg: #183A3F; --warn-bg: #3A2A22; --code-bg: #1C3D45; --shot-edge: #2A4A52;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 48px; padding-block: 40px 80px; }
+@media (max-width: 900px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 24px 60px; } }
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); align-self: start; max-height: calc(100vh - 40px); overflow-y: auto; font-size: 14px; padding-right: 8px; }
+@media (max-width: 900px) { nav.toc { position: static; max-height: none; } }
+nav.toc details > summary { cursor: pointer; font-weight: 600; list-style: none; padding: 6px 0; }
+nav.toc details > summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.toc ol ol { padding-left: 14px; margin: 2px 0 8px; }
+nav.toc a { color: var(--muted); text-decoration: none; display: block; padding: 3px 0; border-radius: 4px; }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--accent); }
+nav.toc .lang { display: flex; gap: 8px; margin-bottom: 16px; }
+nav.toc .lang a { display: inline-block; border: 1px solid var(--line); padding: 4px 12px; border-radius: 999px; color: var(--fg); }
+nav.toc .lang a[aria-current] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+main { min-width: 0; }
+header.cover { padding-bottom: 8px; }
+.eyebrow { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--sea); font-weight: 600; }
+h1 { font-family: var(--display); font-style: italic; font-weight: 500; font-size: clamp(34px, 5vw, 52px); line-height: 1.1; margin: 10px 0 14px; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 3.2vw, 34px); line-height: 1.2; margin: 64px 0 12px; padding-top: 20px; border-top: 1px solid var(--line); text-wrap: balance; scroll-margin-top: 16px; }
+h2 .num { color: var(--accent); font-style: italic; margin-right: 10px; }
+h3 { font-family: var(--display); font-weight: 500; font-style: italic; font-size: 22px; margin: 36px 0 8px; scroll-margin-top: 16px; text-wrap: balance; }
+h4 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 22px 0 6px; }
+p, li { max-width: 72ch; }
+p { margin: 8px 0 12px; }
+ul, ol { padding-left: 22px; margin: 8px 0 14px; }
+li { margin: 4px 0; }
+.lede { font-size: 18px; color: var(--muted); max-width: 64ch; }
+.meta { font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 14px; }
+b, strong { font-weight: 600; }
+.ui { font-family: var(--body); font-weight: 600; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; font-size: .92em; white-space: nowrap; }
+code { font-family: var(--mono); font-size: .88em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+figure { margin: 18px 0 26px; }
+figure img { display: block; width: 100%; height: auto; border: 1px solid var(--shot-edge); border-radius: 8px; background: #0F262B; }
+figure.phone { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+figure.phone img { width: 280px; max-width: 100%; border-radius: 18px; }
+figure.phone figcaption { flex-basis: 100%; }
+figure.half img { max-width: 760px; }
+figcaption { font-size: 13.5px; color: var(--muted); margin-top: 8px; max-width: 80ch; }
+figcaption b { color: var(--fg); }
+.box { border-radius: 8px; padding: 14px 18px; margin: 16px 0; max-width: 78ch; }
+.box p:first-child { margin-top: 0; } .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+.rule { background: var(--note-bg); border-left: 3px solid var(--sea); }
+.warn { background: var(--warn-bg); border-left: 3px solid var(--accent); }
+.box .tag { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 4px; }
+.rule .tag { color: var(--sea); } .warn .tag { color: var(--accent); }
+.tbl { overflow-x: auto; margin: 14px 0 22px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--code-bg); }
+tr:last-child td { border-bottom: 0; }
+td.c, th.c { text-align: center; }
+.yes { color: var(--sea); font-weight: 700; } .no { color: var(--muted); } .part { color: var(--amber); font-weight: 700; }
+.steps { counter-reset: s; list-style: none; padding-left: 0; }
+.steps > li { counter-increment: s; position: relative; padding-left: 36px; }
+.steps > li::before { content: counter(s); position: absolute; left: 0; top: 1px; width: 24px; height: 24px; border-radius: 50%; background: var(--fg); color: var(--bg); font-size: 13px; font-weight: 600; display: grid; place-items: center; }
+.chat { background: #17212B; color: #E9EEF2; border-radius: 14px; padding: 16px; max-width: 440px; font-size: 14px; display: grid; gap: 10px; }
+.chat .msg { background: #182533; border-radius: 12px 12px 12px 4px; padding: 10px 12px; white-space: pre-line; }
+.chat .me { background: #2B5278; border-radius: 12px 12px 4px 12px; justify-self: end; }
+.chat .kb { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.chat .kb span { background: #243443; border-radius: 6px; padding: 6px; text-align: center; font-size: 13px; }
+.chat .kb span.wide { grid-column: 1 / -1; }
+.chat-wrap { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+.chat-cap { font-size: 13px; color: var(--muted); flex: 1 1 260px; min-width: 0; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.grid2 figure { margin: 0; }
+a { color: var(--accent); }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.top { font-size: 13px; }
+body { margin: 0; } img { max-width: 100%; }
+</style>
+
+<style>.wrap[lang="th"] h1, .wrap[lang="th"] h3, .wrap[lang="th"] .num, .wrap[lang="th"] i { font-style: normal; } .wrap[lang="th"] h3 { font-weight: 600; }</style>
+</head>
+<body>
+<div class="wrap" lang="th">
+<nav class="toc" aria-label="สารบัญ">
+<div class="lang"><a href="../en/">English</a><a aria-current="page">ภาษาไทย</a></div>
+<details open><summary>สารบัญ</summary><ol><li><a href="#intro">1. เริ่มต้นใช้งาน</a><ol><li><a href="#parts">ส่วนต่าง ๆ ของระบบ</a></li><li><a href="#roles">บทบาทและหน้าที่งาน</a></li><li><a href="#signin">การเข้าสู่ระบบและเมนู</a></li><li><a href="#conventions">หลักการที่ใช้ทุกหน้าจอ</a></li></ol></li><li><a href="#frontdesk">2. งานต้อนรับ (Front desk)</a><ol><li><a href="#today">กระดาน Today</a></li><li><a href="#calendar">ปฏิทินการจอง</a></li><li><a href="#bookings">รายการการจอง</a></li><li><a href="#booking-page">หน้าการจอง</a></li><li><a href="#folio">โฟลิโอและการชำระเงิน</a></li><li><a href="#guests">แขก (Guests)</a></li><li><a href="#property-map">แผนผังห้องพัก</a></li><li><a href="#in-house">แขกที่พักอยู่ (In house)</a></li><li><a href="#night-audit">การตรวจสอบปิดวัน (Night audit)</a></li><li><a href="#guest-emails">อีเมลถึงแขก (ADMIN)</a></li><li><a href="#siteminder">การนำเข้าจาก SiteMinder (OTA)</a></li></ol></li><li><a href="#rooms">3. ห้องพัก (Rooms)</a><ol><li><a href="#housekeeping">งานแม่บ้าน</a></li><li><a href="#maintenance">งานซ่อมบำรุง</a></li><li><a href="#rates">ราคาและห้องว่าง</a></li><li><a href="#room-types">ประเภทห้องและห้องจริง</a></li></ol></li><li><a href="#pos">4. POS ร้านอาหาร</a><ol><li><a href="#pos-board">กระดานโต๊ะและแผนผังร้าน</a></li><li><a href="#orders">การรับออร์เดอร์</a></li><li><a href="#payment">การรับชำระเงิน</a></li><li><a href="#phone-pos">POS บนโทรศัพท์</a></li><li><a href="#shifts">กะแคชเชียร์</a></li><li><a href="#printing">เครื่องพิมพ์และคิวงานพิมพ์</a></li><li><a href="#menu">เมนู</a></li></ol></li><li><a href="#spa">5. สปา</a><ol><li><a href="#spa-schedule">การนัดหมาย</a></li><li><a href="#spa-other">แผนผังเตียง ทรีตเมนต์ และเตียง</a></li></ol></li><li><a href="#gym">6. ฟิตเนสและระบบไฟ</a><ol><li><a href="#gym-schedule">ตารางฟิตเนส</a></li><li><a href="#lighting">ระบบไฟ</a></li></ol></li><li><a href="#staff">7. พนักงาน (Staff)</a><ol><li><a href="#my-schedule">ตารางงานของฉัน</a></li><li><a href="#roster">ตารางงาน (Roster)</a></li><li><a href="#shift-requests">คำขอเปลี่ยนกะ</a></li><li><a href="#users">ผู้ใช้</a></li></ol></li><li><a href="#notifications">8. การแจ้งเตือน Telegram และบอทพนักงาน</a><ol><li><a href="#notif-how">การแจ้งเตือนทำงานอย่างไร</a></li><li><a href="#notif-link">การเชื่อม Telegram ของพนักงาน</a></li><li><a href="#notif-settings">การตั้งค่าการแจ้งเตือน (ADMIN)</a></li><li><a href="#bot">การใช้บอทพนักงาน</a></li></ol></li><li><a href="#reports">9. รายงาน</a><ol><li><a href="#dashboard">Dashboard</a></li><li><a href="#reports-tabs">รายงาน (Reports)</a></li><li><a href="#history">History (บันทึกการตรวจสอบ)</a></li></ol></li><li><a href="#guest-side">10. ฝั่งแขก</a></li><li><a href="#permissions">11. ใครทำอะไรได้บ้าง</a></li><li><a href="#limits">12. สิ่งที่ระบบตั้งใจไม่ทำ</a></li></ol></details>
+</nav>
+<main>
+<header class="cover">
+  <div class="eyebrow">The Sunset Beach Resort &amp; Spa · คู่มือพนักงาน</div>
+  <h1>คู่มือการใช้งานระบบ Sunset</h1>
+  <p class="lede">วิธีทำงานในโรงแรมด้วยระบบ Sunset ได้แก่ งานต้อนรับ ห้องพัก ระบบขายหน้าร้าน (POS) ของร้านอาหาร สปา ฟิตเนส ตารางงานพนักงาน การแจ้งเตือนทาง Telegram และรายงาน ทุกหน้าจอแสดงตามที่เป็นอยู่จริงในปัจจุบัน พร้อมกฎที่ระบบบังคับใช้และเหตุผลของกฎเหล่านั้น</p>
+  <div class="meta"><span>ฉบับ: ตุลาคม 2026</span><span>สำหรับ: ฝ่ายต้อนรับ แคชเชียร์ พนักงานเสิร์ฟ สปา ช่าง ผู้จัดการ ผู้ดูแลระบบ</span><span>ชื่อและตัวเลขทั้งหมดในภาพเป็นข้อมูลตัวอย่าง</span></div>
+</header>
+
+<div class="box rule"><span class="tag">เกี่ยวกับฉบับภาษาไทย</span><p>หน้าจอในสำนักงานเป็นภาษาอังกฤษ คู่มือนี้จึงคงชื่อปุ่มและเมนูเป็นภาษาอังกฤษตามที่เห็นบนหน้าจอ (เช่น <span class="ui">Check in</span>) ส่วนบอท Telegram ใช้ภาษาไทยได้ ชื่อปุ่มในส่วนของบอทจึงเป็นภาษาไทยตามที่บอทแสดง</p></div>
+
+<h2 id="intro"><span class="num">1</span>เริ่มต้นใช้งาน</h2>
+
+<h3 id="parts">ส่วนต่าง ๆ ของระบบ</h3>
+<p>Sunset เป็นระบบเดียวที่มีหลายช่องทางเข้าใช้งาน ทุกช่องทางอ่านและบันทึกข้อมูลชุดเดียวกันบนเซิร์ฟเวอร์ของโรงแรม การจองที่ทำที่เคาน์เตอร์จึงปรากฏบนปฏิทิน แผนผังห้องพัก และการตรวจสอบปิดวัน (Night audit) ทันที</p>
+<div class="tbl"><table>
+<tr><th>ช่องทาง</th><th>ที่อยู่</th><th>ผู้ใช้งาน</th></tr>
+<tr><td><b>ระบบหลังบ้าน (Office admin)</b></td><td><code>/admin</code> บนเว็บไซต์โรงแรม</td><td>ฝ่ายต้อนรับ ผู้จัดการ ผู้ดูแลระบบ เคาน์เตอร์สปา ใช้กับคอมพิวเตอร์ที่มีเมาส์</td></tr>
+<tr><td><b>POS หน้าร้าน (Floor POS)</b></td><td><code>/pos</code></td><td>พนักงานเสิร์ฟและแคชเชียร์ บนโทรศัพท์หรือแท็บเล็ตที่ใช้ร่วมกัน</td></tr>
+<tr><td><b>แอปพนักงาน (Android)</b></td><td>ติดตั้งจากเซิร์ฟเวอร์ของโรงแรมเอง</td><td>ฟังก์ชันพนักงานชุดเดียวกันในรูปแอป: Today ปฏิทิน การจอง POS กะแคชเชียร์ สปา แม่บ้าน งานซ่อม รายงาน</td></tr>
+<tr><td><b>บอท Telegram สำหรับพนักงาน</b></td><td>เชื่อมต่อรายบุคคล</td><td>ตารางงานของแต่ละคน คำขอเปลี่ยนกะ การแจ้งเตือนผู้บริหาร หน้าจองานซ่อมและสปา</td></tr>
+<tr><td><b>เว็บไซต์และบัญชีแขก</b></td><td><code>/</code>, <code>/guest</code></td><td>แขก: ค้นหาห้องและส่งคำขอจอง บัญชีแขก รูมเซอร์วิส จองฟิตเนส สั่งอาหารที่โต๊ะผ่าน QR</td></tr>
+</table></div>
+<p>หน้าจอในสำนักงานเป็นภาษาอังกฤษ บอท Telegram ใช้ได้ทั้งภาษาอังกฤษ ไทย และรัสเซีย</p>
+
+<h3 id="roles">บทบาทและหน้าที่งาน</h3>
+<p>บัญชีพนักงานทุกบัญชีมี <b>บทบาท (role)</b> เพียงหนึ่งเดียว บทบาทเป็นลำดับขั้น แต่ละขั้นทำได้ทุกอย่างที่ขั้นที่ต่ำกว่าทำได้</p>
+<div class="tbl"><table>
+<tr><th>บทบาท</th><th>ตัวอย่างผู้ใช้</th><th>สิ่งที่ทำได้เพิ่ม</th></tr>
+<tr><td><b>WAITER</b></td><td>พนักงานเสิร์ฟ บาร์เทนเดอร์ พนักงานทั่วไป</td><td>รับออร์เดอร์ ส่งเข้าครัว พิมพ์ใบแจ้งยอดล่วงหน้า แจ้งปัญหาห้องพัก ดูตารางงานของตนเอง</td></tr>
+<tr><td><b>CASHIER</b></td><td>ฝ่ายต้อนรับ แคชเชียร์</td><td>การจอง เช็คอินและเช็คเอาท์ รับชำระเงินเข้าโฟลิโอ ปิดออร์เดอร์ กะแคชเชียร์ จองสปาและฟิตเนส งานแม่บ้าน ตรวจสอบปิดวัน</td></tr>
+<tr><td><b>MANAGER</b></td><td>ผู้จัดการเวร ผู้จัดการฝ่ายอาหารและเครื่องดื่ม</td><td>เมนู โต๊ะ เครื่องพิมพ์ ราคาและการปิดห้อง การยกเลิกรายการ (void) ตารางงาน รายงาน ประวัติการทำงาน ระบบไฟ ราคาที่ต่อรองสำหรับการจองใหม่ การจองย้อนหลัง</td></tr>
+<tr><td><b>ADMIN</b></td><td>เจ้าของ ฝ่ายไอที</td><td>ผู้ใช้และรหัสผ่าน หน้าตั้งค่า (อีเมลถึงแขก รูปแบบการพิมพ์ การแจ้งเตือน อุปกรณ์ฟิตเนสและไฟ) นำเข้าตารางงาน</td></tr>
+</table></div>
+<p><b>หน้าที่งาน (job function)</b> เป็นป้ายกำกับอีกชุดหนึ่งที่แยกจากบทบาท หนึ่งคนอาจไม่มี มีหนึ่ง หรือมีหลายหน้าที่ก็ได้ ไม่ว่าจะมีบทบาทใด และหน้าที่งานไม่ได้ทำให้ใครเลื่อนขั้นบทบาท</p>
+<ul>
+  <li><b>ENGINEER</b> (ช่าง) เริ่มและปิดงานซ่อมบำรุง (ผู้จัดการทำแทนได้)</li>
+  <li><b>HOUSEKEEPER</b> (แม่บ้าน) ถูกระบุเป็นผู้รับผิดชอบการปิดห้องได้</li>
+  <li><b>THERAPIST</b> (นักบำบัด) ถูกจองให้ทำทรีตเมนต์สปาได้ และดูตารางสปาได้ แม้มีบทบาทเป็น WAITER</li>
+  <li><b>HR</b> (มีผู้ใช้งานอยู่ได้ไม่เกินหนึ่งคน) คือผู้อำนวยการฝ่ายบุคคล: ตัดสินคำขอเปลี่ยนกะ และดูตารางงานกับการลงเวลาได้</li>
+</ul>
+<div class="box rule"><span class="tag">กฎ</span><p>ระบบซ่อนสิ่งที่บทบาทนั้นทำไม่ได้ และเซิร์ฟเวอร์ก็ปฏิเสธด้วย ลิงก์ที่ไม่อยู่ในเมนูของคุณไม่ใช่ฟีเจอร์ที่หายไป หากเปิดหน้านั้นโดยตรงจะเห็น <span class="ui">Not available for your role</span></p></div>
+
+<h3 id="signin">การเข้าสู่ระบบและเมนู</h3>
+<p>พนักงานเข้าสู่ระบบที่ <code>/admin/login</code> ด้วยอีเมลและรหัสผ่าน หลังเข้าสู่ระบบ แต่ละคนจะเข้าสู่หน้าเริ่มต้นของตนเอง: พนักงานเสิร์ฟไปที่กระดานโต๊ะ POS แคชเชียร์ไปที่ <b>Today</b> ช่างไปที่ <b>Maintenance</b> นักบำบัดไปที่ตาราง <b>Spa</b> ผู้จัดการและผู้ดูแลระบบไปที่ <b>Dashboard</b></p>
+<p>เมนูด้านซ้ายมีเจ็ดกลุ่ม: <b>Front desk, Rooms, Restaurant, Spa, Gym &amp; lighting, Staff, Reports</b> บนคอมพิวเตอร์ ให้วางเมาส์บนกลุ่มเพื่อเปิด ใต้เส้นคั่นบาง ๆ แต่ละกลุ่มมีลิงก์ <b>Settings</b> ของตัวเอง บนแท็บเล็ตหรือโทรศัพท์ให้แตะเพื่อเปิดกลุ่ม</p>
+<figure><img src="../img/i-nav-flyout.jpg" alt="เมนูหลังบ้านที่เปิดกลุ่ม Front desk" loading="lazy"><figcaption><b>เมนู</b> วางเมาส์บน <span class="ui">Front desk</span> เพื่อเปิดลิงก์ในกลุ่ม <span class="ui">Guest emails</span> อยู่ใต้เส้นคั่น Settings ของกลุ่ม</figcaption></figure>
+<div class="grid2">
+<figure><img src="../img/r-waiter-denied.jpg" alt="หน้า Not available for your role" loading="lazy"><figcaption>พนักงานเสิร์ฟที่เปิดลิงก์การจองจะเห็นหน้านี้ พร้อมปุ่มกลับไปยังงานของตนเอง</figcaption></figure>
+<figure><img src="../img/a-account.jpg" alt="หน้า Account" loading="lazy"><figcaption><b>Account</b> (คลิกอีเมลของคุณที่ด้านล่างของเมนู): เปลี่ยนรหัสผ่านของตนเอง</figcaption></figure>
+</div>
+<ul>
+  <li>ใส่รหัสผ่านผิดห้าครั้งสำหรับอีเมลเดียวกันจากที่เดียวกัน จะถูกล็อกการเข้าสู่ระบบ 15 นาที ข้อความจะเหมือนกันไม่ว่าบัญชีนั้นมีอยู่หรือไม่</li>
+  <li>การเข้าสู่ระบบมีอายุ 7 วัน การเปลี่ยนรหัสผ่าน การที่ผู้ดูแลระบบรีเซ็ตรหัสผ่าน การเปลี่ยนบทบาท หรือการปิดบัญชี จะทำให้ผู้นั้นออกจากระบบทุกเครื่องทันที</li>
+  <li>POS หน้าร้านจะออกจากระบบเองเมื่อไม่มีการแตะ 30 นาที และ <span class="ui">Not you? Switch</span> ใช้ออกจากระบบได้ทันที เพราะโทรศัพท์เปลี่ยนมือกันใช้</li>
+</ul>
+
+<h3 id="conventions">หลักการที่ใช้ทุกหน้าจอ</h3>
+<ul>
+  <li><b>เซิร์ฟเวอร์เป็นผู้คำนวณยอดเงินทุกยอด</b> ราคา ยอดรวม ยอดคงค้าง และตัวเลขในรายงานมาจากเซิร์ฟเวอร์ ตัวเลขเดียวที่หน้าจอคำนวณเองคือเงินทอนเมื่อแขกจ่ายเงินสด</li>
+  <li><b>เวลาโรงแรม</b> "วันนี้" คือวันของโรงแรมตามเวลากรุงเทพฯ ไม่ว่านาฬิกาของคอมพิวเตอร์จะแสดงอะไร วันที่แสดงแบบ <b>24 Oct 2026</b> และเวลาแบบ <b>24 Oct 2026, 14:05</b></li>
+  <li><b>สี</b> เขียวน้ำทะเล = ว่างหรือพร้อมใช้ สีปะการัง = ต้องดำเนินการ (ปิดห้อง ขายเกิน เลยกำหนด) สีเหลืองอำพัน = ควรสังเกตแต่ไม่เร่งด่วน (มียอดค้าง ยังไม่ได้กำหนดห้อง) สีเขียว = ชำระแล้ว</li>
+  <li><b>ข้อผิดพลาดแสดงข้างปุ่มที่ทำให้เกิด</b> หากโหลดรายการใหม่ไม่สำเร็จ ข้อมูลล่าสุดยังคงแสดงอยู่พร้อมข้อความแจ้ง</li>
+  <li><b>ทุกเรื่องสำคัญอยู่ใน History</b> การเปลี่ยนแปลงเรื่องเงิน การจอง ราคา ผู้ใช้ และการตั้งค่า จะถูกบันทึกว่าใครทำและเมื่อใด (ดู <a href="#history">History</a>)</li>
+</ul>
+
+<h2 id="frontdesk"><span class="num">2</span>งานต้อนรับ (Front desk)</h2>
+
+<h3 id="today">กระดาน Today</h3>
+<p><b>Front desk → Today</b> คือรายการงานของเคาน์เตอร์สำหรับวันของโรงแรม: ใครมาถึง ใครออก และใครพักอยู่ แสดงเฉพาะงานที่ยังค้าง แขกที่เช็คอินแล้วจะหายไปจาก <i>Arriving today</i></p>
+<figure><img src="../img/a-today.jpg" alt="กระดาน Today" loading="lazy"><figcaption><b>Today</b> แต่ละการ์ดแสดงห้อง ยอดค้างชำระ และคำเตือน: <span class="ui">No room assigned</span> (ยังไม่ได้กำหนดห้อง), <span class="ui">Room not clean</span> (ห้องยังไม่สะอาด) หรือ <i>1 day overdue</i> สำหรับแขกที่ยังเช็คอินอยู่หลังวันกำหนดออก</figcaption></figure>
+<h4>เช็คอิน</h4>
+<ol class="steps">
+  <li>หาแขกใน <b>Arriving today</b> แล้วกด <span class="ui">Check in</span></li>
+  <li>หากห้องยังไม่ได้ทำเครื่องหมายว่าสะอาด จะมีหน้าต่างแจ้ง กด <span class="ui">Check in anyway</span> หากแขกยอมรับ หรือ <span class="ui">Back</span> เพื่อรอแม่บ้าน</li>
+  <li>การ์ดย้ายไปที่ <b>In-house</b> และการเช็คอินถูกบันทึกในประวัติของการจอง</li>
+</ol>
+<figure class="half"><img src="../img/i-checkin-dialog.jpg" alt="หน้าต่างเช็คอินเตือนว่าห้องยังไม่สะอาด" loading="lazy"><figcaption>เป็นคำเตือน ไม่ใช่การห้าม พนักงานที่เคาน์เตอร์เป็นผู้ตัดสินใจ</figcaption></figure>
+<p>ระบบไม่ให้เช็คอินการจองที่ยกเลิกแล้ว ก่อนวันเข้าพัก หรือเมื่อแขกเช็คอินไปแล้ว การจองที่ยังไม่ได้กำหนดห้องต้องเลือกห้องก่อนจึงจะเช็คอินได้ การจองที่ชำระแล้วล่วงหน้า (PAID) เช็คอินได้ตามปกติ</p>
+<h4>เช็คเอาท์</h4>
+<ol class="steps">
+  <li>กด <span class="ui">Check out</span> บนการ์ดของแขก</li>
+  <li>หากยังมียอดค้าง หน้าต่างจะแสดง <b>Balance due now</b> ให้บันทึกการชำระในโฟลิโอก่อน (ดู <a href="#folio">โฟลิโอ</a>) หรือกด <span class="ui">Check out anyway</span>: หนี้จะคงอยู่ในการจองและแสดงในการตรวจสอบปิดวันภายใต้ <i>Unpaid balances</i></li>
+  <li>ห้องถูกทำเครื่องหมายว่าสกปรกเพื่อให้แม่บ้านทำความสะอาด</li>
+</ol>
+<figure class="half"><img src="../img/i-checkout-dialog.jpg" alt="หน้าต่างเช็คเอาท์ที่มียอดค้าง" loading="lazy"><figcaption>การเช็คเอาท์ไม่ได้เก็บเงิน เพียงแต่เตือนเท่านั้น</figcaption></figure>
+<p><b>ออกก่อนกำหนด</b> เมื่อแขกออกก่อนวันที่จองไว้ หน้าการจองจะเสนอให้ย่นการเข้าพักให้สิ้นสุดวันนี้ พนักงานเลือกได้ทุกครั้งว่าคืนที่เหลือยังคิดเงิน (ค่าธรรมเนียมออกก่อนกำหนด) หรือไม่คิด หากการเข้าพักมีการย้ายห้อง ห้องที่แขกยังไม่ได้ย้ายเข้าไปจะถูกตัดออก</p>
+<p><b>ไม่มาเข้าพัก (No-show)</b> <span class="ui">No-show</span> ใช้กับแขกที่ไม่มาเลย ค่าห้องของแขกที่ไม่มาไม่นับเป็นหนี้ แต่ค่าใช้จ่ายอื่นยังนับอยู่</p>
+
+<h3 id="calendar">ปฏิทินการจอง</h3>
+<p><b>Front desk → Calendar</b> แสดงห้องจริงแต่ละห้องเป็นแถว และแต่ละคืนเป็นคอลัมน์ ตัวเลขใต้ประเภทห้องคือจำนวนห้องประเภทนั้นที่ยังว่างในคืนนั้น จุดข้างหมายเลขห้องหมายถึงห้องยังไม่สะอาด</p>
+<figure><img src="../img/a-calendar.jpg" alt="ปฏิทินการจอง" loading="lazy"><figcaption><b>Calendar</b> แถบคือการจอง: สีเข้ม = ยืนยันแล้ว สีเขียว = ชำระแล้ว สีอ่อน = คำขอใหม่ แถบสีปะการังลายทาง = แขกเลยกำหนดออก แถว <span class="ui">Unassigned</span> รวมการจองประเภทนั้นที่ยังไม่มีห้อง</figcaption></figure>
+<ul>
+  <li><b>ช่วงเวลา:</b> <span class="ui">← Prev</span>, <span class="ui">Today</span>, <span class="ui">Next →</span> ตัวเลือกด่วน (<i>This month</i>, <i>Next 3 months</i>, <i>Year</i>) หรือพิมพ์ <i>From</i> และ <i>To</i> แล้วกด <span class="ui">Apply</span> แสดงได้สูงสุด 366 วัน</li>
+  <li><b>Density</b> ปรับความกว้างของคอลัมน์ การลากต้องใช้คอลัมน์ที่กว้างพอจะเล็งคืนที่ต้องการได้แม่นยำ</li>
+  <li><b>สร้างการจอง:</b> ลากผ่านคืนที่ว่างในแถวของห้อง หรือคลิกช่องว่าง เพื่อเปิดแบบฟอร์มการจองใหม่</li>
+  <li><b>เปลี่ยนวันที่:</b> ลากขอบของแถบ <b>ย้าย:</b> ลากทั้งแถบไปยังห้องหรือวันอื่น การวางลงบนการจองอื่นในห้องอื่นจะเสนอให้ <b>สลับห้อง</b> กัน (เฉพาะประเภทห้องเดียวกัน) การลากทุกครั้งจะขอให้ยืนยันและแสดงราคาใหม่ก่อน</li>
+  <li><b>เปิด:</b> ดับเบิลคลิกแถบ (แตะบนจอสัมผัส) เพื่อเปิดแผงการจอง</li>
+</ul>
+<div class="grid2">
+<figure><img src="../img/i-calendar-new.jpg" alt="แบบฟอร์มการจองใหม่" loading="lazy"><figcaption><b>การจองใหม่</b> ราคาคือราคาที่เซิร์ฟเวอร์คำนวณสำหรับคืนเหล่านั้น ค้นหาแขกเดิมเพื่อใช้บัตรแขกเดิม หรือพิมพ์ชื่อใหม่ ต้องระบุช่องทางการจองและจำนวนผู้เข้าพัก</figcaption></figure>
+<figure><img src="../img/i-calendar-panel.jpg" alt="แผงการจองจากปฏิทิน" loading="lazy"><figcaption><b>แผงการจอง</b> สถานะ ช่องทาง วัตถุประสงค์ จำนวนผู้เข้าพัก หมายเหตุการชำระ ห้อง วันที่ และโฟลิโอ โดยไม่ต้องออกจากปฏิทิน <span class="ui">Open full page</span> เปิดหน้าการจองเต็ม</figcaption></figure>
+</div>
+<div class="box rule"><span class="tag">กฎสำหรับการจองใหม่</span>
+<ul>
+  <li>การเข้าพักยาวได้ไม่เกิน 90 คืน</li>
+  <li>การจองที่เริ่มก่อนวันนี้ (บันทึกย้อนหลัง) ต้องเป็น MANAGER</li>
+  <li>ผู้เข้าพักเกินความจุของห้อง พนักงานบันทึกได้พร้อมคำเตือน (เตียงเสริมมีอยู่จริง) แต่เว็บไซต์จะปฏิเสธ</li>
+  <li><b>Set price manually</b> (MANAGER ขึ้นไป): พิมพ์ราคารวมที่ต่อรองสำหรับทั้งการเข้าพัก เซิร์ฟเวอร์จะกระจายราคาไปยังแต่ละคืน และประวัติจะบันทึกทั้งราคาที่พิมพ์และราคาตามแผนราคา แคชเชียร์จะไม่เห็นลิงก์นี้</li>
+  <li>วัตถุประสงค์ <i>Complimentary</i> หรือ <i>House use</i> ใช้ระบุการเข้าพักฟรีหรือการใช้ของพนักงานในรายงาน</li>
+</ul></div>
+
+<h3 id="bookings">รายการการจอง</h3>
+<p><b>Front desk → Bookings</b> ค้นหาการจองทั้งหมดด้วยชื่อแขก อีเมล โทรศัพท์ หรือหมายเลขอ้างอิง พร้อมตัวกรองวันที่และสถานะ คลิกหัวคอลัมน์เพื่อเรียงลำดับ <span class="ui">Export CSV</span> (MANAGER ขึ้นไป) ดาวน์โหลดรายการพร้อมห้อง ยอดค้าง และเวลาที่สร้าง</p>
+<figure><img src="../img/a-bookings.jpg" alt="รายการการจอง" loading="lazy"><figcaption>สถานะแสดงเป็นป้าย <span class="ui">Owes ฿…</span> ปรากฏเฉพาะเมื่อหนี้ถึงกำหนดแล้ว แถวแรกมาจาก SiteMinder จึงมีหมายเลขอ้างอิง <i>SiteMinder SM-77812</i></figcaption></figure>
+<h4>สถานะการจอง</h4>
+<div class="tbl"><table>
+<tr><th>สถานะ</th><th>ความหมาย</th></tr>
+<tr><td><b>NEW</b></td><td>คำขอ ส่วนใหญ่มาจากเว็บไซต์ ยังไม่ได้ยืนยัน</td></tr>
+<tr><td><b>CONFIRMED</b></td><td>โรงแรมรับการจองแล้ว</td></tr>
+<tr><td><b>PAID</b></td><td>ชำระค่าห้องครบแล้ว การตั้งเป็น PAID ต้องบันทึกการชำระยอดที่เหลือในขณะเดียวกัน (เงินสด บัตร หรืออื่น ๆ เช่น โอนเงิน หรือชำระล่วงหน้าผ่าน OTA) PAID ไม่เคยตัดหนี้ทิ้ง</td></tr>
+<tr><td><b>CANCELLED</b></td><td>ยกเลิกแล้ว พร้อมเหตุผล แขกที่มาถึงแล้วยกเลิกไม่ได้ ให้เช็คเอาท์หรือย่นการเข้าพักแทน</td></tr>
+</table></div>
+<p>แยกจากสถานะ การจองแต่ละรายการมี <b>สถานะการเข้าพัก</b>: รอเข้าพัก เช็คอินแล้ว เช็คเอาท์แล้ว หรือไม่มาเข้าพัก การจองไม่เคยถูกลบ มีแต่ถูกยกเลิก</p>
+<div class="box warn"><span class="tag">คำขอจากเว็บไซต์หมดอายุ</span><p>คำขอ NEW จากเว็บไซต์ที่ไม่มีใครยืนยันภายใน 2 วันทำการจะถูกยกเลิกโดยอัตโนมัติ และผู้จัดการจะได้รับการเตือนก่อนหน้านั้น การจองที่พนักงานสร้างไม่มีวันหมดอายุ</p></div>
+
+<h3 id="booking-page">หน้าการจอง</h3>
+<p>เปิดการจองจากรายการ ปฏิทิน หรือ Today หน้านี้รวมทุกอย่างเกี่ยวกับการเข้าพัก</p>
+<figure><img src="../img/a-booking-anna.jpg" alt="หน้าการจองพร้อมโฟลิโอและประวัติ" loading="lazy"><figcaption><b>หน้าการจอง</b> ซ้าย: ข้อมูลแขกและการเข้าพัก บัตรแขกที่เชื่อมไว้ ขวา: การดำเนินการ วันที่และห้อง ห้องและการย้ายห้อง สถานะ ด้านล่าง: โฟลิโอ ค่าใช้จ่ายจาก POS ที่ลงบัญชีห้อง และประวัติทุกอย่างที่ทำกับการจองนี้</figcaption></figure>
+<ul>
+  <li><b>Dates &amp; room → Change:</b> วันที่ใหม่หรือห้องอื่น <span class="ui">Preview price</span> แสดงยอดรวมใหม่จากเซิร์ฟเวอร์ก่อนยืนยัน</li>
+  <li><b>ราคาถูกตรึงไว้รายคืน</b> ราคาที่ตกลงไว้สำหรับแต่ละคืนจะคงอยู่ การขยายการเข้าพักคิดราคาเฉพาะคืนใหม่ตามอัตราวันนี้ คืนก่อนหน้ายังคงราคาเดิม <span class="ui">Reprice to current rates</span> เป็นการดำเนินการแยกที่ต้องสั่งเอง และใช้ได้เฉพาะคืนตั้งแต่วันนี้เป็นต้นไป</li>
+  <li><b>Relocate to another room:</b> ย้ายแขกตั้งแต่วันที่เลือก ไปห้องประเภทเดียวกันหรือประเภทอื่น ตัวอย่างจะแสดงยอดรวมใหม่และส่วนต่าง การจองจะมีสองช่วงห้อง <span class="ui">Undo this relocation</span> คืนห้องและราคาเดิม</li>
+  <li><b>Payment note:</b> สำหรับเลขใบเสร็จหรือเลขอ้างอิงการโอน ห้ามพิมพ์หมายเลขบัตร หมายเหตุที่ดูเหมือนหมายเลขบัตรจะถูกปฏิเสธ</li>
+  <li><b>Linked to</b> เชื่อมการจองกับบัตรแขก (ดู <a href="#guests">Guests</a>)</li>
+</ul>
+<figure><img src="../img/a-booking-lucas.jpg" alt="การจองที่ย้ายห้องโดยมีสองห้อง" loading="lazy"><figcaption>การเข้าพักที่มีการย้ายห้อง: Deluxe Sea View 204 ถึงวันที่ 5 พ.ย. จากนั้น Garden Villa 101 แต่ละช่วงคงราคารายคืนของตัวเอง</figcaption></figure>
+
+<h3 id="folio">โฟลิโอและการชำระเงิน</h3>
+<p><b>Folio</b> คือที่เดียวที่ตอบคำถามว่า "แขกค้างชำระเท่าไร" ตัวเลขเดียวกันนี้แสดงใน Today แผนผังห้องพัก ตอนเช็คเอาท์ และการตรวจสอบปิดวัน</p>
+<ul>
+  <li><b>Room</b>: ราคาที่ตกลงของคืนที่พัก (รวมค่าธรรมเนียมออกก่อนกำหนด ถ้ามี)</li>
+  <li><b>POS room charges</b>: บิลร้านอาหาร บาร์ และสปาที่ลงบัญชีห้อง</li>
+  <li><b>Paid at the desk</b>: การชำระเข้าโฟลิโอที่บันทึกแล้ว</li>
+  <li><b>Balance due</b> = ค่าใช้จ่าย − การชำระ</li>
+</ul>
+<ol class="steps">
+  <li>ใต้ <b>Balance due</b> ช่องจำนวนเงินจะเติมยอดค้างทั้งหมดไว้ แก้ไขได้หากชำระบางส่วน</li>
+  <li>เลือกวิธีชำระ: Cash, Card หรือ Other</li>
+  <li>กด <span class="ui">Record payment</span> เงินสดจะเข้ากะแคชเชียร์ที่เปิดอยู่ของคุณ เมื่อค่าห้องได้รับชำระครบ การจองจะเปลี่ยนเป็น PAID เอง</li>
+</ol>
+<p>การชำระจะหักค่าใช้จ่ายจาก POS ก่อน แล้วจึงหักค่าห้อง การจองในอนาคตที่ยังไม่ชำระยังไม่ถือว่า "ค้างชำระ" ป้าย <b>Owes</b> จะปรากฏเมื่อแขกพักอยู่ ออกไปแล้ว พ้นวันที่เข้าพักแล้ว หรือการจองถูกยกเลิกแต่ยังมีค่าใช้จ่ายค้าง</p>
+<div class="box rule"><span class="tag">บัญชี</span><p>การชำระเข้าโฟลิโอ ออร์เดอร์ POS ที่ปิดแล้ว และการชำระเป็น PAID ทุกรายการ จะลงบัญชีคู่ของโรงแรมในขณะเดียวกัน ข้อผิดพลาดแก้ด้วยรายการกลับบัญชี ไม่ใช่การแก้ไขรายการเดิม</p></div>
+
+<h3 id="guests">แขก (Guests)</h3>
+<p><b>Front desk → Guests</b> คือทะเบียนบัตรแขก บัตรเก็บข้อมูลติดต่อ ประวัติการเข้าพักพร้อมยอดเงิน และอีเมลอัตโนมัติที่ส่งไปแล้ว <span class="ui">New guest</span> สร้างบัตรใหม่ แก้ไขหรือลบบัตรได้ <i>Has account (verified)</i> หมายถึงแขกสมัครบัญชีบนเว็บไซต์แล้ว</p>
+<div class="grid2">
+<figure><img src="../img/a-guests.jpg" alt="รายการแขก" loading="lazy"><figcaption>ค้นหาด้วยชื่อ อีเมล หรือโทรศัพท์</figcaption></figure>
+<figure><img src="../img/a-guest-anna.jpg" alt="บัตรแขก" loading="lazy"><figcaption>บัตรแขกพร้อมประวัติการเข้าพัก</figcaption></figure>
+</div>
+<p>ในหน้าการจอง <span class="ui">Change</span> ข้าง <i>Linked to</i> ใช้เชื่อมกับบัตรอื่น และ <span class="ui">Unlink</span> ใช้ยกเลิกการเชื่อม การจองที่นำเข้าจาก SiteMinder จะได้บัตรใหม่ที่มีเพียงชื่อเสมอ ระบบไม่จับคู่แขกด้วยชื่อ เพราะการจับคู่ผิดจะทำให้การเข้าพักไปแสดงในบัญชีของคนแปลกหน้า</p>
+
+<h3 id="property-map">แผนผังห้องพัก</h3>
+<p><b>Front desk → Property map</b> วางทุกห้องบนแผนผังโรงแรมและแสดงสีตามสถานะปัจจุบัน: ว่างและพร้อม มีแขกพัก ปิดห้อง งดใช้งาน จุดเล็ก ๆ บอกเพิ่มเติมว่า <i>ค้างชำระ</i> <i>ยังไม่ทำความสะอาด</i> และ <i>เข้าหรือออกวันนี้</i> วงสีปะการังหมายถึงต้องดำเนินการ (แขกเลยกำหนด ห้องที่มีการจองแต่ถูกปิด)</p>
+<figure><img src="../img/a-property-map.jpg" alt="แผนผังห้องพัก" loading="lazy"><figcaption>ดับเบิลคลิกห้อง (แตะบนจอสัมผัส) เพื่อเปิดแผงของห้อง: แขก ยอดค้าง เช็คอินหรือเช็คเอาท์ ผู้จัดการลากห้องวางบนแผนผังและอัปโหลดภาพแผนผังใหม่ได้</figcaption></figure>
+
+<h3 id="in-house">แขกที่พักอยู่ (In house)</h3>
+<p>รายการห้องที่มีแขกพักในคืนหนึ่ง พร้อมชื่อแขก ผู้ใหญ่และเด็ก กลุ่มลูกค้า (OTA, ตรง, walk-in…) วันเข้าและวันออก แขกที่ยังเช็คอินอยู่หลังวันกำหนดออกจะแสดงในรายการพร้อมเครื่องหมายเลยกำหนด และยังคงถือห้องไว้จนกว่าจะเช็คเอาท์</p>
+<figure><img src="../img/a-in-house.jpg" alt="รายการ In house" loading="lazy"><figcaption>แขกที่เลยกำหนดในห้อง 102 ยังนับว่าพักอยู่</figcaption></figure>
+
+<h3 id="night-audit">การตรวจสอบปิดวัน (Night audit)</h3>
+<p><b>Front desk → Night audit</b> ใช้ทบทวนวันหนึ่งก่อนปิดวัน การ์ดแสดงจำนวนห้อง-คืนที่ขาย อัตราการเข้าพัก และรายได้ค่าห้องตามราคาที่ตกลงสำหรับคืนนั้น ด้านล่างเป็นรายการเรื่องที่ยังไม่ได้จัดการ รวมถึงเรื่องค้างจากวันก่อน ๆ:</p>
+<ul>
+  <li><b>Missed arrivals</b>: ยังรอเข้าพักในหรือก่อนวันนี้ ให้เช็คอินหรือทำเครื่องหมาย no-show</li>
+  <li><b>Not arrived — mark no-show or cancel</b>: พ้นวันที่เข้าพักแล้วและแขกไม่มาเลย</li>
+  <li><b>Missed departures</b>: ยังเช็คอินอยู่ในหรือหลังวันกำหนดออก <i>Staying unpaid · N nights</i> นับคืนที่เลยวันเช็คเอาท์โดยไม่มีราคาที่ตกลงไว้ ให้เช็คเอาท์ หรือขยายการเข้าพัก (ซึ่งจะคิดราคาคืนที่เพิ่ม)</li>
+  <li><b>Unpaid balances</b>: การเข้าพักที่จบแล้วแต่ยังค้างชำระ</li>
+</ul>
+<figure><img src="../img/a-night-audit.jpg" alt="Night audit" loading="lazy"><figcaption><span class="ui">Close day</span> บันทึกว่าได้ทบทวนวันนั้นแล้ว พร้อมหมายเหตุ (ไม่บังคับ) ไม่ได้ล็อกสิ่งใด ยังแก้ไขรายการได้ภายหลัง</figcaption></figure>
+
+<h3 id="guest-emails">อีเมลถึงแขก (ADMIN)</h3>
+<p><b>Front desk → Settings → Guest emails</b> เปิดใช้อีเมลอัตโนมัติสามแบบ ส่งวันละครั้งเวลา 10:00: <b>Pre-arrival</b> (N วันก่อนเช็คอิน) <b>Post-stay</b> (N วันหลังเช็คเอาท์ พร้อมลิงก์รีวิวถ้าต้องการ) และ <b>Win-back</b> (N เดือนหลังการเข้าพักครั้งล่าสุด) ส่งเฉพาะแขกที่มีบัญชีเว็บไซต์ที่ยืนยันแล้วและไม่ได้ยกเลิกการรับ ไม่ส่งถึงบัตรแขกที่พิมพ์ไว้ที่เคาน์เตอร์</p>
+<figure class="half"><img src="../img/a-lifecycle-emails.jpg" alt="การตั้งค่า Guest emails" loading="lazy"><figcaption>ทั้งสามแบบปิดอยู่จนกว่าผู้ดูแลระบบจะเปิด</figcaption></figure>
+
+<h3 id="siteminder">การนำเข้าจาก SiteMinder (OTA)</h3>
+<p>การจองจาก Booking.com, Agoda, Expedia และช่องทางอื่น ๆ เข้ามาผ่าน SiteMinder โปรแกรมเล็ก ๆ บนคอมพิวเตอร์ในสำนักงานอ่าน SiteMinder ทุกคืนและส่งการจองแต่ละรายการเข้า Sunset ไม่มีข้อมูลใดถูกส่งกลับไปยัง SiteMinder</p>
+<ul>
+  <li>การจองใหม่จะสร้างการจองโดยใช้ยอดรวมของ SiteMinder เป็นราคาที่ตกลง หลังผ่านการตรวจห้องว่างแบบเดียวกับการจองทั่วไป หากไม่มีห้องว่าง การนำเข้าจะถูกปฏิเสธและต้องมีคนจัดการการจองเกินเอง</li>
+  <li>การจองที่เปลี่ยนแปลงจะปรับวันที่หรือจำนวนผู้เข้าพักผ่านขั้นตอนปกติ การจองที่ถูกยกเลิกจะยกเลิกการจองและปล่อยห้อง</li>
+  <li>ชื่อประเภทห้องของ SiteMinder ถูกจับคู่กับประเภทห้องของ Sunset โดยผู้จัดการ ชื่อที่ไม่รู้จักจะถูกปฏิเสธ ระบบไม่เดา</li>
+  <li>การจองเหล่านี้แสดง <i>SiteMinder</i> และหมายเลขอ้างอิงใต้ชื่อแขก ใน History จะแสดงผู้กระทำเป็น <b>SITEMINDER</b></li>
+</ul>
+
+<h2 id="rooms"><span class="num">3</span>ห้องพัก (Rooms)</h2>
+
+<h3 id="housekeeping">งานแม่บ้าน</h3>
+<p><b>Rooms → Housekeeping</b> แสดงทุกห้องพร้อมรหัสสถานะ: <b>VC</b> ว่างและสะอาด <b>VD</b> ว่างแต่สกปรก <b>OC</b> มีแขกและสะอาด <b>OD</b> มีแขกและสกปรก และ <i>Due out today</i> (ออกวันนี้) <i>Arriving today</i> (เข้าวันนี้) <i>Overdue</i> (เลยกำหนด) หรือ <i>Out of order</i> (งดใช้งาน) กด <span class="ui">Mark clean</span> หรือ <span class="ui">Mark dirty</span></p>
+<figure><img src="../img/a-housekeeping.jpg" alt="สถานะห้องสำหรับแม่บ้าน" loading="lazy"><figcaption>การเช็คเอาท์ทำเครื่องหมายห้องว่าสกปรกโดยอัตโนมัติ เมื่อแขกย้ายห้อง ห้องที่แขกออกมาจะถูกทำเครื่องหมายว่าสกปรกในวันที่การย้ายมีผล</figcaption></figure>
+
+<h3 id="maintenance">งานซ่อมบำรุง</h3>
+<p><b>Rooms → Maintenance</b> เปิดให้พนักงานทุกคน: ใครพบปัญหาก็แจ้งได้ กด <span class="ui">+ Report a problem</span> เลือกห้อง อธิบายปัญหา และแนบรูปภาพ</p>
+<div class="grid2">
+<figure><img src="../img/a-maintenance.jpg" alt="รายการงานซ่อมห้อง" loading="lazy"><figcaption>งาน: <i>Open</i> (เปิด) <i>In progress</i> (กำลังทำ) <i>Done</i> (เสร็จ) จุดสีปะการังหมายถึงห้องถูกปิด</figcaption></figure>
+<figure><img src="../img/i-maintenance-task.jpg" alt="งานที่เปิดพร้อมปุ่ม Start และ Mark done" loading="lazy"><figcaption>ช่าง (หรือผู้จัดการ) กด <span class="ui">Start</span> และ <span class="ui">Mark done</span></figcaption></figure>
+</div>
+<ul>
+  <li>ผู้จัดการ <b>ปิดห้อง</b> จากงานซ่อมได้ (วันที่ เหตุผล และผู้ปิดงาน: ช่างหรือแม่บ้าน) ห้องที่ถูกปิดจะไม่ขายในวันเหล่านั้น</li>
+  <li>การปิดห้องทำได้แม้มีแขกจองห้องนั้นอยู่ โดยมีคำเตือนระบุการจอง: แอร์เสียเป็นข้อเท็จจริง และเคาน์เตอร์เป็นผู้ตัดสินใจว่าจะทำอย่างไรกับแขก</li>
+  <li>การปิดงานซ่อมจะย่นการปิดห้องให้สิ้นสุดอย่างช้าที่สุดเมื่อวานนี้ ห้องจึงกลับมาขายได้ การปิดห้องที่สิ้นสุดไปแล้วจะไม่ถูกยืดออก</li>
+  <li>ช่างทำแบบเดียวกันได้จาก Telegram (หน้าจอ <a href="#bot">งานซ่อมบำรุง</a>)</li>
+</ul>
+
+<h3 id="rates">ราคาและห้องว่าง</h3>
+<p><b>Rooms → Rates &amp; availability</b> เป็นตารางเดียว: ประเภทห้องเป็นแถว วันในเดือนเป็นคอลัมน์</p>
+<figure><img src="../img/a-rates.jpg" alt="แท็บ Rates" loading="lazy"><figcaption><b>แท็บ Rates</b> แต่ละช่องแสดงราคาของคืนนั้นและจำนวนห้องประเภทนั้นที่ยังว่าง ราคาสีปะการังคือราคาที่ตั้งเอง ไม่เช่นนั้นเป็นราคาพื้นฐานของประเภทห้อง</figcaption></figure>
+<ul>
+  <li>ผู้จัดการคลิกราคา พิมพ์ราคาใหม่ แล้วกด Enter (Esc ยกเลิก)</li>
+  <li><b>Set a price range</b>: ประเภทห้อง ตั้งแต่ ถึง ราคาต่อคืน แล้วกด <span class="ui">Apply to range</span> ได้สูงสุด 366 วันต่อครั้ง</li>
+  <li>ราคาใหม่ใช้กับการจองใหม่และคืนใหม่เท่านั้น คืนที่ตกลงราคาแล้วในการจองเดิมยังคงราคาเดิม</li>
+</ul>
+<figure><img src="../img/i-availability.jpg" alt="แท็บ Availability ที่เลือกวันหนึ่ง" loading="lazy"><figcaption><b>แท็บ Availability</b> แต่ละช่องคือห้องว่าง/ห้องทั้งหมด คลิกวันเพื่อดูทีละห้อง: มีการจอง (พร้อมลิงก์) ถูกปิด หรือว่าง <span class="ui">Manage</span> เปิดรายการปิดห้องของห้องนั้น: เพิ่มการปิดพร้อมวันที่และเหตุผล หรือลบออก</figcaption></figure>
+<p><b>การปิดห้อง</b> (งดขายชั่วคราว) และห้องที่ <b>ไม่ใช้งาน</b> (งดให้บริการถาวร) เป็นคนละเรื่องกัน ห้องที่ถูกปิดยังเป็นห้องที่ใช้งานอยู่</p>
+
+<h3 id="room-types">ประเภทห้องและห้องจริง</h3>
+<p><b>Rooms → Settings → Rooms</b> แสดงประเภทห้อง ผู้จัดการสร้างหรือแก้ไขประเภท (ชื่อ คำอธิบาย ความจุ ราคาพื้นฐานต่อคืน รูปภาพ) และภายใต้ประเภทนั้นคือ <b>ห้องจริง</b> พร้อมหมายเลข (101, 102…) ห้องที่มีประวัติลบไม่ได้ ให้ปิดใช้งานแทน</p>
+<div class="grid2">
+<figure><img src="../img/a-rooms.jpg" alt="ประเภทห้อง" loading="lazy"><figcaption>ประเภทห้องพร้อมความจุ จำนวนห้องที่ใช้งาน และราคาพื้นฐาน</figcaption></figure>
+<figure><img src="../img/a-room-edit.jpg" alt="แก้ไขประเภทห้อง" loading="lazy"><figcaption>การแก้ไขประเภทห้อง: รายละเอียด รูปภาพ ห้องจริง</figcaption></figure>
+</div>
+<p>ชื่อประเภทห้องและหมายเลขห้องต้องไม่ซ้ำกัน "Garden Villa" กับ "garden  villa" ถือเป็นชื่อเดียวกัน</p>
+
+<h2 id="pos"><span class="num">4</span>POS ร้านอาหาร</h2>
+
+<h3 id="pos-board">กระดานโต๊ะและแผนผังร้าน</h3>
+<p><b>Restaurant → POS</b> (หลังบ้าน) และ <code>/pos</code> (โทรศัพท์) แสดงทุกโต๊ะแยกตามโซน โต๊ะที่มีออร์เดอร์จะแสดงสถานะและยอดรวม <i>Open tickets</i> (บนโทรศัพท์คือ <i>No table</i>) เก็บออร์เดอร์ที่ไม่มีโต๊ะ เช่น สั่งกลับบ้าน หรือแขกที่บาร์สระว่ายน้ำ</p>
+<figure><img src="../img/a-pos.jpg" alt="กระดานโต๊ะและออร์เดอร์" loading="lazy"><figcaption>แถบสีปะการังนับงานพิมพ์ที่ยังไม่ได้พิมพ์ "Not printed" หมายถึงงานที่ล้มเหลวรวมกับงานที่ยังพยายามพิมพ์ซ้ำอยู่เสมอ</figcaption></figure>
+<figure><img src="../img/a-pos-map.jpg" alt="แผนผังร้านอาหาร" loading="lazy"><figcaption><b>Floor map</b> (<span class="ui">Floor map →</span>): โต๊ะชุดเดียวกันบนแผนผังร้าน เขียวน้ำทะเล = ว่าง สีเข้ม = มีออร์เดอร์เปิดอยู่ ดับเบิลคลิก (หรือแตะ) โต๊ะเพื่อเปิดออร์เดอร์</figcaption></figure>
+
+<h3 id="orders">การรับออร์เดอร์</h3>
+<ol class="steps">
+  <li>แตะโต๊ะ ยังไม่มีอะไรถูกสร้าง ออร์เดอร์จะเกิดขึ้นเมื่อเพิ่มรายการแรก</li>
+  <li>เลือกหมวดหมู่และแตะรายการ แตะแต่ละครั้งเพิ่มหนึ่งชิ้น ใช้ <b>✎</b> เพื่อเพิ่มรายการพร้อมหมายเหตุ ("ไม่ใส่น้ำแข็ง" "เผ็ดกลาง")</li>
+  <li>ปรับด้วย <b>−</b> / <b>+</b> หรือ <span class="ui">Remove</span> ตราบใดที่รายการยังไม่ได้ส่ง</li>
+  <li>กด <span class="ui">Send to kitchen</span> รายการอาหารพิมพ์ที่เครื่องพิมพ์ครัว เครื่องดื่มพิมพ์ที่เครื่องพิมพ์บาร์ ปุ่มยังอยู่ที่เดิมเป็น <span class="ui">Sent ✓</span></li>
+  <li>เพิ่มรายการในออร์เดอร์ที่ส่งแล้วได้ รายการใหม่จะถูกส่งและพิมพ์เมื่อเพิ่ม</li>
+</ol>
+<figure><img src="../img/r-cashier-order.jpg" alt="ใบออร์เดอร์" loading="lazy"><figcaption><b>ใบออร์เดอร์</b> บนคอมพิวเตอร์: เมนูอยู่ซ้าย ออร์เดอร์อยู่ขวา ทุกออร์เดอร์มีเลขใบเสร็จ (<i>Order #5</i>) และเลขอ้างอิง</figcaption></figure>
+<div class="box rule"><span class="tag">กฎ</span>
+<ul>
+  <li>หนึ่งรายการมีได้ 1 ถึง 99 ชิ้น</li>
+  <li>รายการที่ส่งแล้วจะถูก <b>ยกเลิก (void)</b> ไม่ใช่แก้ไข <span class="ui">Void</span> ต้องเป็น MANAGER และระบุเหตุผล ใบ VOID จะพิมพ์ที่สถานีเดียวกัน</li>
+  <li>การยกเลิกออร์เดอร์ที่มีรายการส่งแล้วก็ต้องเป็นผู้จัดการและระบุเหตุผล ออร์เดอร์ที่ยังไม่เคยส่ง พนักงานเสิร์ฟยกเลิกเองได้</li>
+  <li>ออร์เดอร์ที่ไม่มีรายการปิดไม่ได้ ออร์เดอร์ว่างที่เปิดค้างไว้จะถูกยกเลิกอัตโนมัติเมื่อปิดกะ</li>
+  <li>ราคารวม VAT 7% แล้ว ใบเสร็จแสดง "incl. VAT" เป็นการแจกแจง ไม่ใช่การบวกเพิ่ม ไม่มีค่าบริการ</li>
+</ul></div>
+<p><span class="ui">Print pre-bill</span> พิมพ์บิลให้แขกตรวจ <span class="ui">Print QR</span> พิมพ์รหัสที่แขกสแกนเพื่อดูบิลและสั่งเพิ่มจากโทรศัพท์</p>
+
+<h3 id="payment">การรับชำระเงิน</h3>
+<p>การปิดออร์เดอร์ต้องเป็น CASHIER ที่มีกะแคชเชียร์เปิดอยู่ หากไม่มี ส่วนการชำระจะแสดง <i>Open a shift to accept payment</i> พร้อมลิงก์</p>
+<div class="grid2">
+<figure><img src="../img/i-cash-dialog.jpg" alt="ชำระเงินสดพร้อมเงินทอน" loading="lazy"><figcaption><b>Cash</b> พิมพ์จำนวนเงินที่แขกให้มา หน้าจอแสดงเงินทอน ออร์เดอร์ถูกเรียกเก็บตามยอดรวมพอดี</figcaption></figure>
+<figure><img src="../img/i-room-charge.jpg" alt="ปุ่มชำระเงิน" loading="lazy"><figcaption><b>Cash, Card, Room</b> Card ปิดทันที Room จะถามว่าเป็นแขกคนใด</figcaption></figure>
+</div>
+<ul>
+  <li><b>Card</b> บันทึกการชำระด้วยบัตร Sunset ไม่ได้เชื่อมกับเครื่องรูดบัตร แคชเชียร์ยืนยันเองว่าเครื่องอนุมัติแล้ว</li>
+  <li><b>Room</b> ลงบัญชีออร์เดอร์เข้าโฟลิโอของแขก ค้นหาด้วยชื่อแขก ระบบเสนอเฉพาะแขกที่เช็คอินอยู่ (แขกที่เลยกำหนดยังนับว่าเช็คอินอยู่) แขกชำระตอนเช็คเอาท์</li>
+  <li>ออร์เดอร์ที่ปิดแล้วจะพิมพ์ใบเสร็จที่เครื่องพิมพ์แคชเชียร์ หากตั้งค่าไว้</li>
+  <li>ออร์เดอร์ชำระได้ครั้งเดียวเต็มจำนวน ไม่รองรับการแยกบิลเป็นหลายการชำระ</li>
+</ul>
+
+<h3 id="phone-pos">POS บนโทรศัพท์</h3>
+<p>หน้าจอบนโทรศัพท์ทำงานเดียวกันด้วยปุ่มขนาดใหญ่ ก่อนทุกการดำเนินการเรื่องเงิน โทรศัพท์จะแสดง <b>Will be recorded as</b> พร้อมชื่อผู้ที่เข้าสู่ระบบอยู่ เพราะโทรศัพท์ใช้ร่วมกัน หากไม่ใช่คุณ ให้กด <span class="ui">Not you? Switch</span></p>
+<figure class="phone">
+<img src="../img/m-pos.jpg" alt="กระดานโต๊ะบนโทรศัพท์" loading="lazy">
+<img src="../img/m-cash-confirm.jpg" alt="การยืนยันเงินสดบนโทรศัพท์" loading="lazy">
+<img src="../img/m-shift.jpg" alt="กะบนโทรศัพท์" loading="lazy">
+<figcaption>โทรศัพท์: กระดานโต๊ะพร้อมแถบแจ้งการพิมพ์ การชำระเงินสดพร้อม <i>Will be recorded as</i> และกะของแคชเชียร์</figcaption>
+</figure>
+<figure class="phone">
+<img src="../img/m-orders.jpg" alt="ออร์เดอร์ในกะนี้" loading="lazy">
+<img src="../img/m-print-jobs.jpg" alt="งานพิมพ์" loading="lazy">
+<figcaption><i>Orders in this shift</i> และคิวงานพิมพ์บนโทรศัพท์</figcaption>
+</figure>
+
+<h3 id="shifts">กะแคชเชียร์</h3>
+<p><b>กะ (shift)</b> ใน POS หมายถึงช่วงการทำงานของแคชเชียร์หนึ่งคนที่เครื่องเก็บเงิน ตั้งแต่เปิดลิ้นชักจนถึงนับเงิน (ตารางงานเรียกว่า <i>roster</i> และการลงเวลาเรียกว่า <i>attendance</i>)</p>
+<ol class="steps">
+  <li><b>Restaurant → Shifts</b>: พิมพ์ <b>Opening cash float</b> (เงินทอนตั้งต้น) แล้วกด <span class="ui">Open shift</span></li>
+  <li>ระหว่างกะ การ์ดแสดงยอด Cash, Card, Room charge และจำนวนการชำระ</li>
+  <li>เมื่อปิดกะ นับเงินในลิ้นชักแล้วพิมพ์ <b>Counted cash</b> หน้าจอเปรียบเทียบกับ <b>Expected cash</b> (เงินตั้งต้น + ขายเงินสด + ชำระโฟลิโอด้วยเงินสด) และแสดง <b>Discrepancy</b> (ส่วนต่าง)</li>
+  <li>หากเงินในลิ้นชักไม่ตรง ต้องกรอก <b>Notes</b> แล้วกด <span class="ui">Close shift</span> (บนโทรศัพท์: <span class="ui">Review &amp; close</span> แล้ว <span class="ui">Confirm close</span>) รายงาน Z จะพิมพ์ออกมา</li>
+</ol>
+<figure><img src="../img/r-cashier-shifts.jpg" alt="การปิดกะที่มีส่วนต่าง" loading="lazy"><figcaption>นับได้ ฿3,700 เทียบกับที่ควรมี ฿3,740: ขาด ฿40 จึงต้องกรอกหมายเหตุ ออร์เดอร์ที่เปิดค้างของพนักงานคนอื่นจะแสดงในรายการแต่ไม่ขวางการปิดกะนี้</figcaption></figure>
+<p>กะจะถูกขวางเฉพาะออร์เดอร์ที่แคชเชียร์คนนี้เปิด หรือออร์เดอร์ที่มีการชำระในกะนี้ ค่าใช้จ่ายที่ลงบัญชีห้องไม่ใช่เงินสดในลิ้นชัก แต่เป็นหนี้ที่ย้ายไปอยู่ในโฟลิโอของแขก</p>
+<div class="grid2">
+<figure><img src="../img/a-shift-report.jpg" alt="รายงานกะ" loading="lazy"><figcaption><b>Shift report</b>: ยอดรวม <span class="ui">Export CSV</span> และออร์เดอร์ของกะ (MANAGER ขึ้นไป) แคชเชียร์เห็นเฉพาะกะของตนเอง</figcaption></figure>
+<figure><img src="../img/a-shift-history.jpg" alt="ประวัติกะ" loading="lazy"><figcaption><b>Shift history</b> (MANAGER ขึ้นไป): ทุกกะพร้อมยอดที่ควรมี ยอดที่นับได้ และส่วนต่าง</figcaption></figure>
+</div>
+<figure><img src="../img/a-order-history.jpg" alt="ประวัติออร์เดอร์" loading="lazy"><figcaption><b>Order history</b> (MANAGER ขึ้นไป): ออร์เดอร์ตามช่วงเวลา สถานะ โต๊ะ และพนักงาน</figcaption></figure>
+
+<h3 id="printing">เครื่องพิมพ์และคิวงานพิมพ์</h3>
+<p>ใบสั่งครัว ใบสั่งบาร์ ใบแจ้งยอดล่วงหน้า ใบเสร็จ และรายงาน Z ส่งไปยังเครื่องพิมพ์เครือข่าย แต่ละแผนก (Kitchen, Bar, Cashier) มีเครื่องพิมพ์ที่ใช้งานได้ไม่เกินหนึ่งเครื่อง</p>
+<ul>
+  <li>การพิมพ์ไม่เคยหยุดงาน หากเครื่องพิมพ์ไม่ตอบ งานจะรอในคิวและพยายามพิมพ์ซ้ำอัตโนมัติ (ค่าเริ่มต้น 5 ครั้ง) จากนั้นจะถูกทำเครื่องหมาย <b>Failed</b></li>
+  <li><b>Not printed</b> = Failed + Pending แถบแจ้งบนกระดานโต๊ะและแท็บเริ่มต้นของคิวใช้กฎเดียวนี้</li>
+  <li><span class="ui">Retry</span> ส่งเอกสารเดิมที่อยู่ในคิวทุกประการ ไม่ใช่สร้างใหม่ หากที่อยู่เครื่องพิมพ์เปลี่ยน ให้แก้ไขเครื่องพิมพ์ก่อน <span class="ui">Dismiss</span> ซ่อนงานที่จัดการแล้ว</li>
+</ul>
+<figure><img src="../img/a-print-queue.jpg" alt="คิวงานพิมพ์" loading="lazy"><figcaption><b>Print queue</b>: กรองตามสถานะและสถานี สาเหตุของความล้มเหลวแต่ละครั้งแสดงเป็นสีปะการัง</figcaption></figure>
+<figure><img src="../img/a-printers.jpg" alt="เครื่องพิมพ์" loading="lazy"><figcaption><b>Printers</b> (MANAGER ขึ้นไป): ชื่อ แผนก ที่อยู่ และโค้ดเพจ บรรทัดสถานะบอกว่าเครื่องพิมพ์ตอบเมื่อเร็ว ๆ นี้หรือไม่ ใช้ <span class="ui">Test print</span> หลังการเปลี่ยนแปลงทุกครั้ง</figcaption></figure>
+<figure><img src="../img/a-print-layouts.jpg" alt="ตัวแก้ไขรูปแบบการพิมพ์" loading="lazy"><figcaption><b>Print layouts</b> (ADMIN): ความกว้างกระดาษ (58/80 มม.) ฟอนต์ A หรือ B ขนาด หัวเรื่อง ส่วนหัวและส่วนท้าย บรรทัดที่จะพิมพ์ และโลโก้สำหรับใบเสร็จและใบแจ้งยอดล่วงหน้า ตัวอย่างทางขวาสร้างจากโค้ดเดียวกับที่ใช้พิมพ์ จึงแสดงตรงตามที่จะตัดบรรทัดหรือถูกตัดจริง งานทดสอบพิมพ์จะลงท้ายด้วย "sample, not a real order"</figcaption></figure>
+
+<h3 id="menu">เมนู</h3>
+<p><b>Restaurant → Menu</b>: ทุกคนดูได้ ผู้จัดการแก้ไขได้ แต่ละรายการมีชื่อ หมวดหมู่ (การจัดกลุ่มบนหน้าจอ) แผนก (เครื่องพิมพ์ที่จะรับใบสั่ง: Kitchen หรือ Bar) ราคา และสวิตช์ <i>Available</i> ทรีตเมนต์สปาแยกไว้ที่ <a href="#spa">Spa → Treatments</a></p>
+<figure><img src="../img/a-menu.jpg" alt="เมนู" loading="lazy"><figcaption>หมวดหมู่เป็นแท็บ รายการที่ไม่พร้อมขายจะหายไปจากหน้าสั่ง แขกที่สั่งผ่าน QR หรือรูมเซอร์วิสเห็นเฉพาะรายการในเมนูสาธารณะ</figcaption></figure>
+
+<h2 id="spa"><span class="num">5</span>สปา</h2>
+
+<h3 id="spa-schedule">การนัดหมาย</h3>
+<p><b>Spa → Appointments</b>: แถวคือเตียงสปา คอลัมน์คือช่วงเวลา 30 นาที ตั้งแต่ 09:00 ถึง 20:00 คลิกช่องว่างเพื่อจอง ลากนัดหมายไปยังเตียงหรือเวลาอื่น ดับเบิลคลิกเพื่อเปิดแผงรายละเอียด</p>
+<figure><img src="../img/i-spa-tomorrow.jpg" alt="ตารางสปา" loading="lazy"><figcaption>ป้ายบนนัดหมายแต่ละรายการคือห้องของแขก</figcaption></figure>
+<figure><img src="../img/i-spa-panel.jpg" alt="แผงนัดหมายสปา" loading="lazy"><figcaption><b>แผงนัดหมาย:</b> ห้อง เตียง เวลา นักบำบัด ทรีตเมนต์พร้อมราคาเมนูปัจจุบัน <span class="ui">Bill treatment</span>, <span class="ui">Complete</span>, <span class="ui">No-show</span>, <span class="ui">Cancel</span></figcaption></figure>
+<div class="box rule"><span class="tag">กฎที่เซิร์ฟเวอร์ตรวจสอบ</span>
+<ul>
+  <li>แขกต้องมีการจองที่พักอยู่หรือกำลังจะมาถึง และวันที่ต้องอยู่ในช่วงการเข้าพัก</li>
+  <li>นักบำบัดต้องเป็นพนักงานที่ใช้งานอยู่และมีหน้าที่ THERAPIST เตียงต้องอยู่ในโซนสปา</li>
+  <li>นัดหมายสองรายการต้องไม่ทับซ้อนกันบนเตียงเดียวกันหรือนักบำบัดคนเดียวกัน แบบฟอร์มจะแสดงนักบำบัดที่ไม่ว่างเป็นสีเทา แต่เซิร์ฟเวอร์เป็นผู้ตัดสินขั้นสุดท้าย</li>
+  <li>ทรีตเมนต์ไม่เริ่มในอดีต สำหรับวันนี้ ช่วงแรกสุดที่จองได้คือช่วงที่กำลังดำเนินอยู่</li>
+  <li>ความยาวของนัดหมายคือผลรวมของทรีตเมนต์ เพิ่มหรือลบทรีตเมนต์เพื่อเปลี่ยนความยาว ไม่มีการยืดด้วยการลาก</li>
+</ul></div>
+<h4>การเรียกเก็บค่าทรีตเมนต์</h4>
+<ol class="steps">
+  <li>ในแผงกด <span class="ui">Bill treatment</span> ออร์เดอร์จะเปิดที่แท็บ Spa โดยเลือกแขกของนัดหมายไว้แล้ว</li>
+  <li>ปิดเหมือนออร์เดอร์ทั่วไป: เงินสด บัตร หรือลงบัญชีห้อง</li>
+  <li>เมื่อนัดหมายเป็น <b>Completed</b> จะมีคำเตือน ⚠ หากทรีตเมนต์ใดไม่อยู่ในออร์เดอร์ที่ชำระแล้วหรือเปิดอยู่ <span class="ui">Add to the order</span> เพิ่มเฉพาะส่วนที่ขาด</li>
+</ol>
+<p>ราคาคือราคาเมนูปัจจุบัน ณ เวลาที่เรียกเก็บเสมอ หากการจองถูกยกเลิก นัดหมายสปาในอนาคตจะถูกยกเลิกด้วย และรายการสปาที่ยังไม่ชำระจะถูกลบออก สิ่งที่ชำระแล้วจะไม่ถูกแตะต้อง และจะมีคำเตือนแสดงบนการจอง การเข้าพักที่สั้นลงจะยกเลิกนัดหมายที่อยู่นอกช่วงเข้าพัก</p>
+
+<h3 id="spa-other">แผนผังเตียง ทรีตเมนต์ และเตียง</h3>
+<div class="grid2">
+<figure><img src="../img/a-spa-map.jpg" alt="แผนผังเตียงสปา" loading="lazy"><figcaption><b>Table map:</b> เตียงสปาใดไม่ว่างในขณะนี้ และนัดหมายถัดไป</figcaption></figure>
+<figure><img src="../img/a-spa-treatments.jpg" alt="ทรีตเมนต์สปา" loading="lazy"><figcaption><b>Treatments:</b> ชื่อ หมวดหมู่ ราคา และระยะเวลา (MANAGER แก้ไข)</figcaption></figure>
+</div>
+<figure class="half"><img src="../img/r-therapist-landing.jpg" alt="ตารางแบบอ่านอย่างเดียวของนักบำบัด" loading="lazy"><figcaption><b>มุมมองของนักบำบัด</b> นักบำบัดเห็นตารางแบบอ่านอย่างเดียว โดยนัดหมายของตนมีกรอบเน้น และดูหัตถการของตนใน Telegram ได้ด้วย</figcaption></figure>
+
+<h2 id="gym"><span class="num">6</span>ฟิตเนสและระบบไฟ</h2>
+
+<h3 id="gym-schedule">ตารางฟิตเนส</h3>
+<p>ฟิตเนสรับแขกครั้งละหนึ่งคน <b>Gym &amp; lighting → Gym schedule</b> แสดงวันเป็นแถวและช่วงครึ่งชั่วโมงเป็นคอลัมน์ (มุมมอง Day หรือ Week) คลิกช่องว่างเพื่อจองให้การจองห้องพัก เปิดการจองเพื่อย้าย ย่น หรือยกเลิก</p>
+<figure><img src="../img/a-gym-schedule.jpg" alt="ตารางฟิตเนส" loading="lazy"><figcaption>แถบแจ้งแสดงว่าเซิร์ฟเวอร์ทดลองนี้ไม่มีคีย์ Tuya จึงสั่งเปิดปิดอุปกรณ์ไม่ได้ บนเซิร์ฟเวอร์ของโรงแรม เครื่องหมายบนการจองแต่ละรายการแสดงผลของระบบอัตโนมัติ: ⚡ เปิดแล้ว ⚠ เปิดบางส่วน ✕ ผิดพลาด</figcaption></figure>
+<ul>
+  <li>แต่ละรอบยาว 30 ถึง 120 นาที เพิ่มทีละ 30 นาที อยู่ในเวลาทำการ และไม่เกิน 120 นาทีต่อวันต่อการจอง</li>
+  <li>แขกจองเองบนเว็บไซต์ได้เฉพาะขณะเช็คอินอยู่ พนักงานจองให้แขกที่กำลังจะมาถึงได้ด้วย</li>
+  <li>เมื่อถึงเวลาจอง พัดลมและแอร์ที่เลือกให้ใช้กับการจองจะเปิดก่อนไม่กี่นาที และปิดเมื่อหมดเวลา เว้นแต่มีรอบถัดไปต่อกัน</li>
+  <li>การเช็คเอาท์ การยกเลิก หรือการเข้าพักที่สั้นลง จะยกเลิกรอบที่ไม่อยู่ในช่วงแล้ว</li>
+</ul>
+<div class="grid2">
+<figure><img src="../img/a-gym.jpg" alt="อุปกรณ์ฟิตเนส" loading="lazy"><figcaption><b>Gym</b> (CASHIER ขึ้นไป): เปิดปิดพัดลมหรือแอร์แต่ละเครื่องด้วยมือ <span class="ui">Refresh</span> อ่านสถานะจริง</figcaption></figure>
+<figure><img src="../img/a-gym-settings.jpg" alt="การตั้งค่าอุปกรณ์ฟิตเนส" loading="lazy"><figcaption><b>Gym devices</b> (ADMIN): เวลาทำการ เวลาเปิดล่วงหน้า โหมดแอร์ อุปกรณ์จากบัญชี Tuya จำนวนการเรียก Tuya ต่อเดือน การลดเวลาทำการจะแสดงการจองที่จะอยู่นอกเวลาก่อนบันทึก</figcaption></figure>
+</div>
+
+<h3 id="lighting">ระบบไฟ</h3>
+<p><b>Lighting</b> (MANAGER ขึ้นไป) ควบคุมตัวควบคุมไฟ WLED ในเครือข่ายโรงแรม: เปิด/ปิด ความสว่าง และพรีเซ็ตที่บันทึกไว้ ความสว่าง 0% หมายถึงปิด หน้านี้ไม่รีเฟรชเอง ให้กด Refresh <b>Lighting devices</b> (ADMIN) เพิ่มตัวควบคุมด้วยที่อยู่ในเครือข่ายและตรวจการเชื่อมต่อ เพิ่มได้เฉพาะที่อยู่ภายในเครือข่ายโรงแรมที่เซิร์ฟเวอร์อนุญาต</p>
+<figure class="half"><img src="../img/a-lighting.jpg" alt="หน้า Lighting" loading="lazy"><figcaption>บนเซิร์ฟเวอร์ทดลองนี้ยังไม่ได้ตั้งค่าระบบไฟ หน้าจึงแจ้งไว้ ที่โรงแรม ตัวควบคุมแต่ละตัวมีการ์ดของตัวเอง</figcaption></figure>
+
+<h2 id="staff"><span class="num">7</span>พนักงาน (Staff)</h2>
+
+<h3 id="my-schedule">ตารางงานของฉัน</h3>
+<p>พนักงานทุกคนดูตารางเดือนของตนเองได้ที่ <b>Staff → My schedule</b>: รหัสกะและเวลาของแต่ละวัน</p>
+<figure class="half"><img src="../img/r-waiter-schedule.jpg" alt="My schedule" loading="lazy"><figcaption>ตารางเดือนของพนักงานเสิร์ฟ รหัสกะ 9 (09:00–18:00) และวันหยุดประจำสัปดาห์</figcaption></figure>
+
+<h3 id="roster">ตารางงาน (Roster)</h3>
+<p><b>Staff → Roster</b> (MANAGER ขึ้นไป) คือตารางงานรายเดือน มีแท็บดังนี้:</p>
+<div class="tbl"><table>
+<tr><th>แท็บ</th><th>หน้าที่</th></tr>
+<tr><td><b>Grid</b></td><td>พนักงานแยกตามแผนก วันเรียงตามแนวนอน คลิกวันว่างเพื่อกำหนดกะ ลากกะเพื่อย้าย หรือลากไปวางบนคนอื่นเพื่อสลับ <i>Lock</i> ป้องกันไม่ให้กะถูกเปลี่ยน ตัวเลขความครอบคลุมสีปะการังหมายถึงแผนกมีคนน้อยกว่าขั้นต่ำในวันนั้น (เป็นคำเตือนเท่านั้น) <span class="ui">Copy previous month</span> (ตามวันในสัปดาห์), <span class="ui">Generate from patterns</span>, <span class="ui">Export actuals (Excel)</span>, <span class="ui">Export grid (Excel)</span></td></tr>
+<tr><td><b>Shift codes</b></td><td>รหัสกะของแต่ละแผนกพร้อมเวลา (หนึ่งหรือสองช่วง) นับเป็นวันทำงานและได้รับค่าจ้างหรือไม่ และสี การเปลี่ยนเวลาจะสร้างเวอร์ชันใหม่ตั้งแต่วันที่กำหนด ข้อมูลในอดีตจึงคงเวลาเดิม</td></tr>
+<tr><td><b>Patterns</b></td><td>จำนวนวันทำงานต่อสัปดาห์และวันหยุดประจำสัปดาห์ ใช้กับ <i>Generate from patterns</i></td></tr>
+<tr><td><b>Coverage</b></td><td>จำนวนคนทำงานขั้นต่ำของแต่ละแผนก</td></tr>
+<tr><td><b>Today</b></td><td>กระดานสด: อยู่ในกะ มาสาย ขาดงาน เลิกงานแล้ว จากตารางงานวันนี้และการสแกนลายนิ้วมือ</td></tr>
+<tr><td><b>Attendance</b></td><td>ชั่วโมงทำงานรายเดือนของแต่ละคนจากการสแกน คลิกวันเพื่อแก้ไข</td></tr>
+<tr><td><b>Pay rates</b></td><td>ค่าจ้างรายวันของพนักงานแต่ละคน มีผลตั้งแต่วันที่กำหนด</td></tr>
+</table></div>
+<figure><img src="../img/a-roster.jpg" alt="ตารางงาน" loading="lazy"><figcaption>ตารางงาน รูปนาฬิกาทรายบนกะหมายถึงมีคำขอเปลี่ยนกะที่รออยู่</figcaption></figure>
+<div class="grid2">
+<figure><img src="../img/a-roster-today.jpg" alt="กระดาน Today ของตารางงาน" loading="lazy"><figcaption><b>Today</b>: ใครอยู่ในกะ มาสาย หรือขาดงาน</figcaption></figure>
+<figure><img src="../img/a-roster-attendance.jpg" alt="การลงเวลารายเดือน" loading="lazy"><figcaption><b>Attendance</b>: ชั่วโมงต่อวัน <i>missed</i> หมายถึงมีกะแต่ไม่มีการสแกน</figcaption></figure>
+<figure><img src="../img/a-roster-codes.jpg" alt="รหัสกะ" loading="lazy"><figcaption><b>Shift codes</b> แยกตามแผนก</figcaption></figure>
+<figure><img src="../img/a-roster-coverage.jpg" alt="ความครอบคลุม" loading="lazy"><figcaption><b>Coverage</b>: ขั้นต่ำของแต่ละแผนก</figcaption></figure>
+</div>
+<div class="box rule"><span class="tag">กฎการลงเวลา</span>
+<ul>
+  <li>เซิร์ฟเวอร์อ่านข้อมูลจากเครื่องสแกนลายนิ้วมือทุกไม่กี่นาที เข้าหรือออกตัดสินจากลำดับ (สแกนแรกคือเข้า ครั้งถัดไปคือออก…) ไม่ใช่จากปุ่มที่กดบนเครื่อง การสแกนครั้งที่สองภายใน 2 นาทีถือเป็นการแตะซ้ำและไม่นับ</li>
+  <li>การสแกนไม่เคยถูกแก้ไขหรือลบ การแก้ไขจะแทนที่ทั้งวัน: การสแกนเดิมยังอยู่ในประวัติโดยถูกทำเครื่องหมายว่าเป็นโมฆะ เวลาใหม่ถูกบันทึกพร้อมเหตุผลที่ต้องระบุ</li>
+  <li>หากเครื่องสแกนหยุดตอบ การแจ้งเตือนมาสายและขาดงานจะถูกระงับ เพราะหากไม่มีเครื่อง คำว่า "มาสาย" จะกลายเป็นการกล่าวหา</li>
+</ul></div>
+<p><b>Fingerprint terminals</b> (MANAGER ขึ้นไป) ลงทะเบียนเครื่องสแกนด้วยที่อยู่ <span class="ui">Resync</span> อ่านบันทึกทั้งหมดใหม่ <b>Import schedule</b> (ADMIN) อ่านตารางงาน Excel ที่โรงแรมทำเอง หรือนำเข้าไฟล์ตารางที่ส่งออกและแก้ไขแล้ว ชื่อจะถูกจับคู่ครั้งเดียวโดยคน และไม่เขียนทับรายการที่มีอยู่</p>
+<div class="grid2">
+<figure><img src="../img/a-attendance-devices.jpg" alt="เครื่องสแกนลายนิ้วมือ" loading="lazy"><figcaption>"Never reached": เครื่องยังไม่เคยตอบ</figcaption></figure>
+<figure><img src="../img/a-roster-import.jpg" alt="นำเข้าตารางงาน" loading="lazy"><figcaption>การนำเข้า: ดูตัวอย่างก่อน ไม่มีการบันทึกจนกว่าจะยืนยัน</figcaption></figure>
+</div>
+
+<h3 id="shift-requests">คำขอเปลี่ยนกะ</h3>
+<p>พนักงานขอผ่านบอท Telegram เพื่อ <b>ย้าย</b> กะไปวันอื่น หรือขอ <b>วันหยุด</b> ผู้อำนวยการฝ่ายบุคคล (HR) เป็นผู้ตัดสิน ทั้งใน Telegram หรือที่ <b>Staff → Shift requests</b></p>
+<figure><img src="../img/r-hr-requests.jpg" alt="คำขอเปลี่ยนกะพร้อม Approve และ Reject" loading="lazy"><figcaption>มุมมองของผู้อำนวยการฝ่ายบุคคล: คำขอ เหตุผล คำเตือนความครอบคลุม และ <span class="ui">Approve</span> / <span class="ui">Reject</span></figcaption></figure>
+<ul>
+  <li>การอนุมัติจะเปลี่ยนตารางงานทันที โดยผ่านการตรวจสอบของตารางงานทุกข้อ หากกะเปลี่ยนไปหลังจากยื่นคำขอ คำขอจะเป็น <b>Expired</b> (หมดอายุ) และไม่มีอะไรเปลี่ยน</li>
+  <li>ความครอบคลุมต่ำกว่าขั้นต่ำแสดงเป็นคำเตือน ยังอนุมัติได้</li>
+  <li>เมื่อไม่มีผู้ถือหน้าที่ HR หรือผู้อำนวยการฝ่ายบุคคลลาอยู่ ผู้ดูแลระบบจะเป็นผู้ตัดสิน คำขอของผู้อำนวยการฝ่ายบุคคลเองจะไปที่ผู้ดูแลระบบเสมอ</li>
+  <li>ผู้จัดการที่ไม่ใช่ผู้ตัดสินในวันนี้เห็นรายการโดยไม่มีปุ่ม ผู้อำนวยการฝ่ายบุคคลที่ไม่มีบทบาทผู้จัดการเห็นตารางงานแบบอ่านอย่างเดียว</li>
+  <li>วันลาของผู้อำนวยการฝ่ายบุคคลตั้งได้ที่นี่ (<span class="ui">Save leave</span>) หรือในบอท</li>
+</ul>
+<figure><img src="../img/r-hr-roster.jpg" alt="ตารางงานแบบอ่านอย่างเดียวของ HR" loading="lazy"><figcaption>ตารางงานของผู้อำนวยการฝ่ายบุคคล: มีเฉพาะแท็บ Grid และ Attendance แบบอ่านอย่างเดียว</figcaption></figure>
+
+<h3 id="users">ผู้ใช้</h3>
+<p><b>Staff → Settings → Users</b> (ADMIN) แสดงพนักงานแยกตามแผนก แต่ละแถวมีบทบาท หน้าที่งาน (Engineer, Housekeeper, Therapist, HR) หมายเลขลายนิ้วมือ การรีเซ็ตรหัสผ่าน และการปิดใช้งาน พนักงานมีอยู่ในระบบได้โดยไม่มีบัญชีเข้าสู่ระบบ (อยู่ในตารางงานเท่านั้น) ติ๊ก <i>Can sign in</i> เพื่อกำหนดอีเมลและรหัสผ่าน</p>
+<div class="grid2">
+<figure><img src="../img/a-users.jpg" alt="รายชื่อผู้ใช้" loading="lazy"><figcaption>ผู้ใช้แยกตามแผนก</figcaption></figure>
+<figure><img src="../img/a-users-new.jpg" alt="ผู้ใช้ใหม่" loading="lazy"><figcaption>ผู้ใช้ใหม่: ชื่อ บัญชีเข้าสู่ระบบ (ไม่บังคับ) บทบาท</figcaption></figure>
+</div>
+<p>ผู้ดูแลระบบเปลี่ยนบทบาทของตนเองหรือปิดใช้งานตนเองไม่ได้ พนักงานที่ถูกปิดใช้งานจะไม่ได้รับกะใหม่ หายไปจากกระดาน Today และถูกยกเลิกการเชื่อม Telegram ประวัติของเขายังคงอยู่</p>
+
+<h2 id="notifications"><span class="num">8</span>การแจ้งเตือน Telegram และบอทพนักงาน</h2>
+
+<h3 id="notif-how">การแจ้งเตือนทำงานอย่างไร</h3>
+<p>Sunset ส่งข้อความถึงพนักงานผ่านบอท Telegram ข้อความแต่ละข้อความเขียนในภาษาของผู้อ่าน (อังกฤษ ไทย หรือรัสเซีย) ไม่มีการส่งถึงผู้ที่ยังไม่ได้เชื่อม Telegram</p>
+<div class="tbl"><table>
+<tr><th>ข้อความ</th><th>ผู้รับ</th><th>เมื่อใด</th></tr>
+<tr><td>มาสาย</td><td>พนักงาน และผู้ที่อยู่ใน <i>Also tell</i></td><td>N นาทีหลังเริ่มกะโดยไม่มีการสแกน (ค่าเริ่มต้น 10)</td></tr>
+<tr><td>ขาดงาน / มาถึงหลังขาดงาน</td><td>ผู้บริหาร</td><td>N นาทีหลังเริ่มกะ (ค่าเริ่มต้น 60) และแจ้งตามเมื่อพนักงานสแกนเข้า</td></tr>
+<tr><td>เครื่องลงเวลาไม่ตอบสนอง / กลับมาออนไลน์</td><td>ผู้บริหาร</td><td>ครั้งเดียวต่อช่วงที่เครื่องเงียบ</td></tr>
+<tr><td>สร้างการปิดห้อง วันสุดท้าย สิ้นสุดแล้วแต่งานยังเปิด</td><td>ช่างหรือแม่บ้านที่อยู่ในกะ ไม่เช่นนั้นผู้บริหาร</td><td>เมื่อสร้าง และตามเวลาตอนเช้า</td></tr>
+<tr><td>คำขอเปลี่ยนกะใหม่ การเตือน ผลการตัดสิน</td><td>ผู้อำนวยการฝ่ายบุคคล (หรือผู้ดูแลระบบ) และพนักงาน</td><td>เมื่อยื่น เตือนหลัง 12 ชม. และเมื่อตัดสิน</td></tr>
+<tr><td>ผู้จัดการเปลี่ยนตารางงาน</td><td>พนักงาน</td><td>10 นาทีหลังการเปลี่ยนแปลงครั้งสุดท้าย หนึ่งข้อความต่อวันพร้อมสถานะสุดท้าย</td></tr>
+<tr><td>เตือนตอนเย็น</td><td>พนักงานที่เปิดใช้</td><td>18:00 ของเย็นก่อนวันทำงาน</td></tr>
+<tr><td>สรุปตอนเช้า</td><td>ผู้บริหาร</td><td>08:00</td></tr>
+<tr><td>ข้อความตอนเช้าของนักบำบัด</td><td>นักบำบัดที่เปิดใช้</td><td>ในวันที่มีหัตถการ</td></tr>
+</table></div>
+<p><b>ช่วงเวลาเงียบ</b> (เช่น 22:00–07:00) จะเลื่อนข้อความไปส่งตอนเช้า ไม่มีข้อความใดถูกทิ้ง</p>
+
+<h3 id="notif-link">การเชื่อม Telegram ของพนักงาน</h3>
+<ol class="steps">
+  <li>ผู้จัดการเปิด <b>Staff → Notification channels</b> แล้วกด <span class="ui">Link Telegram</span> ข้างชื่อพนักงาน</li>
+  <li>QR code และลิงก์จะปรากฏ ใช้ได้ 15 นาที พนักงานสแกนด้วยโทรศัพท์ Telegram จะเปิดบอทและเชื่อมแชท ไม่ต้องใช้รหัสผ่าน</li>
+  <li>แถวจะแสดง <i>Linked</i> ตั้งภาษาได้รายบุคคล <span class="ui">Unlink</span> ยกเลิกการเชื่อม</li>
+</ol>
+<figure><img src="../img/a-notif-staff.jpg" alt="Notification channels" loading="lazy"><figcaption>Notification channels บนเซิร์ฟเวอร์ทดลองนี้ยังไม่ได้ตั้งค่า Telegram ปุ่มเชื่อมจึงใช้ไม่ได้</figcaption></figure>
+<figure><img src="../img/a-notifications.jpg" alt="บันทึกการแจ้งเตือน" loading="lazy"><figcaption><b>Notifications</b> (MANAGER ขึ้นไป): บันทึกทุกข้อความ ส่งถึงใคร ข้อความ และสถานะการส่ง ที่นี่ข้อความยังรอเพราะยังไม่ได้ตั้งค่าบอท</figcaption></figure>
+
+<h3 id="notif-settings">การตั้งค่าการแจ้งเตือน (ADMIN)</h3>
+<p><b>Staff → Settings → Notification settings</b> มีหลายแท็บ แถบ <span class="ui">Save</span> / <span class="ui">Discard</span> แถบเดียวใช้กับทุกแท็บ จุดบนแท็บหมายถึงมีการแก้ไขที่ยังไม่ได้บันทึก</p>
+<div class="tbl"><table>
+<tr><th>แท็บ</th><th>เนื้อหา</th></tr>
+<tr><td>Overview</td><td>สถานะ Telegram จำนวนพนักงานที่เชื่อมแล้ว ผู้อำนวยการฝ่ายบุคคล ผู้บริหาร ช่วงเวลาเงียบ และตารางของทุกข้อความและหน้าจอบอทพร้อมเปิด/ปิด</td></tr>
+<tr><td>Attendance alerts</td><td>มาสาย (นาทีผ่อนผัน) ขาดงาน (นาที) เครื่องลงเวลาไม่ตอบสนอง (นาที)</td></tr>
+<tr><td>Room blocks</td><td>ข้อความเมื่อสร้าง ในวันสุดท้าย หลังสิ้นสุดขณะงานยังเปิด และเวลาเตือนตอนเช้า</td></tr>
+<tr><td>Recipients &amp; delivery</td><td>ผู้บริหาร ผู้ที่ต้องแจ้งเพิ่มเรื่องมาสาย ช่วงเวลาเงียบ ภาษาเริ่มต้น</td></tr>
+<tr><td>Staff bot</td><td>หน้าจอส่วนตัว การเตือนตอนเย็น ข้อความเปลี่ยนตารางงานและระยะหน่วง</td></tr>
+<tr><td>Shift requests &amp; HR</td><td>คำขอย้ายกะและขอวันหยุด ชั่วโมงแจ้งล่วงหน้า ช่วงวันที่ย้ายได้ ล่วงหน้าได้ไกลเท่าใด ต้องระบุเหตุผลหรือไม่ ให้ผู้ดูแลระบบตัดสินแทน วันลาของผู้อำนวยการฝ่ายบุคคล</td></tr>
+<tr><td>Role screens</td><td>หน้าจอบอทสำหรับช่าง แม่บ้าน สปา และผู้จัดการ</td></tr>
+<tr><td>Morning summary</td><td>เนื้อหาของสรุปเวลา 08:00 สำหรับผู้บริหาร</td></tr>
+</table></div>
+<div class="grid2">
+<figure><img src="../img/a-notif-settings.jpg" alt="ภาพรวมการตั้งค่าการแจ้งเตือน" loading="lazy"><figcaption>แท็บ Overview</figcaption></figure>
+<figure><img src="../img/a-notif-settings-requests.jpg" alt="แท็บ Shift requests และ HR" loading="lazy"><figcaption>แท็บ Shift requests &amp; HR</figcaption></figure>
+</div>
+
+<h3 id="bot">การใช้บอทพนักงาน</h3>
+<p>บอทแสดงแป้นเมนูที่ด้านล่างของแชท แต่ละคนเห็นเฉพาะหน้าจอที่บทบาทและหน้าที่งานของตนอนุญาต ชื่อปุ่มด้านล่างเป็นภาษาไทยตามที่บอทแสดงเมื่อเลือกภาษาไทย</p>
+<div class="tbl"><table>
+<tr><th>ปุ่ม</th><th>ผู้ใช้</th><th>สิ่งที่แสดง</th></tr>
+<tr><td>กะของฉัน</td><td>ทุกคน</td><td>วันข้างหน้าพร้อมรหัสและเวลา ใต้กะในอนาคตมีปุ่ม <i>ย้าย</i> และ <i>ขอหยุด</i> หรือสถานะคำขอพร้อม <i>ถอนคำขอ</i></td></tr>
+<tr><td>วันนี้ของฉัน</td><td>ทุกคน</td><td>กะวันนี้ สถานะ (อยู่ในกะ มาสาย…) และการสแกนของตนเอง</td></tr>
+<tr><td>เดือนของฉัน</td><td>ทุกคน</td><td>วันและชั่วโมงที่วางแผนไว้และที่ทำงานจริง</td></tr>
+<tr><td>คำขอของฉัน</td><td>ทุกคน</td><td>คำขอล่าสุด: รอการตัดสินใจ อนุมัติแล้ว ไม่อนุมัติ ถอนแล้ว หมดอายุ</td></tr>
+<tr><td>ตั้งค่า</td><td>ทุกคน</td><td>ภาษา EN/TH/RU การเตือนตอนเย็น ข้อความตอนเช้าของนักบำบัด</td></tr>
+<tr><td>คำขอที่รออยู่, วันลาของฉัน</td><td>ผู้อำนวยการฝ่ายบุคคล / ผู้ดูแลระบบที่ตัดสิน</td><td>คำขอที่รออยู่พร้อม อนุมัติ / ไม่อนุมัติ ตั้งหรือยกเลิกวันลา</td></tr>
+<tr><td>งานซ่อมบำรุง</td><td>ช่าง (ผู้จัดการทำแทนได้)</td><td>งานซ่อมที่เปิดอยู่พร้อม เริ่มงาน และ เสร็จแล้ว</td></tr>
+<tr><td>ห้องที่ถูกปิด</td><td>แม่บ้าน</td><td>การปิดห้องที่แม่บ้านรับผิดชอบ ปัจจุบันและ 7 วันข้างหน้า</td></tr>
+<tr><td>หัตถการของฉัน</td><td>นักบำบัด</td><td>หัตถการของตนวันนี้และพรุ่งนี้ พร้อมหมายเลขห้อง ไม่แสดงชื่อแขก</td></tr>
+<tr><td>ใครอยู่ในกะ</td><td>ผู้จัดการ ผู้อำนวยการฝ่ายบุคคล</td><td>มาสาย ขาดงาน อยู่ในกะ ยังไม่ถึงเวลา เลิกงานแล้ว แยกตามแผนก</td></tr>
+<tr><td>สรุปประจำวัน</td><td>ผู้จัดการ</td><td>แขกเข้า แขกออก เลยกำหนด พักอยู่ อัตราการเข้าพัก ห้องว่างคืนนี้ ห้องที่ถูกปิดและห้องสกปรก พนักงาน คำขอที่รออยู่</td></tr>
+</table></div>
+<p>ตัวอย่างด้านล่างใช้ข้อความจริงของบอท (รูปแบบวันที่เป็นเพียงตัวอย่าง)</p>
+<div class="chat-wrap">
+<div class="chat" aria-label="ตัวอย่างแชท: การยื่นคำขอย้ายกะ">
+  <div class="msg me">กะของฉัน</div>
+  <div class="msg">กะของคุณใน 14 วันข้างหน้า:
+ส. 25 ต.ค. (พรุ่งนี้): 9 09:00-18:00 · Restaurant
+จ. 27 ต.ค.: 9 09:00-18:00 · Restaurant</div>
+  <div class="kb"><span>ย้าย ส. 25 ต.ค.</span><span>ขอหยุด ส. 25 ต.ค.</span><span>ย้าย จ. 27 ต.ค.</span><span>ขอหยุด จ. 27 ต.ค.</span></div>
+  <div class="kb"><span>อ. 28 ต.ค.</span><span>พ. 29 ต.ค.</span><span class="wide">วันอื่น...</span></div>
+  <div class="msg me">ครอบครัวมาเยี่ยมจากกรุงเทพฯ</div>
+  <div class="msg">ส่งคำขอแล้ว: ย้ายกะวันที่ จ. 27 ต.ค. (9) ไปเป็นวันที่ อ. 28 ต.ค. คุณจะได้รับข้อความแจ้งผล</div>
+</div>
+<p class="chat-cap"><b>การยื่นคำขอ</b> กะของฉัน → <i>ย้าย</i> → เลือกวันที่ว่าง (หรือ <i>วันอื่น...</i> เพื่อเปิดปฏิทินรายเดือน หรือพิมพ์วันที่ เช่น <code>25.11</code>) → พิมพ์เหตุผล (ไม่เกิน 300 ตัวอักษร) → คำขอส่งไปยังผู้อำนวยการฝ่ายบุคคล เซิร์ฟเวอร์จะปฏิเสธพร้อมเหตุผลเป็นข้อความ: สายเกินไป (ค่าเริ่มต้น 24 ชั่วโมงก่อนกะ) วันที่คุณทำงานอยู่แล้ว ไกลเกินไป (ค่าเริ่มต้น 60 วัน) กะที่ถูกล็อก</p>
+</div>
+<div class="chat-wrap">
+<div class="chat" aria-label="ตัวอย่างแชท: การตัดสินของ HR">
+  <div class="msg">Walt Waiter ขอย้ายกะวันที่ พฤ. 30 ต.ค. (9) ไปเป็นวันที่ พฤ. 13 พ.ย.
+เหตุผล: ครอบครัวมาเยี่ยมจากกรุงเทพฯ
+! Restaurant: จะเหลือคนทำงานเพียง 1 คนในวันที่ 30 ต.ค. (ขั้นต่ำ 2)</div>
+  <div class="kb"><span>อนุมัติ</span><span>ไม่อนุมัติ</span></div>
+  <div class="msg">Hugo HR อนุมัติเมื่อ 10:42</div>
+</div>
+<p class="chat-cap"><b>การตัดสิน</b> ผู้อำนวยการฝ่ายบุคคลได้รับคำขอพร้อมบรรทัดความครอบคลุม หลังตัดสินแล้ว ข้อความของผู้ตัดสินทุกคนจะถูกแทนที่ด้วยผลการตัดสิน และพนักงานได้รับ "อนุมัติแล้ว: …" หรือ "ไม่อนุมัติ: … ตารางงานของคุณไม่เปลี่ยนแปลง"</p>
+</div>
+
+<h2 id="reports"><span class="num">9</span>รายงาน</h2>
+
+<h3 id="dashboard">Dashboard</h3>
+<figure><img src="../img/a-dashboard.jpg" alt="Dashboard" loading="lazy"><figcaption><b>Dashboard</b> (CASHIER ขึ้นไป): การจองวันนี้และสัปดาห์นี้ อัตราการเข้าพัก 30 วันข้างหน้า เงินค่าห้องที่เก็บได้เดือนนี้ รายได้ POS ที่เก็บได้ (เงินสด บัตร อื่น ๆ) ค่าใช้จ่ายที่ลงบัญชีห้องแต่ยังไม่ได้เก็บ พนักงานในกะ ช่องว่างกำลังคน สถานะเครื่องลงเวลา และงานซ่อม</figcaption></figure>
+<p>เงินค่าห้องบน Dashboard คือ <b>เงินที่บันทึกรับจริง</b> ที่เคาน์เตอร์ (การชำระเข้าโฟลิโอ) ไม่ใช่ผลรวมราคาการจอง ค่าใช้จ่ายที่ลงบัญชีห้องแสดงแยก เพราะยังไม่ใช่เงินในมือจนกว่าแขกจะชำระตอนเช็คเอาท์</p>
+
+<h3 id="reports-tabs">รายงาน (Reports)</h3>
+<p><b>Reports → Reports</b> (MANAGER ขึ้นไป) มีหนึ่งแท็บต่อหนึ่งรายงาน รายงานห้องพักนับทุกคืนของทุกการจองที่ไม่ได้ยกเลิก รายได้ค่าห้องคือราคาที่ตกลง ไม่ใช่เงินที่เก็บได้</p>
+<div class="tbl"><table>
+<tr><th>แท็บ</th><th>แสดง</th></tr>
+<tr><td>Manager report</td><td>หนึ่งคืนเทียบกับวันเดียวกันของปีที่แล้ว: สถิติห้อง (ห้อง งดใช้งาน มีแขก ฟรี อัตราการเข้าพัก ADR RevPAR) แขก จำนวนการจอง รายได้ และพยากรณ์วันพรุ่งนี้</td></tr>
+<tr><td>Occupancy</td><td>อัตราการเข้าพัก ADR และ RevPAR ตามประเภทห้องในช่วงเวลาหนึ่ง</td></tr>
+<tr><td>Top production</td><td>ห้อง-คืนและรายได้ตามช่องทาง</td></tr>
+<tr><td>Market segment</td><td>ห้อง แขก และรายได้ตามกลุ่มลูกค้า (ตรง OTA walk-in ฟรี ใช้ภายใน)</td></tr>
+<tr><td>Sales mix</td><td>จำนวนและรายได้ POS ตามแผนกและหมวดหมู่</td></tr>
+<tr><td>Guest LTV</td><td>การจอง จำนวนคืน รายได้ค่าห้อง และค่าใช้จ่ายลงบัญชีห้องของแขกแต่ละคน</td></tr>
+</table></div>
+<figure><img src="../img/a-reports.jpg" alt="Manager report" loading="lazy"><figcaption>Manager report สถิติห้องพัก</figcaption></figure>
+<div class="grid2">
+<figure><img src="../img/a-reports-occupancy.jpg" alt="รายงานอัตราการเข้าพัก" loading="lazy"><figcaption>อัตราการเข้าพัก ADR และ RevPAR</figcaption></figure>
+<figure><img src="../img/a-reports-production.jpg" alt="Top production" loading="lazy"><figcaption>Top production ตามช่องทาง</figcaption></figure>
+<figure><img src="../img/a-reports-segments.jpg" alt="Market segment" loading="lazy"><figcaption>Market segment</figcaption></figure>
+<figure><img src="../img/a-reports-sales.jpg" alt="Sales mix" loading="lazy"><figcaption>สัดส่วนยอดขาย POS</figcaption></figure>
+</div>
+<p>แขกที่ยังเช็คอินอยู่หลังวันกำหนดออกนับเป็นห้องที่มีแขกในทุกรายงาน โดยไม่มีรายได้สำหรับคืนที่เกิน</p>
+
+<h3 id="history">History (บันทึกการตรวจสอบ)</h3>
+<p><b>Reports → History</b> (MANAGER ขึ้นไป) เป็นบันทึกแบบอ่านอย่างเดียวของการดำเนินการสำคัญ: การจอง การชำระ ราคา ออร์เดอร์และการยกเลิกรายการ กะ ผู้ใช้ การตั้งค่า ตารางงาน และการแก้ไขการลงเวลา กรองด้วยอีเมลพนักงาน การดำเนินการ ประเภทข้อมูล และวันที่ การดำเนินการที่ระบบทำเอง (เช่น คำขอจากเว็บไซต์หมดอายุ) แสดงเป็น <b>System</b> การดำเนินการผ่าน Telegram มีเครื่องหมาย "via Telegram"</p>
+<figure><img src="../img/a-history.jpg" alt="History" loading="lazy"><figcaption>ไม่มีสิ่งใดใน History ที่แก้ไขหรือลบได้</figcaption></figure>
+
+<h2 id="guest-side"><span class="num">10</span>ฝั่งแขก</h2>
+<p>พนักงานควรรู้ว่าแขกเห็นอะไร เพราะแขกจะถามถึง</p>
+<ul>
+  <li><b>การจองผ่านเว็บไซต์</b> แขกเลือกวันที่ เห็นราคาของทั้งการเข้าพักจากเซิร์ฟเวอร์ แล้วส่งคำขอ คำขอจะเข้ามาเป็น <b>NEW</b> และต้องยืนยันที่เคาน์เตอร์ภายใน 2 วันทำการ จำกัดไม่เกินแปดครั้งต่อชั่วโมงต่อผู้เข้าชม</li>
+  <li><b>บัญชีแขก</b> สมัครพร้อมยืนยันอีเมล บัญชีแสดงการจองของแขก และให้สั่งรูมเซอร์วิสและจองฟิตเนสได้ขณะเช็คอินอยู่</li>
+  <li><b>รูมเซอร์วิสและ QR ที่โต๊ะ</b> แขกสั่งจากโทรศัพท์ ออร์เดอร์ปรากฏใน POS เหมือนออร์เดอร์อื่น และพิมพ์ที่ครัวและบาร์</li>
+</ul>
+<div class="grid2">
+<figure><img src="../img/p-home.jpg" alt="เว็บไซต์สาธารณะ" loading="lazy"><figcaption>เว็บไซต์สาธารณะ</figcaption></figure>
+<figure><img src="../img/p-booking.jpg" alt="ค้นหาห้อง" loading="lazy"><figcaption>ค้นหาห้องพร้อมราคา</figcaption></figure>
+<figure><img src="../img/g-account.jpg" alt="บัญชีแขก" loading="lazy"><figcaption>บัญชีแขก</figcaption></figure>
+<figure><img src="../img/g-gym.jpg" alt="แขกจองฟิตเนส" loading="lazy"><figcaption>แขกจองฟิตเนสเอง</figcaption></figure>
+</div>
+
+<h2 id="permissions"><span class="num">11</span>ใครทำอะไรได้บ้าง</h2>
+<div class="tbl"><table>
+<tr><th>การดำเนินการ</th><th class="c">WAITER</th><th class="c">CASHIER</th><th class="c">MANAGER</th><th class="c">ADMIN</th></tr>
+<tr><td>รับออร์เดอร์ ส่งเข้าครัว พิมพ์ใบแจ้งยอดล่วงหน้า แจ้งปัญหาห้องพัก</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>ยกเลิกออร์เดอร์ที่ยังไม่เคยส่ง</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>ปิดออร์เดอร์ เปิดและปิดกะแคชเชียร์ของตนเอง</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>การจอง ปฏิทิน เช็คอิน/เอาท์ ชำระเข้าโฟลิโอ ตรวจสอบปิดวัน</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>จองสปาและฟิตเนส สถานะงานแม่บ้าน</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>ยกเลิกรายการที่ส่งแล้ว ยกเลิกออร์เดอร์ที่ส่งแล้ว</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>ตั้งราคาเองในการจองใหม่ การจองย้อนหลัง</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>ราคา การปิดห้อง ประเภทห้อง เมนู โต๊ะ เครื่องพิมพ์</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>ตารางงาน การลงเวลา บันทึกการแจ้งเตือน การเชื่อม Telegram</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>รายงาน History ประวัติกะ ประวัติออร์เดอร์ การส่งออก CSV</td><td class="c no">—</td><td class="c part">กะของตน</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>ควบคุมระบบไฟ</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>ผู้ใช้ หน้าตั้งค่า นำเข้าตารางงาน ตั้งค่าอุปกรณ์</td><td class="c no">—</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td></tr>
+</table></div>
+<p>หน้าที่งานเพิ่มสิทธิ์จากตารางนี้: ENGINEER ปิดงานซ่อม THERAPIST ดูตารางสปา HR ดูตารางงานและตัดสินคำขอเปลี่ยนกะ</p>
+
+<h2 id="limits"><span class="num">12</span>สิ่งที่ระบบตั้งใจไม่ทำ</h2>
+<ul>
+  <li><b>ลบการจอง</b> การจองถูกยกเลิกพร้อมเหตุผล ไม่เคยถูกลบ</li>
+  <li><b>แยกบิล</b> ออร์เดอร์ชำระครั้งเดียวเต็มจำนวน</li>
+  <li><b>เชื่อมกับเครื่องรูดบัตร</b> "Card" คือการยืนยันของแคชเชียร์ว่าเครื่องอนุมัติการชำระแล้ว</li>
+  <li><b>คำนวณราคาที่ตกลงแล้วใหม่โดยไม่แจ้ง</b> คืนที่ตกลงราคาแล้วคงราคาเดิม การปรับราคาต้องสั่งเอง</li>
+  <li><b>ตัดหนี้ทิ้ง</b> PAID ต้องมีการบันทึกการชำระ การเช็คเอาท์ที่มียอดค้างจะทิ้งหนี้ที่มองเห็นได้ไว้</li>
+  <li><b>แก้ไขประวัติ</b> การชำระ รายการบัญชี การสแกนลายนิ้วมือ และบันทึกการตรวจสอบ แก้ไขด้วยการบันทึกรายการใหม่ ไม่ใช่แก้รายการเดิม</li>
+  <li><b>ทำงานแบบออฟไลน์</b> เมื่อไม่มีการเชื่อมต่อ หน้าจอจะแจ้ง และไม่มีสิ่งใดแสร้งว่าบันทึกแล้ว</li>
+  <li><b>ส่งการเปลี่ยนแปลงกลับไปยัง SiteMinder</b> การนำเข้าเป็นทางเดียว</li>
+</ul>
+<p class="top"><a href="#intro">กลับไปด้านบน</a></p>
+
+</main>
+</div>
+<script>try{if(window.matchMedia('(max-width: 900px)').matches){var d=document.querySelector('nav.toc details');if(d)d.open=false;}}catch(e){}</script>
+</body>
+</html>
