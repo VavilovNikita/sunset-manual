@@ -1,0 +1,100 @@
+<script>
+(function () {
+  var input = document.getElementById('q'), list = document.getElementById('results'), status = document.getElementById('qstatus');
+  if (!input) return;
+  var L = JSON.parse(input.getAttribute('data-l'));
+  var main = document.querySelector('main');
+  // One entry per heading: the heading and everything up to the next h2/h3.
+  var sections = [], cur = null, h2 = '';
+  Array.prototype.forEach.call(main.children, function (el) {
+    var tag = el.tagName;
+    if ((tag === 'H2' || tag === 'H3') && el.id) {
+      var num = el.querySelector('.num'), title = el.textContent.replace(/\s+/g, ' ').trim();
+      if (num) title = num.textContent.trim() + '. ' + title.slice(num.textContent.trim().length).trim();
+      if (tag === 'H2') h2 = title;
+      cur = { id: el.id, title: title, parent: tag === 'H3' ? h2 : '', nodes: [el], text: '' };
+      sections.push(cur);
+    } else if (cur) cur.nodes.push(el);
+  });
+  sections.forEach(function (s) {
+    s.text = s.nodes.map(function (n) { return n.textContent; }).join(' ').replace(/\s+/g, ' ').trim();
+    s.lower = s.text.toLowerCase();
+  });
+  function esc(t) { return t.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function terms(q) { return q.toLowerCase().split(/\s+/).filter(Boolean); }
+  function snippet(s, ts) {
+    var i = s.lower.indexOf(ts[0]), start = Math.max(0, i - 40), end = Math.min(s.text.length, i + ts[0].length + 90);
+    var t = (start > 0 ? '…' : '') + s.text.slice(start, end) + (end < s.text.length ? '…' : '');
+    var out = esc(t);
+    ts.forEach(function (w) {
+      var re = new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/[&<>"]/g, function (c) { return esc(c); }), 'gi');
+      out = out.replace(re, function (m) { return '<mark>' + m + '</mark>'; });
+    });
+    return out;
+  }
+  function clearMarks() {
+    Array.prototype.forEach.call(main.querySelectorAll('mark.hit'), function (m) {
+      var p = m.parentNode; p.replaceChild(document.createTextNode(m.textContent), m); p.normalize();
+    });
+  }
+  function markIn(s, ts) {
+    clearMarks();
+    s.nodes.forEach(function (root) {
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT), found = [], n;
+      while ((n = walker.nextNode())) found.push(n);
+      found.forEach(function (node) {
+        var lower = node.nodeValue.toLowerCase(), hits = [];
+        ts.forEach(function (w) { var i = lower.indexOf(w); while (i >= 0) { hits.push([i, i + w.length]); i = lower.indexOf(w, i + w.length); } });
+        if (!hits.length) return;
+        hits.sort(function (a, b) { return a[0] - b[0]; });
+        var frag = document.createDocumentFragment(), pos = 0, v = node.nodeValue;
+        hits.forEach(function (h) {
+          if (h[0] < pos) return;
+          frag.appendChild(document.createTextNode(v.slice(pos, h[0])));
+          var m = document.createElement('mark'); m.className = 'hit'; m.textContent = v.slice(h[0], h[1]); frag.appendChild(m);
+          pos = h[1];
+        });
+        frag.appendChild(document.createTextNode(v.slice(pos)));
+        node.parentNode.replaceChild(frag, node);
+      });
+    });
+  }
+  var current = [];
+  function run() {
+    var ts = terms(input.value);
+    list.innerHTML = ''; current = [];
+    if (!ts.length || input.value.trim().length < 2) { status.textContent = ''; clearMarks(); return; }
+    sections.forEach(function (s) {
+      if (!ts.every(function (w) { return s.lower.indexOf(w) >= 0; })) return;
+      var score = 0, tl = s.title.toLowerCase();
+      ts.forEach(function (w) { if (tl.indexOf(w) >= 0) score += 100; score += Math.min(s.lower.split(w).length - 1, 20); });
+      current.push({ s: s, score: score });
+    });
+    current.sort(function (a, b) { return b.score - a.score; });
+    status.textContent = current.length ? L.found.replace('{n}', current.length) : L.none;
+    current.slice(0, 30).forEach(function (r) {
+      var li = document.createElement('li'), a = document.createElement('a');
+      a.href = '#' + r.s.id;
+      a.innerHTML = '<span class="t">' + esc(r.s.parent ? r.s.parent + ' › ' + r.s.title : r.s.title) + '</span><span class="s">' + snippet(r.s, ts) + '</span>';
+      a.addEventListener('click', function (e) { e.preventDefault(); go(r.s, ts); });
+      li.appendChild(a); list.appendChild(li);
+    });
+  }
+  function go(s, ts) {
+    markIn(s, ts);
+    var first = main.querySelector('mark.hit') || document.getElementById(s.id);
+    var target = first.closest('figure, li, p, td, .box, .chat-wrap') || document.getElementById(s.id);
+    target.scrollIntoView({ block: 'center' });
+    try { history.replaceState(null, '', '#' + s.id); } catch (e) {}
+  }
+  var timer;
+  input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && current.length) { e.preventDefault(); go(current[0].s, terms(input.value)); }
+    if (e.key === 'Escape') { input.value = ''; run(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && document.activeElement !== input && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); input.focus(); }
+  });
+})();
+</script>

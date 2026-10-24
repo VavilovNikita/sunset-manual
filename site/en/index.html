@@ -112,12 +112,28 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outli
 body { margin: 0; } img { max-width: 100%; }
 </style>
 
+<style>
+.search { margin-bottom: 16px; }
+.search input { width: 100%; font: inherit; font-size: 15px; color: var(--fg); background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; }
+.search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.search .status { font-size: 12.5px; color: var(--muted); margin: 6px 2px 0; min-height: 1em; }
+.search ol.results { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 2px; max-height: 60vh; overflow-y: auto; }
+.search ol.results a { display: block; padding: 6px 8px; border-radius: 6px; color: var(--fg); text-decoration: none; }
+.search ol.results a:hover, .search ol.results a:focus-visible { background: var(--code-bg); }
+.search ol.results .t { font-weight: 600; font-size: 13.5px; display: block; }
+.search ol.results .s { font-size: 12.5px; color: var(--muted); display: block; line-height: 1.45; }
+mark { background: #F3D27A; color: #12282D; border-radius: 2px; padding: 0 1px; }
+main mark.hit { outline: 2px solid var(--accent); }
+@media (max-width: 900px) { .search ol.results { max-height: 50vh; } }
+</style>
+
 <style>.wrap[lang="th"] h1, .wrap[lang="th"] h3, .wrap[lang="th"] .num, .wrap[lang="th"] i { font-style: normal; } .wrap[lang="th"] h3 { font-weight: 600; }</style>
 </head>
 <body>
 <div class="wrap" lang="en">
 <nav class="toc" aria-label="Contents">
 <div class="lang"><a aria-current="page">English</a><a href="../th/">ภาษาไทย</a></div>
+<div class="search" role="search"><input id="q" type="search" autocomplete="off" placeholder="Search the manual ( / )" aria-label="Search the manual" data-l="{&quot;found&quot;: &quot;{n} sections found&quot;, &quot;none&quot;: &quot;Nothing found&quot;}"><p class="status" id="qstatus" aria-live="polite"></p><ol class="results" id="results"></ol></div>
 <details open><summary>Contents</summary><ol><li><a href="#intro">1. Getting started</a><ol><li><a href="#parts">The parts of the system</a></li><li><a href="#roles">Roles and job functions</a></li><li><a href="#signin">Signing in and the menu</a></li><li><a href="#conventions">Conventions used everywhere</a></li></ol></li><li><a href="#frontdesk">2. Front desk</a><ol><li><a href="#today">Today board</a></li><li><a href="#calendar">Booking calendar</a></li><li><a href="#bookings">Bookings list</a></li><li><a href="#booking-page">Booking page</a></li><li><a href="#folio">Folio and payments</a></li><li><a href="#guests">Guests</a></li><li><a href="#property-map">Property map</a></li><li><a href="#in-house">In house</a></li><li><a href="#night-audit">Night audit</a></li><li><a href="#guest-emails">Guest emails (ADMIN)</a></li><li><a href="#siteminder">SiteMinder (OTA) import</a></li></ol></li><li><a href="#rooms">3. Rooms</a><ol><li><a href="#housekeeping">Housekeeping</a></li><li><a href="#maintenance">Maintenance</a></li><li><a href="#rates">Rates &amp; availability</a></li><li><a href="#room-types">Room types and physical rooms</a></li></ol></li><li><a href="#pos">4. Restaurant POS</a><ol><li><a href="#pos-board">Tables board and floor map</a></li><li><a href="#orders">Taking an order</a></li><li><a href="#payment">Taking payment</a></li><li><a href="#phone-pos">The phone POS</a></li><li><a href="#shifts">Cash shifts</a></li><li><a href="#printing">Printers and the print queue</a></li><li><a href="#menu">Menu</a></li></ol></li><li><a href="#spa">5. Spa</a><ol><li><a href="#spa-schedule">Appointments</a></li><li><a href="#spa-other">Table map, treatments and tables</a></li></ol></li><li><a href="#gym">6. Gym and lighting</a><ol><li><a href="#gym-schedule">Gym schedule</a></li><li><a href="#lighting">Lighting</a></li></ol></li><li><a href="#staff">7. Staff</a><ol><li><a href="#my-schedule">My schedule</a></li><li><a href="#roster">Roster</a></li><li><a href="#shift-requests">Shift requests</a></li><li><a href="#users">Users</a></li></ol></li><li><a href="#notifications">8. Telegram notifications and the staff bot</a><ol><li><a href="#notif-how">How notifications work</a></li><li><a href="#notif-link">Linking an employee's Telegram</a></li><li><a href="#notif-settings">Notification settings (ADMIN)</a></li><li><a href="#bot">Using the staff bot</a></li></ol></li><li><a href="#reports">9. Reports</a><ol><li><a href="#dashboard">Dashboard</a></li><li><a href="#reports-tabs">Reports</a></li><li><a href="#history">History (audit log)</a></li></ol></li><li><a href="#guest-side">10. The guest side</a></li><li><a href="#permissions">11. Who can do what</a></li><li><a href="#limits">12. What the system deliberately does not do</a></li></ol></details>
 </nav>
 <main>
@@ -163,10 +179,10 @@ body { margin: 0; } img { max-width: 100%; }
 <h3 id="signin">Signing in and the menu</h3>
 <p>Staff sign in at <code>/admin/login</code> with email and password. After sign-in each person lands on their own starting page: waiters on the POS table board, cashiers on <b>Today</b>, engineers on <b>Maintenance</b>, therapists on the <b>Spa</b> schedule, managers and administrators on the <b>Dashboard</b>.</p>
 <p>The left menu has seven groups: <b>Front desk, Rooms, Restaurant, Spa, Gym &amp; lighting, Staff, Reports</b>. On a desktop, hover a group to open it; under a thin divider each group lists its own <b>Settings</b> links. On a tablet or phone the groups open with a tap.</p>
-<figure><img src="../img/i-nav-flyout.jpg" alt="Admin menu with the Front desk group open" loading="lazy"><figcaption><b>Menu.</b> Hovering <span class="ui">Front desk</span> opens its links; <span class="ui">Guest emails</span> sits under the group's Settings divider.</figcaption></figure>
+<figure><img src="../img/i-nav-flyout.jpg" width="1280" height="800" alt="Admin menu with the Front desk group open" loading="lazy"><figcaption><b>Menu.</b> Hovering <span class="ui">Front desk</span> opens its links; <span class="ui">Guest emails</span> sits under the group's Settings divider.</figcaption></figure>
 <div class="grid2">
-<figure><img src="../img/r-waiter-denied.jpg" alt="Not available for your role page" loading="lazy"><figcaption>A waiter who opens a booking link gets this page, with a button back to their own work.</figcaption></figure>
-<figure><img src="../img/a-account.jpg" alt="Account page" loading="lazy"><figcaption><b>Account</b> (click your email at the bottom of the menu): change your own password.</figcaption></figure>
+<figure><img src="../img/r-waiter-denied.jpg" width="1280" height="800" alt="Not available for your role page" loading="lazy"><figcaption>A waiter who opens a booking link gets this page, with a button back to their own work.</figcaption></figure>
+<figure><img src="../img/a-account.jpg" width="1280" height="800" alt="Account page" loading="lazy"><figcaption><b>Account</b> (click your email at the bottom of the menu): change your own password.</figcaption></figure>
 </div>
 <ul>
   <li>Five wrong passwords for the same email from the same place lock sign-in for 15 minutes. The message is the same whether the account exists or not.</li>
@@ -187,14 +203,14 @@ body { margin: 0; } img { max-width: 100%; }
 
 <h3 id="today">Today board</h3>
 <p><b>Front desk → Today</b> is the desk's to-do list for the hotel day: who is arriving, who is leaving, and who is in the house. It lists only open work; a guest who has already checked in disappears from <i>Arriving today</i>.</p>
-<figure><img src="../img/a-today.jpg" alt="Today board" loading="lazy"><figcaption><b>Today.</b> Each card shows the room, the balance owed and warnings: <span class="ui">No room assigned</span>, <span class="ui">Room not clean</span>, or <i>1 day overdue</i> for a guest still checked in after their departure date.</figcaption></figure>
+<figure><img src="../img/a-today.jpg" width="1280" height="1042" alt="Today board" loading="lazy"><figcaption><b>Today.</b> Each card shows the room, the balance owed and warnings: <span class="ui">No room assigned</span>, <span class="ui">Room not clean</span>, or <i>1 day overdue</i> for a guest still checked in after their departure date.</figcaption></figure>
 <h4>Check in</h4>
 <ol class="steps">
   <li>Find the guest under <b>Arriving today</b> and press <span class="ui">Check in</span>.</li>
   <li>If the room is not marked clean, a dialog says so. Press <span class="ui">Check in anyway</span> if the guest accepts, or <span class="ui">Back</span> to wait for housekeeping.</li>
   <li>The card moves to <b>In-house</b>. The check-in is recorded in the booking's history.</li>
 </ol>
-<figure class="half"><img src="../img/i-checkin-dialog.jpg" alt="Check-in dialog warning that the room is not clean" loading="lazy"><figcaption>A warning, not a block: the person at the desk decides.</figcaption></figure>
+<figure class="half"><img src="../img/i-checkin-dialog.jpg" width="1280" height="800" alt="Check-in dialog warning that the room is not clean" loading="lazy"><figcaption>A warning, not a block: the person at the desk decides.</figcaption></figure>
 <p>Check-in is refused for a cancelled booking, before the arrival date, and when the guest is already checked in. A booking with no room assigned cannot be checked in until a room is chosen. A prepaid (PAID) booking checks in like any other.</p>
 <h4>Check out</h4>
 <ol class="steps">
@@ -202,13 +218,13 @@ body { margin: 0; } img { max-width: 100%; }
   <li>If money is still owed, the dialog shows <b>Balance due now</b>. Record the payment in the folio first (see <a href="#folio">Folio</a>), or press <span class="ui">Check out anyway</span>: the debt stays on the booking and appears in the night audit under <i>Unpaid balances</i>.</li>
   <li>The room is marked dirty for housekeeping.</li>
 </ol>
-<figure class="half"><img src="../img/i-checkout-dialog.jpg" alt="Check-out dialog with balance due" loading="lazy"><figcaption>Checking out does not collect money; it only warns.</figcaption></figure>
+<figure class="half"><img src="../img/i-checkout-dialog.jpg" width="1280" height="800" alt="Check-out dialog with balance due" loading="lazy"><figcaption>Checking out does not collect money; it only warns.</figcaption></figure>
 <p><b>Early departure.</b> When a guest leaves before the booked date, the booking page offers to shorten the stay to today. Staff choose each time whether the released nights are still charged (an early-departure fee) or released. If the stay was moved between rooms, rooms the guest never reached are dropped.</p>
 <p><b>No-show.</b> <span class="ui">No-show</span> marks a guest who never came. A no-show's room is not counted as owed; other charges still are.</p>
 
 <h3 id="calendar">Booking calendar</h3>
 <p><b>Front desk → Calendar</b> shows every physical room as a row and every night as a column. The number under each room type is how many rooms of that type are still free that night. A dot next to a room number means the room is not clean.</p>
-<figure><img src="../img/a-calendar.jpg" alt="Booking calendar" loading="lazy"><figcaption><b>Calendar.</b> Bars are bookings: dark for confirmed, green for paid, lighter for new requests; a striped coral bar is a guest overdue. <span class="ui">Unassigned</span> collects bookings of that type without a room.</figcaption></figure>
+<figure><img src="../img/a-calendar.jpg" width="1280" height="968" alt="Booking calendar" loading="lazy"><figcaption><b>Calendar.</b> Bars are bookings: dark for confirmed, green for paid, lighter for new requests; a striped coral bar is a guest overdue. <span class="ui">Unassigned</span> collects bookings of that type without a room.</figcaption></figure>
 <ul>
   <li><b>Period:</b> <span class="ui">← Prev</span>, <span class="ui">Today</span>, <span class="ui">Next →</span>, the quick picks (<i>This month</i>, <i>Next 3 months</i>, <i>Year</i>), or type <i>From</i> and <i>To</i> and press <span class="ui">Apply</span>. Up to 366 days at once.</li>
   <li><b>Density</b> makes columns wider or narrower. Dragging needs columns wide enough to hit a night exactly.</li>
@@ -217,8 +233,8 @@ body { margin: 0; } img { max-width: 100%; }
   <li><b>Open:</b> double-click a bar (tap on a touchscreen) to open the booking panel.</li>
 </ul>
 <div class="grid2">
-<figure><img src="../img/i-calendar-new.jpg" alt="New booking form" loading="lazy"><figcaption><b>New booking.</b> The price is the server's quote for those nights. Find an existing guest to reuse their card, or type a new name. Channel and party size are required.</figcaption></figure>
-<figure><img src="../img/i-calendar-panel.jpg" alt="Booking panel from the calendar" loading="lazy"><figcaption><b>Booking panel.</b> Status, channel, purpose, party size, payment note, rooms, dates and the folio, without leaving the calendar. <span class="ui">Open full page</span> opens the booking page.</figcaption></figure>
+<figure><img src="../img/i-calendar-new.jpg" width="1280" height="800" alt="New booking form" loading="lazy"><figcaption><b>New booking.</b> The price is the server's quote for those nights. Find an existing guest to reuse their card, or type a new name. Channel and party size are required.</figcaption></figure>
+<figure><img src="../img/i-calendar-panel.jpg" width="1280" height="800" alt="Booking panel from the calendar" loading="lazy"><figcaption><b>Booking panel.</b> Status, channel, purpose, party size, payment note, rooms, dates and the folio, without leaving the calendar. <span class="ui">Open full page</span> opens the booking page.</figcaption></figure>
 </div>
 <div class="box rule"><span class="tag">Business rules for new bookings</span>
 <ul>
@@ -231,7 +247,7 @@ body { margin: 0; } img { max-width: 100%; }
 
 <h3 id="bookings">Bookings list</h3>
 <p><b>Front desk → Bookings</b> searches all bookings by guest name, email, phone or reference, with date and status filters. Click a column heading to sort. <span class="ui">Export CSV</span> (MANAGER and above) downloads the list with the room, balance due and creation time.</p>
-<figure><img src="../img/a-bookings.jpg" alt="Bookings list" loading="lazy"><figcaption>Statuses are badges; <span class="ui">Owes ฿…</span> appears only when a debt has fallen due. The first row came from SiteMinder: it carries its reference <i>SiteMinder SM-77812</i>.</figcaption></figure>
+<figure><img src="../img/a-bookings.jpg" width="1280" height="1293" alt="Bookings list" loading="lazy"><figcaption>Statuses are badges; <span class="ui">Owes ฿…</span> appears only when a debt has fallen due. The first row came from SiteMinder: it carries its reference <i>SiteMinder SM-77812</i>.</figcaption></figure>
 <h4>Booking status</h4>
 <div class="tbl"><table>
 <tr><th>Status</th><th>Meaning</th></tr>
@@ -245,7 +261,7 @@ body { margin: 0; } img { max-width: 100%; }
 
 <h3 id="booking-page">Booking page</h3>
 <p>Open a booking from the list, the calendar or Today. The page holds everything about the stay.</p>
-<figure><img src="../img/a-booking-anna.jpg" alt="Booking page with folio and history" loading="lazy"><figcaption><b>Booking page.</b> Left: guest and stay details, linked guest card. Right: stay actions, dates and room, rooms and relocation, status. Below: folio, room charges from the POS, and the history of everything done to this booking.</figcaption></figure>
+<figure><img src="../img/a-booking-anna.jpg" width="1280" height="2090" alt="Booking page with folio and history" loading="lazy"><figcaption><b>Booking page.</b> Left: guest and stay details, linked guest card. Right: stay actions, dates and room, rooms and relocation, status. Below: folio, room charges from the POS, and the history of everything done to this booking.</figcaption></figure>
 <ul>
   <li><b>Dates &amp; room → Change:</b> new dates or another room. <span class="ui">Preview price</span> shows the server's new total before you confirm.</li>
   <li><b>Prices are frozen per night.</b> The price agreed for a night stays. Extending a stay prices only the new nights at today's rates; earlier nights keep their price. <span class="ui">Reprice to current rates</span> is a separate, explicit action, and only for nights from today on.</li>
@@ -253,7 +269,7 @@ body { margin: 0; } img { max-width: 100%; }
   <li><b>Payment note:</b> for a receipt or transfer reference. Never type a card number: a note that looks like one is refused.</li>
   <li><b>Linked to</b> ties the booking to a guest card (see <a href="#guests">Guests</a>).</li>
 </ul>
-<figure><img src="../img/a-booking-lucas.jpg" alt="Relocated booking with two rooms" loading="lazy"><figcaption>A relocated stay: Deluxe Sea View 204 until 5 Nov, then Garden Villa 101. Each segment keeps its own nightly prices.</figcaption></figure>
+<figure><img src="../img/a-booking-lucas.jpg" width="1280" height="1752" alt="Relocated booking with two rooms" loading="lazy"><figcaption>A relocated stay: Deluxe Sea View 204 until 5 Nov, then Garden Villa 101. Each segment keeps its own nightly prices.</figcaption></figure>
 
 <h3 id="folio">Folio and payments</h3>
 <p>The <b>Folio</b> is the one place that answers "what does this guest owe?". The same figure is shown on Today, the property map, check-out and the night audit.</p>
@@ -274,18 +290,18 @@ body { margin: 0; } img { max-width: 100%; }
 <h3 id="guests">Guests</h3>
 <p><b>Front desk → Guests</b> is the guest card index. A card holds contact details, the stay history with amounts and the automated emails sent. <span class="ui">New guest</span> creates a card; a card can be edited or deleted. <i>Has account (verified)</i> means the guest registered on the website.</p>
 <div class="grid2">
-<figure><img src="../img/a-guests.jpg" alt="Guests list" loading="lazy"><figcaption>Search by name, email or phone.</figcaption></figure>
-<figure><img src="../img/a-guest-anna.jpg" alt="Guest card" loading="lazy"><figcaption>Guest card with stay history.</figcaption></figure>
+<figure><img src="../img/a-guests.jpg" width="1280" height="1200" alt="Guests list" loading="lazy"><figcaption>Search by name, email or phone.</figcaption></figure>
+<figure><img src="../img/a-guest-anna.jpg" width="1280" height="800" alt="Guest card" loading="lazy"><figcaption>Guest card with stay history.</figcaption></figure>
 </div>
 <p>On a booking, <span class="ui">Change</span> next to <i>Linked to</i> attaches a different card and <span class="ui">Unlink</span> removes it. Bookings imported from SiteMinder always get a new card with the name only; the system never matches guests by name, because a wrong match would show the stay in a stranger's account.</p>
 
 <h3 id="property-map">Property map</h3>
 <p><b>Front desk → Property map</b> places every room on the hotel's plan and colours it by what is true right now: vacant and ready, guest in the house, blocked, out of service. Small dots add <i>owes money</i>, <i>not cleaned</i> and <i>arriving or leaving today</i>. A coral ring means action is needed (an overdue guest, a booked room that is blocked).</p>
-<figure><img src="../img/a-property-map.jpg" alt="Property map" loading="lazy"><figcaption>Double-click a room (tap on a touchscreen) for its panel: guest, balance, check-in or check-out. Managers drag rooms onto the plan and upload a new plan image.</figcaption></figure>
+<figure><img src="../img/a-property-map.jpg" width="1280" height="861" alt="Property map" loading="lazy"><figcaption>Double-click a room (tap on a touchscreen) for its panel: guest, balance, check-in or check-out. Managers drag rooms onto the plan and upload a new plan image.</figcaption></figure>
 
 <h3 id="in-house">In house</h3>
 <p>The list of occupied rooms for a night, with guest, adults and children, segment (OTA, direct, walk-in…), arrival and departure. A guest still checked in after their departure date is listed and flagged overdue: they hold the room until they check out.</p>
-<figure><img src="../img/a-in-house.jpg" alt="In house list" loading="lazy"><figcaption>The overdue guest in 102 still counts as in the house.</figcaption></figure>
+<figure><img src="../img/a-in-house.jpg" width="1280" height="800" alt="In house list" loading="lazy"><figcaption>The overdue guest in 102 still counts as in the house.</figcaption></figure>
 
 <h3 id="night-audit">Night audit</h3>
 <p><b>Front desk → Night audit</b> reviews a day before closing it. The cards show room-nights sold, occupancy and the agreed room revenue for that night. Below are the lists of unresolved items, including ones left over from earlier days:</p>
@@ -295,11 +311,11 @@ body { margin: 0; } img { max-width: 100%; }
   <li><b>Missed departures</b>: still checked in on or after their departure date. <i>Staying unpaid · N nights</i> counts nights past check-out with nothing agreed. Check out, or extend the stay (which prices the extra nights).</li>
   <li><b>Unpaid balances</b>: finished stays that still owe money.</li>
 </ul>
-<figure><img src="../img/a-night-audit.jpg" alt="Night audit" loading="lazy"><figcaption><span class="ui">Close day</span> records that the day was reviewed, with optional notes. It locks nothing: items can still be fixed afterwards.</figcaption></figure>
+<figure><img src="../img/a-night-audit.jpg" width="1280" height="1368" alt="Night audit" loading="lazy"><figcaption><span class="ui">Close day</span> records that the day was reviewed, with optional notes. It locks nothing: items can still be fixed afterwards.</figcaption></figure>
 
 <h3 id="guest-emails">Guest emails (ADMIN)</h3>
 <p><b>Front desk → Settings → Guest emails</b> switches on three automated emails, sent once a day at 10:00: <b>Pre-arrival</b> (N days before check-in), <b>Post-stay</b> (N days after check-out, with an optional review link) and <b>Win-back</b> (N months after the last stay). They go only to guests with a verified website account who have not unsubscribed, never to a card typed in at the desk.</p>
-<figure class="half"><img src="../img/a-lifecycle-emails.jpg" alt="Guest emails settings" loading="lazy"><figcaption>All three are off until an administrator turns them on.</figcaption></figure>
+<figure class="half"><img src="../img/a-lifecycle-emails.jpg" width="1280" height="800" alt="Guest emails settings" loading="lazy"><figcaption>All three are off until an administrator turns them on.</figcaption></figure>
 
 <h3 id="siteminder">SiteMinder (OTA) import</h3>
 <p>Reservations from Booking.com, Agoda, Expedia and other channels arrive through SiteMinder. A small program on the office PC reads SiteMinder every night and sends each reservation to Sunset. Nothing is sent back to SiteMinder.</p>
@@ -314,13 +330,13 @@ body { margin: 0; } img { max-width: 100%; }
 
 <h3 id="housekeeping">Housekeeping</h3>
 <p><b>Rooms → Housekeeping</b> lists every room with its status code: <b>VC</b> vacant clean, <b>VD</b> vacant dirty, <b>OC</b> occupied clean, <b>OD</b> occupied dirty, plus <i>Due out today</i>, <i>Arriving today</i>, <i>Overdue</i> or <i>Out of order</i>. Press <span class="ui">Mark clean</span> or <span class="ui">Mark dirty</span>.</p>
-<figure><img src="../img/a-housekeeping.jpg" alt="Housekeeping room status" loading="lazy"><figcaption>Check-out marks the room dirty automatically. When a guest is moved to another room, the room they left is marked dirty on the day the move takes effect.</figcaption></figure>
+<figure><img src="../img/a-housekeeping.jpg" width="1280" height="1272" alt="Housekeeping room status" loading="lazy"><figcaption>Check-out marks the room dirty automatically. When a guest is moved to another room, the room they left is marked dirty on the day the move takes effect.</figcaption></figure>
 
 <h3 id="maintenance">Maintenance</h3>
 <p><b>Rooms → Maintenance</b> is open to every staff member: whoever notices a problem reports it. Press <span class="ui">+ Report a problem</span>, choose the room, describe the problem and add photos.</p>
 <div class="grid2">
-<figure><img src="../img/a-maintenance.jpg" alt="Room tasks list" loading="lazy"><figcaption>Tasks: <i>Open</i>, <i>In progress</i>, <i>Done</i>. A coral dot means the room is blocked.</figcaption></figure>
-<figure><img src="../img/i-maintenance-task.jpg" alt="Task opened with Start and Mark done" loading="lazy"><figcaption>An engineer (or a manager) presses <span class="ui">Start</span> and <span class="ui">Mark done</span>.</figcaption></figure>
+<figure><img src="../img/a-maintenance.jpg" width="1280" height="800" alt="Room tasks list" loading="lazy"><figcaption>Tasks: <i>Open</i>, <i>In progress</i>, <i>Done</i>. A coral dot means the room is blocked.</figcaption></figure>
+<figure><img src="../img/i-maintenance-task.jpg" width="1280" height="800" alt="Task opened with Start and Mark done" loading="lazy"><figcaption>An engineer (or a manager) presses <span class="ui">Start</span> and <span class="ui">Mark done</span>.</figcaption></figure>
 </div>
 <ul>
   <li>A manager can <b>block the room</b> from a task (dates, reason, who closes it: engineer or housekeeper). A blocked room is out of sale on those dates.</li>
@@ -331,20 +347,20 @@ body { margin: 0; } img { max-width: 100%; }
 
 <h3 id="rates">Rates &amp; availability</h3>
 <p><b>Rooms → Rates &amp; availability</b> is one table: room types down, days of the month across.</p>
-<figure><img src="../img/a-rates.jpg" alt="Rates tab" loading="lazy"><figcaption><b>Rates tab.</b> Each cell shows the night's price and how many rooms of that type are still free. A coral price was set by hand; otherwise it is the room type's base price.</figcaption></figure>
+<figure><img src="../img/a-rates.jpg" width="1280" height="814" alt="Rates tab" loading="lazy"><figcaption><b>Rates tab.</b> Each cell shows the night's price and how many rooms of that type are still free. A coral price was set by hand; otherwise it is the room type's base price.</figcaption></figure>
 <ul>
   <li>A manager clicks a price, types a new one and presses Enter (Esc cancels).</li>
   <li><b>Set a price range</b>: room type, from, to, price per night, <span class="ui">Apply to range</span>. Up to 366 days at once.</li>
   <li>New prices apply to new bookings and new nights only. Nights already agreed on existing bookings keep their price.</li>
 </ul>
-<figure><img src="../img/i-availability.jpg" alt="Availability tab with a day selected" loading="lazy"><figcaption><b>Availability tab.</b> Each cell is free/total rooms. Click a day to see each room: booked (with a link), blocked or free. <span class="ui">Manage</span> opens one room's blocks: add a block with dates and a reason, or remove one.</figcaption></figure>
+<figure><img src="../img/i-availability.jpg" width="1280" height="800" alt="Availability tab with a day selected" loading="lazy"><figcaption><b>Availability tab.</b> Each cell is free/total rooms. Click a day to see each room: booked (with a link), blocked or free. <span class="ui">Manage</span> opens one room's blocks: add a block with dates and a reason, or remove one.</figcaption></figure>
 <p>A room <b>block</b> (temporarily out of sale) and an <b>inactive</b> room (permanently out of service) are two different things. A blocked room is still an active room.</p>
 
 <h3 id="room-types">Room types and physical rooms</h3>
 <p><b>Rooms → Settings → Rooms</b> lists room types. A manager creates or edits a type (name, description, capacity, base price per night, photos) and, under it, the <b>physical rooms</b> of that type with their labels (101, 102…). A room that has history cannot be deleted; deactivate it instead.</p>
 <div class="grid2">
-<figure><img src="../img/a-rooms.jpg" alt="Room types" loading="lazy"><figcaption>Room types with capacity, active rooms and base price.</figcaption></figure>
-<figure><img src="../img/a-room-edit.jpg" alt="Edit room type" loading="lazy"><figcaption>Editing a type: details, photos, physical rooms.</figcaption></figure>
+<figure><img src="../img/a-rooms.jpg" width="1280" height="800" alt="Room types" loading="lazy"><figcaption>Room types with capacity, active rooms and base price.</figcaption></figure>
+<figure><img src="../img/a-room-edit.jpg" width="1280" height="1135" alt="Edit room type" loading="lazy"><figcaption>Editing a type: details, photos, physical rooms.</figcaption></figure>
 </div>
 <p>Room type names and room labels must be unique; "Garden Villa" and "garden  villa" count as the same name.</p>
 
@@ -352,8 +368,8 @@ body { margin: 0; } img { max-width: 100%; }
 
 <h3 id="pos-board">Tables board and floor map</h3>
 <p><b>Restaurant → POS</b> (admin) and <code>/pos</code> (phone) show every table by zone. A table with an order shows its status and total. <i>Open tickets</i> (<i>No table</i> on the phone) holds orders without a table, such as takeaway or a guest at the pool bar.</p>
-<figure><img src="../img/a-pos.jpg" alt="Tables and tickets board" loading="lazy"><figcaption>The coral banner counts print jobs that did not print. "Not printed" always means failed plus still retrying.</figcaption></figure>
-<figure><img src="../img/a-pos-map.jpg" alt="Restaurant floor map" loading="lazy"><figcaption><b>Floor map</b> (<span class="ui">Floor map →</span>): the same tables on the restaurant plan. Sea green is free, dark has an open order. Double-click (or tap) a table to open its order.</figcaption></figure>
+<figure><img src="../img/a-pos.jpg" width="1280" height="1068" alt="Tables and tickets board" loading="lazy"><figcaption>The coral banner counts print jobs that did not print. "Not printed" always means failed plus still retrying.</figcaption></figure>
+<figure><img src="../img/a-pos-map.jpg" width="1280" height="800" alt="Restaurant floor map" loading="lazy"><figcaption><b>Floor map</b> (<span class="ui">Floor map →</span>): the same tables on the restaurant plan. Sea green is free, dark has an open order. Double-click (or tap) a table to open its order.</figcaption></figure>
 
 <h3 id="orders">Taking an order</h3>
 <ol class="steps">
@@ -363,7 +379,7 @@ body { margin: 0; } img { max-width: 100%; }
   <li>Press <span class="ui">Send to kitchen</span>. Kitchen items print on the kitchen printer, drinks on the bar printer. The button stays in place as <span class="ui">Sent ✓</span>.</li>
   <li>More items can be added to a sent order; they are sent and printed when added.</li>
 </ol>
-<figure><img src="../img/r-cashier-order.jpg" alt="Order ticket" loading="lazy"><figcaption><b>Order ticket</b> on the desktop: menu on the left, order on the right. Every order has a receipt number (<i>Order #5</i>) and a reference.</figcaption></figure>
+<figure><img src="../img/r-cashier-order.jpg" width="1280" height="912" alt="Order ticket" loading="lazy"><figcaption><b>Order ticket</b> on the desktop: menu on the left, order on the right. Every order has a receipt number (<i>Order #5</i>) and a reference.</figcaption></figure>
 <div class="box rule"><span class="tag">Rules</span>
 <ul>
   <li>A line is 1 to 99 pieces.</li>
@@ -377,8 +393,8 @@ body { margin: 0; } img { max-width: 100%; }
 <h3 id="payment">Taking payment</h3>
 <p>Closing an order needs a CASHIER with an open cash shift. Without one the payment block says <i>Open a shift to accept payment</i> with a link.</p>
 <div class="grid2">
-<figure><img src="../img/i-cash-dialog.jpg" alt="Cash payment with change" loading="lazy"><figcaption><b>Cash.</b> Type what the guest handed over; the screen shows the change. The order is charged exactly its total.</figcaption></figure>
-<figure><img src="../img/i-room-charge.jpg" alt="Payment buttons" loading="lazy"><figcaption><b>Cash, Card, Room.</b> Card closes at once. Room asks for the guest.</figcaption></figure>
+<figure><img src="../img/i-cash-dialog.jpg" width="1280" height="1120" alt="Cash payment with change" loading="lazy"><figcaption><b>Cash.</b> Type what the guest handed over; the screen shows the change. The order is charged exactly its total.</figcaption></figure>
+<figure><img src="../img/i-room-charge.jpg" width="1280" height="912" alt="Payment buttons" loading="lazy"><figcaption><b>Cash, Card, Room.</b> Card closes at once. Room asks for the guest.</figcaption></figure>
 </div>
 <ul>
   <li><b>Card</b> records a card payment. Sunset is not connected to the card terminal; the cashier confirms the terminal approved it.</li>
@@ -390,14 +406,14 @@ body { margin: 0; } img { max-width: 100%; }
 <h3 id="phone-pos">The phone POS</h3>
 <p>The phone screens do the same work with large buttons. Before any money action the phone shows <b>Will be recorded as</b> with the signed-in person, because the phone is shared. If it is the wrong person, use <span class="ui">Not you? Switch</span>.</p>
 <figure class="phone">
-<img src="../img/m-pos.jpg" alt="Phone table board" loading="lazy">
-<img src="../img/m-cash-confirm.jpg" alt="Phone cash confirmation" loading="lazy">
-<img src="../img/m-shift.jpg" alt="Phone shift" loading="lazy">
+<img src="../img/m-pos.jpg" width="560" height="1466" alt="Phone table board" loading="lazy">
+<img src="../img/m-cash-confirm.jpg" width="560" height="953" alt="Phone cash confirmation" loading="lazy">
+<img src="../img/m-shift.jpg" width="560" height="1553" alt="Phone shift" loading="lazy">
 <figcaption>Phone: table board with the print banner, cash payment with <i>Will be recorded as</i>, and the cashier's shift.</figcaption>
 </figure>
 <figure class="phone">
-<img src="../img/m-orders.jpg" alt="Orders in this shift" loading="lazy">
-<img src="../img/m-print-jobs.jpg" alt="Print jobs" loading="lazy">
+<img src="../img/m-orders.jpg" width="560" height="953" alt="Orders in this shift" loading="lazy">
+<img src="../img/m-print-jobs.jpg" width="560" height="3042" alt="Print jobs" loading="lazy">
 <figcaption><i>Orders in this shift</i> and the print queue on the phone.</figcaption>
 </figure>
 
@@ -409,13 +425,13 @@ body { margin: 0; } img { max-width: 100%; }
   <li>To close, count the drawer and type <b>Counted cash</b>. The screen compares it with <b>Expected cash</b> (float + cash sales + cash folio payments) and shows the <b>Discrepancy</b>.</li>
   <li>If the drawer does not match, <b>Notes</b> are required. Then press <span class="ui">Close shift</span> (on the phone: <span class="ui">Review &amp; close</span>, then <span class="ui">Confirm close</span>). A Z-report prints.</li>
 </ol>
-<figure><img src="../img/r-cashier-shifts.jpg" alt="Closing a shift with a discrepancy" loading="lazy"><figcaption>Counted ฿3,700 against ฿3,740 expected: −฿40, so a note is required. Open orders of other staff are listed but do not block this shift.</figcaption></figure>
+<figure><img src="../img/r-cashier-shifts.jpg" width="1280" height="921" alt="Closing a shift with a discrepancy" loading="lazy"><figcaption>Counted ฿3,700 against ฿3,740 expected: −฿40, so a note is required. Open orders of other staff are listed but do not block this shift.</figcaption></figure>
 <p>A shift is blocked only by orders that this cashier opened, or that carry a payment in this shift. Room charges are never cash in the drawer: they are debt moved to the guest's folio.</p>
 <div class="grid2">
-<figure><img src="../img/a-shift-report.jpg" alt="Shift report" loading="lazy"><figcaption><b>Shift report</b>: totals, <span class="ui">Export CSV</span> and the orders of the shift (MANAGER+). A cashier sees only their own shifts.</figcaption></figure>
-<figure><img src="../img/a-shift-history.jpg" alt="Shift history" loading="lazy"><figcaption><b>Shift history</b> (MANAGER+): every shift with expected, counted and discrepancy.</figcaption></figure>
+<figure><img src="../img/a-shift-report.jpg" width="1280" height="800" alt="Shift report" loading="lazy"><figcaption><b>Shift report</b>: totals, <span class="ui">Export CSV</span> and the orders of the shift (MANAGER+). A cashier sees only their own shifts.</figcaption></figure>
+<figure><img src="../img/a-shift-history.jpg" width="1280" height="800" alt="Shift history" loading="lazy"><figcaption><b>Shift history</b> (MANAGER+): every shift with expected, counted and discrepancy.</figcaption></figure>
 </div>
-<figure><img src="../img/a-order-history.jpg" alt="Order history" loading="lazy"><figcaption><b>Order history</b> (MANAGER+): orders by period, status, table and staff member.</figcaption></figure>
+<figure><img src="../img/a-order-history.jpg" width="1280" height="800" alt="Order history" loading="lazy"><figcaption><b>Order history</b> (MANAGER+): orders by period, status, table and staff member.</figcaption></figure>
 
 <h3 id="printing">Printers and the print queue</h3>
 <p>Kitchen tickets, bar tickets, pre-bills, receipts and Z-reports go to network printers. Each department (Kitchen, Bar, Cashier) has at most one active printer.</p>
@@ -424,20 +440,20 @@ body { margin: 0; } img { max-width: 100%; }
   <li><b>Not printed</b> = Failed + Pending. The banner on the tables board and the queue's default tab use this one rule.</li>
   <li><span class="ui">Retry</span> sends exactly the document that was queued, not a fresh one. Fix the printer first if its address changed. <span class="ui">Dismiss</span> hides a job you have dealt with.</li>
 </ul>
-<figure><img src="../img/a-print-queue.jpg" alt="Print queue" loading="lazy"><figcaption><b>Print queue</b>: filter by status and station; the reason for each failure is shown in coral.</figcaption></figure>
-<figure><img src="../img/a-printers.jpg" alt="Printers" loading="lazy"><figcaption><b>Printers</b> (MANAGER+): name, department, address and code page. The status line says whether the printer answered recently. Use <span class="ui">Test print</span> after any change.</figcaption></figure>
-<figure><img src="../img/a-print-layouts.jpg" alt="Print layouts editor" loading="lazy"><figcaption><b>Print layouts</b> (ADMIN): paper width (58/80 mm), font A or B, sizes, title, header and footer, which lines print, and the logo for the guest receipt and pre-bill. The preview on the right is produced by the same code that prints, so it shows exactly what wraps or gets cut. Test prints end with "sample, not a real order".</figcaption></figure>
+<figure><img src="../img/a-print-queue.jpg" width="1280" height="977" alt="Print queue" loading="lazy"><figcaption><b>Print queue</b>: filter by status and station; the reason for each failure is shown in coral.</figcaption></figure>
+<figure><img src="../img/a-printers.jpg" width="1280" height="800" alt="Printers" loading="lazy"><figcaption><b>Printers</b> (MANAGER+): name, department, address and code page. The status line says whether the printer answered recently. Use <span class="ui">Test print</span> after any change.</figcaption></figure>
+<figure><img src="../img/a-print-layouts.jpg" width="1280" height="1759" alt="Print layouts editor" loading="lazy"><figcaption><b>Print layouts</b> (ADMIN): paper width (58/80 mm), font A or B, sizes, title, header and footer, which lines print, and the logo for the guest receipt and pre-bill. The preview on the right is produced by the same code that prints, so it shows exactly what wraps or gets cut. Test prints end with "sample, not a real order".</figcaption></figure>
 
 <h3 id="menu">Menu</h3>
 <p><b>Restaurant → Menu</b>: everyone can read it, a manager edits it. Each item has a name, category (how it is grouped on screen), department (which printer gets the ticket: Kitchen or Bar), price and an <i>Available</i> switch. Spa treatments are kept separately under <a href="#spa">Spa → Treatments</a>.</p>
-<figure><img src="../img/a-menu.jpg" alt="Menu" loading="lazy"><figcaption>Categories as tabs; an unavailable item disappears from ordering. Guests ordering by QR code or room service see only what the public menu lists.</figcaption></figure>
+<figure><img src="../img/a-menu.jpg" width="1280" height="800" alt="Menu" loading="lazy"><figcaption>Categories as tabs; an unavailable item disappears from ordering. Guests ordering by QR code or room service see only what the public menu lists.</figcaption></figure>
 
 <h2 id="spa"><span class="num">5</span>Spa</h2>
 
 <h3 id="spa-schedule">Appointments</h3>
 <p><b>Spa → Appointments</b>: rows are spa tables, columns are 30-minute slots from 09:00 to 20:00. Click a free slot to book; drag an appointment to another table or time; double-click it to open its panel.</p>
-<figure><img src="../img/i-spa-tomorrow.jpg" alt="Spa schedule" loading="lazy"><figcaption>The badge on each appointment is the guest's room.</figcaption></figure>
-<figure><img src="../img/i-spa-panel.jpg" alt="Spa appointment panel" loading="lazy"><figcaption><b>Appointment panel:</b> room, table, time, therapist, treatments with the current menu price, <span class="ui">Bill treatment</span>, <span class="ui">Complete</span>, <span class="ui">No-show</span>, <span class="ui">Cancel</span>.</figcaption></figure>
+<figure><img src="../img/i-spa-tomorrow.jpg" width="1280" height="800" alt="Spa schedule" loading="lazy"><figcaption>The badge on each appointment is the guest's room.</figcaption></figure>
+<figure><img src="../img/i-spa-panel.jpg" width="1280" height="800" alt="Spa appointment panel" loading="lazy"><figcaption><b>Appointment panel:</b> room, table, time, therapist, treatments with the current menu price, <span class="ui">Bill treatment</span>, <span class="ui">Complete</span>, <span class="ui">No-show</span>, <span class="ui">Cancel</span>.</figcaption></figure>
 <div class="box rule"><span class="tag">Rules the server checks</span>
 <ul>
   <li>The guest must have a booking that is in the house or expected, and the date must be within the stay.</li>
@@ -456,16 +472,16 @@ body { margin: 0; } img { max-width: 100%; }
 
 <h3 id="spa-other">Table map, treatments and tables</h3>
 <div class="grid2">
-<figure><img src="../img/a-spa-map.jpg" alt="Spa table map" loading="lazy"><figcaption><b>Table map:</b> which spa table is busy now and its next appointment.</figcaption></figure>
-<figure><img src="../img/a-spa-treatments.jpg" alt="Spa treatments" loading="lazy"><figcaption><b>Treatments:</b> name, category, price and duration (MANAGER edits).</figcaption></figure>
+<figure><img src="../img/a-spa-map.jpg" width="1280" height="800" alt="Spa table map" loading="lazy"><figcaption><b>Table map:</b> which spa table is busy now and its next appointment.</figcaption></figure>
+<figure><img src="../img/a-spa-treatments.jpg" width="1280" height="800" alt="Spa treatments" loading="lazy"><figcaption><b>Treatments:</b> name, category, price and duration (MANAGER edits).</figcaption></figure>
 </div>
-<figure class="half"><img src="../img/r-therapist-landing.jpg" alt="Therapist read-only schedule" loading="lazy"><figcaption><b>A therapist's view.</b> Therapists see the schedule read only, with their own appointments outlined. They can also see their procedures in Telegram.</figcaption></figure>
+<figure class="half"><img src="../img/r-therapist-landing.jpg" width="1280" height="800" alt="Therapist read-only schedule" loading="lazy"><figcaption><b>A therapist's view.</b> Therapists see the schedule read only, with their own appointments outlined. They can also see their procedures in Telegram.</figcaption></figure>
 
 <h2 id="gym"><span class="num">6</span>Gym and lighting</h2>
 
 <h3 id="gym-schedule">Gym schedule</h3>
 <p>The gym takes one guest at a time. <b>Gym &amp; lighting → Gym schedule</b> shows days as rows and half-hour slots as columns (Day or Week view). Click a free slot to reserve it for a hotel booking; open a reservation to move, shorten or cancel it.</p>
-<figure><img src="../img/a-gym-schedule.jpg" alt="Gym schedule" loading="lazy"><figcaption>The banner shows that this demo server has no Tuya keys, so equipment cannot be switched. On the hotel server the marks on each reservation show the automation's result: ⚡ on, ⚠ partly, ✕ error.</figcaption></figure>
+<figure><img src="../img/a-gym-schedule.jpg" width="1280" height="800" alt="Gym schedule" loading="lazy"><figcaption>The banner shows that this demo server has no Tuya keys, so equipment cannot be switched. On the hotel server the marks on each reservation show the automation's result: ⚡ on, ⚠ partly, ✕ error.</figcaption></figure>
 <ul>
   <li>Sessions are 30 to 120 minutes in 30-minute steps, within the opening hours; at most 120 minutes a day per booking.</li>
   <li>Guests book themselves on the website only while checked in. Staff can also book an expected guest.</li>
@@ -473,19 +489,19 @@ body { margin: 0; } img { max-width: 100%; }
   <li>Check-out, cancellation or a shorter stay cancels the sessions that no longer fit.</li>
 </ul>
 <div class="grid2">
-<figure><img src="../img/a-gym.jpg" alt="Gym equipment" loading="lazy"><figcaption><b>Gym</b> (CASHIER+): switch each fan or air conditioner by hand. <span class="ui">Refresh</span> reads the real state.</figcaption></figure>
-<figure><img src="../img/a-gym-settings.jpg" alt="Gym devices settings" loading="lazy"><figcaption><b>Gym devices</b> (ADMIN): opening hours, switch-on lead time, air-conditioner mode, devices taken from the Tuya account, monthly Tuya call count. Narrowing the hours shows which reservations would fall outside before saving.</figcaption></figure>
+<figure><img src="../img/a-gym.jpg" width="1280" height="800" alt="Gym equipment" loading="lazy"><figcaption><b>Gym</b> (CASHIER+): switch each fan or air conditioner by hand. <span class="ui">Refresh</span> reads the real state.</figcaption></figure>
+<figure><img src="../img/a-gym-settings.jpg" width="1280" height="1015" alt="Gym devices settings" loading="lazy"><figcaption><b>Gym devices</b> (ADMIN): opening hours, switch-on lead time, air-conditioner mode, devices taken from the Tuya account, monthly Tuya call count. Narrowing the hours shows which reservations would fall outside before saving.</figcaption></figure>
 </div>
 
 <h3 id="lighting">Lighting</h3>
 <p><b>Lighting</b> (MANAGER+) switches the WLED lighting controllers on the hotel network: on/off, brightness and stored presets. Brightness 0% means off. The page does not refresh by itself; press Refresh. <b>Lighting devices</b> (ADMIN) adds controllers by their local address and checks the connection. Only addresses inside the hotel network that the server allows can be added.</p>
-<figure class="half"><img src="../img/a-lighting.jpg" alt="Lighting page" loading="lazy"><figcaption>On this demo server lighting is not configured, so the page says so. In the hotel each controller has its own card.</figcaption></figure>
+<figure class="half"><img src="../img/a-lighting.jpg" width="1280" height="800" alt="Lighting page" loading="lazy"><figcaption>On this demo server lighting is not configured, so the page says so. In the hotel each controller has its own card.</figcaption></figure>
 
 <h2 id="staff"><span class="num">7</span>Staff</h2>
 
 <h3 id="my-schedule">My schedule</h3>
 <p>Every employee sees their own month under <b>Staff → My schedule</b>: the shift code and times for each day.</p>
-<figure class="half"><img src="../img/r-waiter-schedule.jpg" alt="My schedule" loading="lazy"><figcaption>A waiter's month with code 9 (09:00–18:00) and weekly days off.</figcaption></figure>
+<figure class="half"><img src="../img/r-waiter-schedule.jpg" width="1280" height="800" alt="My schedule" loading="lazy"><figcaption>A waiter's month with code 9 (09:00–18:00) and weekly days off.</figcaption></figure>
 
 <h3 id="roster">Roster</h3>
 <p><b>Staff → Roster</b> (MANAGER+) is the monthly schedule grid. Tabs:</p>
@@ -499,12 +515,12 @@ body { margin: 0; } img { max-width: 100%; }
 <tr><td><b>Attendance</b></td><td>Month of hours per person from the scans. Click a day to correct it.</td></tr>
 <tr><td><b>Pay rates</b></td><td>Daily rate per employee, effective from a date.</td></tr>
 </table></div>
-<figure><img src="../img/a-roster.jpg" alt="Roster grid" loading="lazy"><figcaption>Roster grid. The hourglass on a shift marks a waiting shift request.</figcaption></figure>
+<figure><img src="../img/a-roster.jpg" width="1280" height="1182" alt="Roster grid" loading="lazy"><figcaption>Roster grid. The hourglass on a shift marks a waiting shift request.</figcaption></figure>
 <div class="grid2">
-<figure><img src="../img/a-roster-today.jpg" alt="Roster today board" loading="lazy"><figcaption><b>Today</b>: who is on shift, late or missed.</figcaption></figure>
-<figure><img src="../img/a-roster-attendance.jpg" alt="Attendance month" loading="lazy"><figcaption><b>Attendance</b>: hours per day; <i>missed</i> means scheduled but no scan.</figcaption></figure>
-<figure><img src="../img/a-roster-codes.jpg" alt="Shift codes" loading="lazy"><figcaption><b>Shift codes</b> by department.</figcaption></figure>
-<figure><img src="../img/a-roster-coverage.jpg" alt="Coverage" loading="lazy"><figcaption><b>Coverage</b>: minimum per department.</figcaption></figure>
+<figure><img src="../img/a-roster-today.jpg" width="1280" height="800" alt="Roster today board" loading="lazy"><figcaption><b>Today</b>: who is on shift, late or missed.</figcaption></figure>
+<figure><img src="../img/a-roster-attendance.jpg" width="1280" height="800" alt="Attendance month" loading="lazy"><figcaption><b>Attendance</b>: hours per day; <i>missed</i> means scheduled but no scan.</figcaption></figure>
+<figure><img src="../img/a-roster-codes.jpg" width="1280" height="1359" alt="Shift codes" loading="lazy"><figcaption><b>Shift codes</b> by department.</figcaption></figure>
+<figure><img src="../img/a-roster-coverage.jpg" width="1280" height="800" alt="Coverage" loading="lazy"><figcaption><b>Coverage</b>: minimum per department.</figcaption></figure>
 </div>
 <div class="box rule"><span class="tag">Attendance rules</span>
 <ul>
@@ -514,13 +530,13 @@ body { margin: 0; } img { max-width: 100%; }
 </ul></div>
 <p><b>Fingerprint terminals</b> (MANAGER+) registers terminals by address; <span class="ui">Resync</span> re-reads the full log. <b>Import schedule</b> (ADMIN) reads the hotel's hand-made Excel schedule or re-imports an edited grid export; names are mapped once by a person and existing entries are never overwritten.</p>
 <div class="grid2">
-<figure><img src="../img/a-attendance-devices.jpg" alt="Fingerprint terminals" loading="lazy"><figcaption>"Never reached": the terminal has not answered yet.</figcaption></figure>
-<figure><img src="../img/a-roster-import.jpg" alt="Import schedule" loading="lazy"><figcaption>Import: preview first, nothing is written until you confirm.</figcaption></figure>
+<figure><img src="../img/a-attendance-devices.jpg" width="1280" height="800" alt="Fingerprint terminals" loading="lazy"><figcaption>"Never reached": the terminal has not answered yet.</figcaption></figure>
+<figure><img src="../img/a-roster-import.jpg" width="1280" height="800" alt="Import schedule" loading="lazy"><figcaption>Import: preview first, nothing is written until you confirm.</figcaption></figure>
 </div>
 
 <h3 id="shift-requests">Shift requests</h3>
 <p>Employees ask in the Telegram bot to <b>move</b> a shift to another day or to take a <b>day off</b>. The HR director decides, either in Telegram or under <b>Staff → Shift requests</b>.</p>
-<figure><img src="../img/r-hr-requests.jpg" alt="Shift requests with Approve and Reject" loading="lazy"><figcaption>As the HR director sees it: the request, the reason, the coverage warning and <span class="ui">Approve</span> / <span class="ui">Reject</span>.</figcaption></figure>
+<figure><img src="../img/r-hr-requests.jpg" width="1280" height="800" alt="Shift requests with Approve and Reject" loading="lazy"><figcaption>As the HR director sees it: the request, the reason, the coverage warning and <span class="ui">Approve</span> / <span class="ui">Reject</span>.</figcaption></figure>
 <ul>
   <li>Approving changes the roster at once, with every roster check. If the shift changed since the request was filed, the request becomes <b>Expired</b> and nothing changes.</li>
   <li>Coverage below the minimum is shown as a warning; approving still works.</li>
@@ -528,13 +544,13 @@ body { margin: 0; } img { max-width: 100%; }
   <li>Managers who are not today's deciders see the list without buttons. The HR director without a manager role sees the roster read only.</li>
   <li>The HR director's leave is set here (<span class="ui">Save leave</span>) or in the bot.</li>
 </ul>
-<figure><img src="../img/r-hr-roster.jpg" alt="HR director read-only roster" loading="lazy"><figcaption>The HR director's roster: Grid and Attendance tabs only, read only.</figcaption></figure>
+<figure><img src="../img/r-hr-roster.jpg" width="1280" height="1117" alt="HR director read-only roster" loading="lazy"><figcaption>The HR director's roster: Grid and Attendance tabs only, read only.</figcaption></figure>
 
 <h3 id="users">Users</h3>
 <p><b>Staff → Settings → Users</b> (ADMIN) lists staff by department. Each row has the role, functions (Engineer, Housekeeper, Therapist, HR), fingerprint number, password reset and disable. A person can exist without a login (only on the roster); tick <i>Can sign in</i> to give them email and password.</p>
 <div class="grid2">
-<figure><img src="../img/a-users.jpg" alt="Users list" loading="lazy"><figcaption>Users grouped by department.</figcaption></figure>
-<figure><img src="../img/a-users-new.jpg" alt="New user" loading="lazy"><figcaption>New user: name, optional login, role.</figcaption></figure>
+<figure><img src="../img/a-users.jpg" width="1280" height="1377" alt="Users list" loading="lazy"><figcaption>Users grouped by department.</figcaption></figure>
+<figure><img src="../img/a-users-new.jpg" width="1280" height="800" alt="New user" loading="lazy"><figcaption>New user: name, optional login, role.</figcaption></figure>
 </div>
 <p>An administrator cannot change their own role or disable themselves. A deactivated employee gets no new shifts, disappears from the Today board and loses the Telegram link; their history stays.</p>
 
@@ -562,8 +578,8 @@ body { margin: 0; } img { max-width: 100%; }
   <li>A QR code and link appear, valid for 15 minutes. The employee scans it with their phone; Telegram opens the bot and links the chat. No password is needed.</li>
   <li>The row shows <i>Linked</i>. The language can be set per person. <span class="ui">Unlink</span> removes it.</li>
 </ol>
-<figure><img src="../img/a-notif-staff.jpg" alt="Notification channels" loading="lazy"><figcaption>Notification channels. On this demo server Telegram is not configured, so linking is disabled.</figcaption></figure>
-<figure><img src="../img/a-notifications.jpg" alt="Notifications log" loading="lazy"><figcaption><b>Notifications</b> (MANAGER+): the log of every message, to whom, its text and delivery state. Here they wait because no bot is set up.</figcaption></figure>
+<figure><img src="../img/a-notif-staff.jpg" width="1280" height="1358" alt="Notification channels" loading="lazy"><figcaption>Notification channels. On this demo server Telegram is not configured, so linking is disabled.</figcaption></figure>
+<figure><img src="../img/a-notifications.jpg" width="1280" height="1543" alt="Notifications log" loading="lazy"><figcaption><b>Notifications</b> (MANAGER+): the log of every message, to whom, its text and delivery state. Here they wait because no bot is set up.</figcaption></figure>
 
 <h3 id="notif-settings">Notification settings (ADMIN)</h3>
 <p><b>Staff → Settings → Notification settings</b> has tabs; one <span class="ui">Save</span> / <span class="ui">Discard</span> bar covers all of them. A dot marks a tab with unsaved changes.</p>
@@ -579,8 +595,8 @@ body { margin: 0; } img { max-width: 100%; }
 <tr><td>Morning summary</td><td>What the directors' 08:00 summary contains.</td></tr>
 </table></div>
 <div class="grid2">
-<figure><img src="../img/a-notif-settings.jpg" alt="Notification settings overview" loading="lazy"><figcaption>Overview tab.</figcaption></figure>
-<figure><img src="../img/a-notif-settings-requests.jpg" alt="Shift requests and HR tab" loading="lazy"><figcaption>Shift requests &amp; HR tab.</figcaption></figure>
+<figure><img src="../img/a-notif-settings.jpg" width="1280" height="1260" alt="Notification settings overview" loading="lazy"><figcaption>Overview tab.</figcaption></figure>
+<figure><img src="../img/a-notif-settings-requests.jpg" width="1280" height="1150" alt="Shift requests and HR tab" loading="lazy"><figcaption>Shift requests &amp; HR tab.</figcaption></figure>
 </div>
 
 <h3 id="bot">Using the staff bot</h3>
@@ -627,7 +643,7 @@ Reason: Family visiting from Bangkok
 <h2 id="reports"><span class="num">9</span>Reports</h2>
 
 <h3 id="dashboard">Dashboard</h3>
-<figure><img src="../img/a-dashboard.jpg" alt="Dashboard" loading="lazy"><figcaption><b>Dashboard</b> (CASHIER+): bookings today and this week, occupancy for the next 30 days, room payments collected this month, POS revenue collected (cash, card, other), charges to rooms not yet collected, staff on shift, staffing gaps, terminal status and maintenance.</figcaption></figure>
+<figure><img src="../img/a-dashboard.jpg" width="1280" height="800" alt="Dashboard" loading="lazy"><figcaption><b>Dashboard</b> (CASHIER+): bookings today and this week, occupancy for the next 30 days, room payments collected this month, POS revenue collected (cash, card, other), charges to rooms not yet collected, staff on shift, staffing gaps, terminal status and maintenance.</figcaption></figure>
 <p>Room money on the dashboard is <b>money actually recorded</b> at the desk (folio payments), never a sum of booking prices. Room charges are shown separately because they are not money in hand until the guest pays at check-out.</p>
 
 <h3 id="reports-tabs">Reports</h3>
@@ -641,18 +657,18 @@ Reason: Family visiting from Bangkok
 <tr><td>Sales mix</td><td>POS quantities and revenue by department and category.</td></tr>
 <tr><td>Guest LTV</td><td>Each guest's bookings, nights, room revenue and room charges.</td></tr>
 </table></div>
-<figure><img src="../img/a-reports.jpg" alt="Manager report" loading="lazy"><figcaption>Manager report, room statistics.</figcaption></figure>
+<figure><img src="../img/a-reports.jpg" width="1280" height="923" alt="Manager report" loading="lazy"><figcaption>Manager report, room statistics.</figcaption></figure>
 <div class="grid2">
-<figure><img src="../img/a-reports-occupancy.jpg" alt="Occupancy report" loading="lazy"><figcaption>Occupancy, ADR and RevPAR.</figcaption></figure>
-<figure><img src="../img/a-reports-production.jpg" alt="Top production" loading="lazy"><figcaption>Top production by channel.</figcaption></figure>
-<figure><img src="../img/a-reports-segments.jpg" alt="Market segment" loading="lazy"><figcaption>Market segment.</figcaption></figure>
-<figure><img src="../img/a-reports-sales.jpg" alt="Sales mix" loading="lazy"><figcaption>POS sales mix.</figcaption></figure>
+<figure><img src="../img/a-reports-occupancy.jpg" width="1280" height="800" alt="Occupancy report" loading="lazy"><figcaption>Occupancy, ADR and RevPAR.</figcaption></figure>
+<figure><img src="../img/a-reports-production.jpg" width="1280" height="800" alt="Top production" loading="lazy"><figcaption>Top production by channel.</figcaption></figure>
+<figure><img src="../img/a-reports-segments.jpg" width="1280" height="800" alt="Market segment" loading="lazy"><figcaption>Market segment.</figcaption></figure>
+<figure><img src="../img/a-reports-sales.jpg" width="1280" height="832" alt="Sales mix" loading="lazy"><figcaption>POS sales mix.</figcaption></figure>
 </div>
 <p>A guest still checked in after their departure date counts as occupied in every report, with no revenue for the extra nights.</p>
 
 <h3 id="history">History (audit log)</h3>
 <p><b>Reports → History</b> (MANAGER+) is a read-only record of significant actions: bookings, payments, prices, orders and voids, shifts, users, settings, roster and attendance corrections. Filter by staff email, action, entity and dates. Actions done by the system itself (for example the expiry of a website request) are shown as <b>System</b>; actions done through Telegram are marked "via Telegram".</p>
-<figure><img src="../img/a-history.jpg" alt="History" loading="lazy"><figcaption>Nothing in History can be edited or deleted.</figcaption></figure>
+<figure><img src="../img/a-history.jpg" width="1280" height="800" alt="History" loading="lazy"><figcaption>Nothing in History can be edited or deleted.</figcaption></figure>
 
 <h2 id="guest-side"><span class="num">10</span>The guest side</h2>
 <p>Staff should know what guests see, because guests will ask about it.</p>
@@ -662,10 +678,10 @@ Reason: Family visiting from Bangkok
   <li><b>Room service and table QR.</b> The guest orders from their phone. The order appears on the POS like any other and prints in the kitchen and bar.</li>
 </ul>
 <div class="grid2">
-<figure><img src="../img/p-home.jpg" alt="Public website" loading="lazy"><figcaption>Public website.</figcaption></figure>
-<figure><img src="../img/p-booking.jpg" alt="Booking search" loading="lazy"><figcaption>Room search with prices.</figcaption></figure>
-<figure><img src="../img/g-account.jpg" alt="Guest account" loading="lazy"><figcaption>Guest account.</figcaption></figure>
-<figure><img src="../img/g-gym.jpg" alt="Guest gym booking" loading="lazy"><figcaption>Gym booking by the guest.</figcaption></figure>
+<figure><img src="../img/p-home.jpg" width="1280" height="1924" alt="Public website" loading="lazy"><figcaption>Public website.</figcaption></figure>
+<figure><img src="../img/p-booking.jpg" width="1280" height="1758" alt="Booking search" loading="lazy"><figcaption>Room search with prices.</figcaption></figure>
+<figure><img src="../img/g-account.jpg" width="1280" height="800" alt="Guest account" loading="lazy"><figcaption>Guest account.</figcaption></figure>
+<figure><img src="../img/g-gym.jpg" width="1280" height="952" alt="Guest gym booking" loading="lazy"><figcaption>Gym booking by the guest.</figcaption></figure>
 </div>
 
 <h2 id="permissions"><span class="num">11</span>Who can do what</h2>
@@ -702,5 +718,105 @@ Reason: Family visiting from Bangkok
 </main>
 </div>
 <script>try{if(window.matchMedia('(max-width: 900px)').matches){var d=document.querySelector('nav.toc details');if(d)d.open=false;}}catch(e){}</script>
+<script>
+(function () {
+  var input = document.getElementById('q'), list = document.getElementById('results'), status = document.getElementById('qstatus');
+  if (!input) return;
+  var L = JSON.parse(input.getAttribute('data-l'));
+  var main = document.querySelector('main');
+  // One entry per heading: the heading and everything up to the next h2/h3.
+  var sections = [], cur = null, h2 = '';
+  Array.prototype.forEach.call(main.children, function (el) {
+    var tag = el.tagName;
+    if ((tag === 'H2' || tag === 'H3') && el.id) {
+      var num = el.querySelector('.num'), title = el.textContent.replace(/\s+/g, ' ').trim();
+      if (num) title = num.textContent.trim() + '. ' + title.slice(num.textContent.trim().length).trim();
+      if (tag === 'H2') h2 = title;
+      cur = { id: el.id, title: title, parent: tag === 'H3' ? h2 : '', nodes: [el], text: '' };
+      sections.push(cur);
+    } else if (cur) cur.nodes.push(el);
+  });
+  sections.forEach(function (s) {
+    s.text = s.nodes.map(function (n) { return n.textContent; }).join(' ').replace(/\s+/g, ' ').trim();
+    s.lower = s.text.toLowerCase();
+  });
+  function esc(t) { return t.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function terms(q) { return q.toLowerCase().split(/\s+/).filter(Boolean); }
+  function snippet(s, ts) {
+    var i = s.lower.indexOf(ts[0]), start = Math.max(0, i - 40), end = Math.min(s.text.length, i + ts[0].length + 90);
+    var t = (start > 0 ? '…' : '') + s.text.slice(start, end) + (end < s.text.length ? '…' : '');
+    var out = esc(t);
+    ts.forEach(function (w) {
+      var re = new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/[&<>"]/g, function (c) { return esc(c); }), 'gi');
+      out = out.replace(re, function (m) { return '<mark>' + m + '</mark>'; });
+    });
+    return out;
+  }
+  function clearMarks() {
+    Array.prototype.forEach.call(main.querySelectorAll('mark.hit'), function (m) {
+      var p = m.parentNode; p.replaceChild(document.createTextNode(m.textContent), m); p.normalize();
+    });
+  }
+  function markIn(s, ts) {
+    clearMarks();
+    s.nodes.forEach(function (root) {
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT), found = [], n;
+      while ((n = walker.nextNode())) found.push(n);
+      found.forEach(function (node) {
+        var lower = node.nodeValue.toLowerCase(), hits = [];
+        ts.forEach(function (w) { var i = lower.indexOf(w); while (i >= 0) { hits.push([i, i + w.length]); i = lower.indexOf(w, i + w.length); } });
+        if (!hits.length) return;
+        hits.sort(function (a, b) { return a[0] - b[0]; });
+        var frag = document.createDocumentFragment(), pos = 0, v = node.nodeValue;
+        hits.forEach(function (h) {
+          if (h[0] < pos) return;
+          frag.appendChild(document.createTextNode(v.slice(pos, h[0])));
+          var m = document.createElement('mark'); m.className = 'hit'; m.textContent = v.slice(h[0], h[1]); frag.appendChild(m);
+          pos = h[1];
+        });
+        frag.appendChild(document.createTextNode(v.slice(pos)));
+        node.parentNode.replaceChild(frag, node);
+      });
+    });
+  }
+  var current = [];
+  function run() {
+    var ts = terms(input.value);
+    list.innerHTML = ''; current = [];
+    if (!ts.length || input.value.trim().length < 2) { status.textContent = ''; clearMarks(); return; }
+    sections.forEach(function (s) {
+      if (!ts.every(function (w) { return s.lower.indexOf(w) >= 0; })) return;
+      var score = 0, tl = s.title.toLowerCase();
+      ts.forEach(function (w) { if (tl.indexOf(w) >= 0) score += 100; score += Math.min(s.lower.split(w).length - 1, 20); });
+      current.push({ s: s, score: score });
+    });
+    current.sort(function (a, b) { return b.score - a.score; });
+    status.textContent = current.length ? L.found.replace('{n}', current.length) : L.none;
+    current.slice(0, 30).forEach(function (r) {
+      var li = document.createElement('li'), a = document.createElement('a');
+      a.href = '#' + r.s.id;
+      a.innerHTML = '<span class="t">' + esc(r.s.parent ? r.s.parent + ' › ' + r.s.title : r.s.title) + '</span><span class="s">' + snippet(r.s, ts) + '</span>';
+      a.addEventListener('click', function (e) { e.preventDefault(); go(r.s, ts); });
+      li.appendChild(a); list.appendChild(li);
+    });
+  }
+  function go(s, ts) {
+    markIn(s, ts);
+    var first = main.querySelector('mark.hit') || document.getElementById(s.id);
+    var target = first.closest('figure, li, p, td, .box, .chat-wrap') || document.getElementById(s.id);
+    target.scrollIntoView({ block: 'center' });
+    try { history.replaceState(null, '', '#' + s.id); } catch (e) {}
+  }
+  var timer;
+  input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && current.length) { e.preventDefault(); go(current[0].s, terms(input.value)); }
+    if (e.key === 'Escape') { input.value = ''; run(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && document.activeElement !== input && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); input.focus(); }
+  });
+})();
+</script>
 </body>
 </html>

@@ -5,9 +5,23 @@ standalone = len(sys.argv) > 3 and sys.argv[3] == "site"
 import os
 d = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/"
 body = open(d + f"body-{lang}.html", encoding="utf-8").read()
-css = open(d + "style.css.part", encoding="utf-8").read()
+css = open(d + "style.css.part", encoding="utf-8").read() + "\n" + open(d + "search.css.part", encoding="utf-8").read()
+search_js = open(d + "search.js.part", encoding="utf-8").read()
+import json
 title = {"en": "Sunset Staff Manual", "th": "คู่มือระบบ Sunset"}[lang]
 toc_label = {"en": "Contents", "th": "สารบัญ"}[lang]
+L = {"en": {"ph": "Search the manual", "found": "{n} sections found", "none": "Nothing found"}, "th": {"ph": "ค้นหาในคู่มือ", "found": "พบ {n} หัวข้อ", "none": "ไม่พบผลลัพธ์"}}[lang]
+search_box = '<div class="search" role="search"><input id="q" type="search" autocomplete="off" placeholder="' + L["ph"] + ' ( / )" aria-label="' + L["ph"] + '" data-l="' + html.escape(json.dumps({"found": L["found"], "none": L["none"]}, ensure_ascii=False)) + '"><p class="status" id="qstatus" aria-live="polite"></p><ol class="results" id="results"></ol></div>'
+from PIL import Image
+imgdir = os.path.join(os.path.dirname(d.rstrip("/")), "site")
+def _dims(m):
+    path = os.path.join(imgdir, m.group(1))
+    try:
+        w, h = Image.open(path).size
+        return f'src="{m.group(1)}" width="{w}" height="{h}"'
+    except OSError:
+        return m.group(0)
+body = re.sub(r'src="(img/[^"]+)"', _dims, body)
 items, cur = [], None
 for m in re.finditer(r'<h([23])[^>]*id="([^"]+)"[^>]*>(.*?)</h\1>', body, re.S):
     lvl, i, t = m.group(1), m.group(2), m.group(3)
@@ -34,6 +48,7 @@ out = f'''<title>{title}</title>
 <div class="wrap" lang="{lang}">
 <nav class="toc" aria-label="{toc_label}">
 <div class="lang">{switch}</div>
+{search_box}
 <details open><summary>{toc_label}</summary><ol>{"".join(toc)}</ol></details>
 </nav>
 <main>
@@ -41,7 +56,7 @@ out = f'''<title>{title}</title>
 </main>
 </div>
 <script>try{{if(window.matchMedia('(max-width: 900px)').matches){{var d=document.querySelector('nav.toc details');if(d)d.open=false;}}}}catch(e){{}}</script>
-'''
+''' + search_js
 if standalone:
     out = out.replace('src="img/', 'src="../img/').replace(' target="_blank" rel="noopener"', '').replace('</style>', 'body { margin: 0; } img { max-width: 100%; }\n</style>', 1)
     out = f'<!doctype html>\n<html lang="{lang}">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<meta name="robots" content="noindex, nofollow">\n' + out.replace('<meta name="claude:viewport-fit-sides" content="cover">\n', '', 1).replace('\n<div class="wrap"', '\n</head>\n<body>\n<div class="wrap"', 1) + '</body>\n</html>\n'
