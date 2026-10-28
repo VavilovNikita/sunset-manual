@@ -15,6 +15,12 @@ cd ~/sunset-manual
 ./deploy/publish.sh                                         # copies site/ to /var/www/sunset-manual
 ```
 
+Create the parent folder of the auth cache once (nginx creates only the last folder of a `proxy_cache_path`, and this server has no `/var/cache/nginx`):
+
+```
+sudo mkdir -p /var/cache/nginx && sudo chmod 755 /var/cache/nginx
+```
+
 Then edit `/etc/nginx/sites-available/sunsetsamui` (keep a dated copy first): put the `proxy_cache_path` line from `deploy/nginx-manual.conf` at the top, outside the server blocks, and the `location` blocks inside the `server { listen 443 ... }` block.
 
 ```
@@ -35,4 +41,4 @@ cd ~/sunset-manual && git pull && ./deploy/publish.sh
 
 ## From the shared password (October 2026) to the staff login
 
-The first version used nginx basic auth. Replace its two `location` blocks with the ones above, and add the `proxy_cache_path` line. After the reload, `/etc/nginx/sunset-manual.htpasswd` is no longer read and can be deleted.
+The first version used nginx basic auth. Create `/var/cache/nginx` as above, replace its two `location` blocks with the ones above, and add the `proxy_cache_path` line. After the reload, `/etc/nginx/sunset-manual.htpasswd` is no longer read and can be deleted.
