@@ -2,33 +2,30 @@
 
 Commands are shown with `sudo`; when logged in as root (as on the hotel VPS), leave it out.
 
-The manual is served at `https://sunsetsamui.com/manual/` by the nginx that already runs on the host, behind one shared staff password.
+The manual is served at `https://sunsetsamui.com/manual/` by the nginx that already runs on the host. Anyone signed in to the admin as staff can open it; anyone else is sent to the staff sign-in page and back.
+The check is the web app's `GET /api/session/staff-check` (sunset-beach), so that has to be deployed first.
 Nothing else on the server changes.
 
 ## One time
 
 ```
 cd ~
-git clone git@github.com:vavilovnikita/sunset-manual.git   # or https, same as the other repos
+git clone git@github.com:VavilovNikita/sunset-manual.git   # or https, same as the other repos
 cd ~/sunset-manual
 ./deploy/publish.sh                                         # copies site/ to /var/www/sunset-manual
-sudo apt install -y rsync apache2-utils                     # if rsync or htpasswd is missing
-sudo htpasswd -c /etc/nginx/sunset-manual.htpasswd staff    # type the password at the prompt
 ```
 
-Next, copy the two `location` blocks from `deploy/nginx-manual.conf` into the `server { listen 443 ... }` block of `/etc/nginx/sites-available/sunsetsamui`, and reload nginx:
+Then edit `/etc/nginx/sites-available/sunsetsamui` (keep a dated copy first): put the `proxy_cache_path` line from `deploy/nginx-manual.conf` at the top, outside the server blocks, and the `location` blocks inside the `server { listen 443 ... }` block.
 
 ```
-sudo cp /etc/nginx/sites-available/sunsetsamui /etc/nginx/sites-available/sunsetsamui.bak-$(date +%F)
-sudo nano /etc/nginx/sites-available/sunsetsamui
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
 Check it works:
 
-- `curl -sI https://sunsetsamui.com/manual/` should answer `401`.
-- `curl -sI -u staff https://sunsetsamui.com/manual/en/` should answer `200` (curl asks for the password).
-- `curl -sI https://sunsetsamui.com/` and `https://sunsetsamui.com/api/actuator/health` should be unchanged.
+- `curl -sI https://sunsetsamui.com/manual/` answers `302` to `/login?callbackUrl=/manual/`.
+- In a browser: sign in at `/login` and open `/manual/`, the manual opens. Sign out and reload, you are back on the sign-in page.
+- `curl -sI https://sunsetsamui.com/` and `https://sunsetsamui.com/api/actuator/health` are unchanged.
 
 ## Every update
 
@@ -36,7 +33,6 @@ Check it works:
 cd ~/sunset-manual && git pull && ./deploy/publish.sh
 ```
 
-## Changing the password
+## From the shared password (October 2026) to the staff login
 
-Run `sudo htpasswd /etc/nginx/sunset-manual.htpasswd staff` (without `-c`, which would replace the file).
-There is no need to reload nginx.
+The first version used nginx basic auth. Replace its two `location` blocks with the ones above, and add the `proxy_cache_path` line. After the reload, `/etc/nginx/sunset-manual.htpasswd` is no longer read and can be deleted.
