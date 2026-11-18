@@ -2,7 +2,7 @@
   <div class="eyebrow">The Sunset Beach Resort &amp; Spa · Staff handbook</div>
   <h1>Sunset system user manual</h1>
   <p class="lede">How to run the hotel in the Sunset system: the front desk, rooms, the restaurant POS, the spa, the gym, staff schedules, Telegram notifications and the reports. Every screen is shown as it looks today, with the rules the system enforces and the reasons behind them.</p>
-  <div class="meta"><span>Version: October 2026</span><span>Audience: front desk, cashiers, waiters, spa, engineering, managers, administrators</span><span>All names and figures in the screenshots are demo data</span></div>
+  <div class="meta"><span>Version: November 2026</span><span>Audience: front desk, cashiers, waiters, spa, engineering, managers, administrators</span><span>All names and figures in the screenshots are demo data</span></div>
 </header>
 
 <h2 id="intro"><span class="num">1</span>Getting started</h2>
@@ -129,7 +129,11 @@
   <li><b>Relocate to another room:</b> move the guest from a chosen date, to the same or another room type. The preview shows the new total and the difference. The booking then has two room segments; <span class="ui">Undo this relocation</span> restores the original room and prices.</li>
   <li><b>Payment note:</b> for a receipt or transfer reference. Never type a card number: a note that looks like one is refused.</li>
   <li><b>Linked to</b> ties the booking to a guest card (see <a href="#guests">Guests</a>).</li>
+  <li><b>Booked on</b> is the day the booking was made. For a SiteMinder booking it is SiteMinder's own booking date, which the booking tracker uses for the booking window; for any other booking it is the day it was entered.</li>
+  <li><b>Channel</b> is how the guest booked: Walk-in, Phone, Direct (website), Booking.com, Airbnb, Agoda, Expedia, Ctrip / Trip.com, Hotelbeds, Travel agent or Other. Ctrip, Hotelbeds and Travel agent are new; existing SiteMinder bookings that were filed under Other are moved to them where SiteMinder named one of these channels.</li>
+  <li><b>Breakfast</b> (in the status form, with <span class="ui">Save</span>; CASHIER and above): <i>Breakfast guests</i> is how many people have breakfast each night and <i>Rate per night</i> is ฿250 or ฿350 per person. Leave the guests empty or 0 for no breakfast. With guests you must choose a rate, and the number cannot be more than the party (adults + children). Nothing is charged to the guest: breakfast is only taken out of the room price in the <a href="#booking-tracker">Booking tracker</a>. SiteMinder never sets it, so type it on the booking.</li>
 </ul>
+<figure><img src="img/a-booking-breakfast.jpg" alt="Booking page with breakfast and channel" loading="lazy"><figcaption>A Hotelbeds booking with breakfast for 2 guests at ฿250 a night. <i>Booked on</i> is in the left card; <i>Breakfast guests</i> and <i>Rate per night</i> are in the status form.</figcaption></figure>
 <figure><img src="img/a-booking-lucas.jpg" alt="Relocated booking with two rooms" loading="lazy"><figcaption>A relocated stay: Deluxe Sea View 204 until 5 Nov, then Garden Villa 101. Each segment keeps its own nightly prices.</figcaption></figure>
 
 <h3 id="folio">Folio and payments</h3>
@@ -184,6 +188,7 @@
   <li>A new reservation creates a booking with SiteMinder's total as the agreed price, after the same availability check as any booking. If there is no room, the import is refused and a person must resolve the overbooking.</li>
   <li>A changed reservation updates the dates or party through the normal paths; a cancelled one cancels the booking and releases the room.</li>
   <li>SiteMinder room type names are mapped to Sunset room types by a manager. An unknown name is refused, never guessed.</li>
+  <li>The channel on the booking is the one SiteMinder reports (Booking.com, Agoda, Expedia, Ctrip, Hotelbeds, Travel agent…) and SiteMinder's own booking date is kept as <b>Booked on</b>.</li>
   <li>Such bookings show <i>SiteMinder</i> and the reference under the guest's name. In History they appear with the actor <b>SITEMINDER</b>.</li>
 </ul>
 
@@ -514,9 +519,10 @@ Reason: Family visiting from Bangkok
 <tr><td>Manager report</td><td>One night compared with the same date last year: room statistics (rooms, out of order, occupied, complimentary, occupancy, ADR, RevPAR), guests, booking counts, revenue and tomorrow's forecast.</td></tr>
 <tr><td>Occupancy</td><td>Occupancy, ADR and RevPAR by room type for a period.</td></tr>
 <tr><td>Top production</td><td>Room-nights and revenue by channel.</td></tr>
-<tr><td>Market segment</td><td>Rooms, guests and revenue by segment (direct, OTA, walk-in, complimentary, house use).</td></tr>
+<tr><td>Market segment</td><td>Rooms, guests and revenue by segment (direct, OTA, walk-in, complimentary, house use). Booking.com, Airbnb, Agoda, Expedia, Ctrip, Hotelbeds and Travel agent bookings all count as OTA here: an agent is a sale through an intermediary.</td></tr>
 <tr><td>Sales mix</td><td>POS quantities and revenue by department and category.</td></tr>
 <tr><td>Guest LTV</td><td>Each guest's bookings, nights, room revenue and room charges.</td></tr>
+<tr><td>Booking tracker</td><td>The hotel's booking tracker workbook on live data: results by month against targets, channels, booking trends and a weekly review. <a href="#booking-tracker">Details below.</a></td></tr>
 </table></div>
 <figure><img src="img/a-reports.jpg" alt="Manager report" loading="lazy"><figcaption>Manager report, room statistics.</figcaption></figure>
 <div class="grid2">
@@ -526,6 +532,46 @@ Reason: Family visiting from Bangkok
 <figure><img src="img/a-reports-sales.jpg" alt="Sales mix" loading="lazy"><figcaption>POS sales mix.</figcaption></figure>
 </div>
 <p>A guest still checked in after their departure date counts as occupied in every report, with no revenue for the extra nights.</p>
+
+<h3 id="booking-tracker">Booking tracker</h3>
+<p><b>Reports → Reports → Booking tracker</b> (MANAGER and above) is the hotel's "SBR Booking Tracker" Excel workbook, worked out from the live bookings instead of typed in by hand. It answers: how full are the coming months, how much room revenue is that, how are we doing against the target, which channels bring it, and how early guests book.</p>
+<p>Choose the <b>From month</b> and <b>To month</b> and press <span class="ui">View</span>. The default is the current season (November to April). <b>Channels and trends for</b> narrows the Channel summary and Booking trends to one stay month; <span class="ui">Current season</span> goes back to the default.</p>
+<figure><img src="img/a-booking-tracker.jpg" alt="Booking tracker: results by month" loading="lazy"><figcaption><b>Booking tracker.</b> The range, <span class="ui">Export xlsx</span>, then Results and the Breakdown for every month. Demo data.</figcaption></figure>
+<h4>What is counted, and how the money is worked out</h4>
+<ul>
+  <li><b>Only Confirmed and Paid bookings.</b> Enquiries (New), cancelled bookings and no-shows are not counted.</li>
+  <li><b>A stay is split by its nights.</b> A booking from 29 December to 3 January puts three nights into December and three into January, each at the price agreed for that night.</li>
+  <li><b>Net room revenue</b> is the price with service charge, VAT and breakfast taken out: <i>price ÷ (1 + service charge) ÷ (1 + VAT) − breakfast</i>. The <b>Breakdown</b> table shows each step: <i>Inclusive package</i>, <i>Service charge</i>, <i>VAT</i>, <i>Breakfast</i>, <i>Net room revenue</i>. Each step is rounded to two decimals for every booking and month, and the tables only add the rounded figures.</li>
+  <li><b>Net ADR</b> is net room revenue divided by the room nights booked.</li>
+  <li><b>The early-departure fee is not included.</b> It belongs to no particular night, so the tracker (like the revenue statistic) leaves it out.</li>
+</ul>
+<div class="box warn"><span class="tag">The service charge is not charged</span><p>Room prices already include a 10% service charge and 7% VAT. The tracker takes them out only to show the figures the workbook needs. Nothing is added to a guest's bill, the folio, the POS or the receipts: this system still has no service charge for guests.</p></div>
+<h4>The sections</h4>
+<div class="tbl"><table>
+<tr><th>Section</th><th>Shows</th></tr>
+<tr><td><b>Results</b></td><td>One row per month and a total: <i>Available</i> room nights (today's rooms over the nights of the month, less the nights a room is blocked), <i>Booked</i>, <i>Occupancy</i>, <i>Net room revenue</i>, <i>Breakfast</i>, <i>Net ADR</i>, <i>Target</i>, <i>Still needed</i> (target minus booked) and <i>Pickup vs baseline</i> (booked minus the baseline you typed). Then the <b>Breakdown</b> and the <b>Inputs</b>.</td></tr>
+<tr><td><b>Channel summary</b></td><td>Room nights, net revenue, net ADR and the share of nights and of revenue for each channel; the channels ranked by net room revenue; two charts.</td></tr>
+<tr><td><b>Booking trends</b></td><td>The average booking window (days between the day the booking was made and arrival, weighted by room nights), the room nights in each window bucket, and the booking pace of the last 12 weeks.</td></tr>
+<tr><td><b>Weekly review</b></td><td>A frozen snapshot of every stay month, taken automatically each Friday at 23:55, with the pickup since the previous snapshot of the same month.</td></tr>
+</table></div>
+<figure><img src="img/a-booking-tracker-channels.jpg" alt="Booking tracker: channel summary and charts" loading="lazy"><figcaption><b>Channel summary</b> with the ranking and its two charts. Booking trends follow below it on the same page.</figcaption></figure>
+<h4>Targets and baseline</h4>
+<p>Under <b>Results → Inputs</b>, each month has three fields: <i>Target room nights</i>, <i>Baseline room nights</i> and <i>Baseline net revenue</i> (last year's figures, or any comparison you choose). Type them and press <span class="ui">Save</span> on that row. An empty field is cleared. The rooms, nights and blocked nights in the same table come from the system and cannot be typed over.</p>
+<h4>Weekly review</h4>
+<ul>
+  <li>The snapshot is <b>never recalculated</b>: it keeps the figures as they were on that Friday. If the server was off at Friday 23:55, the snapshot is taken when it is back and marked <i>late</i>.</li>
+  <li><i>Pickup nights</i> and <i>Pickup revenue</i> are the change since the previous snapshot of the same month.</li>
+  <li><i>Reason / issue</i>, <i>Next action</i>, <i>Owner</i> and <i>Due</i> are yours to fill in or change on each row, then <span class="ui">Save</span>. They are the only thing that can be edited; the History log records which fields were changed, never the text.</li>
+  <li>Before the first Friday there is nothing to show: "No snapshot for these months yet".</li>
+</ul>
+<figure><img src="img/a-booking-tracker-review.jpg" alt="Booking tracker: weekly review" loading="lazy"><figcaption><b>Weekly review.</b> The snapshot of 13 Nov is marked <i>late</i> because it was taken after the Friday run. The four columns on the right are the notes you edit.</figcaption></figure>
+<h4>Export xlsx</h4>
+<p><span class="ui">Export xlsx</span> downloads the same figures as an Excel file with the sheets <i>Results</i>, <i>Channel summary</i>, <i>Booking trends</i>, <i>Weekly review</i> and <i>Bookings</i> (the bookings behind the figures), with charts. It uses the range and stay month currently on screen.</p>
+<p>If a reload fails, the screen keeps the last figures and says when they were loaded.</p>
+
+<h3 id="tax-rates">Tax rates (ADMIN)</h3>
+<p><b>Reports → Settings → Tax rates</b> holds the two percentages the tracker takes out of room prices: <b>Service charge</b> and <b>VAT</b>. Each has its own card and its own <span class="ui">Save</span>. A rate is a percentage from 0 to 99.99 with at most two decimals. A new rate applies to the next report you open, for its whole range. The VAT rate is also used by the revenue statistic (Z410), to take VAT out of a price, never to add it. Changing either rate changes no price, receipt or balance.</p>
+<figure class="half"><img src="img/a-tax-rates.jpg" alt="Tax rates settings" loading="lazy"><figcaption>Tax rates (ADMIN): one card for the service charge and one for VAT, each saved on its own.</figcaption></figure>
 
 <h3 id="history">History (audit log)</h3>
 <p><b>Reports → History</b> (MANAGER+) is a read-only record of significant actions: bookings, payments, prices, orders and voids, shifts, users, settings, roster and attendance corrections. Filter by staff email, action, entity and dates. Actions done by the system itself (for example the expiry of a website request) are shown as <b>System</b>; actions done through Telegram are marked "via Telegram".</p>
@@ -551,15 +597,16 @@ Reason: Family visiting from Bangkok
 <tr><td>Take orders, send to kitchen, pre-bill, report a room problem</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>Cancel an order that was never sent</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>Close orders, open and close own cash shift</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
-<tr><td>Bookings, calendar, check-in/out, folio payments, night audit</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>Bookings (including breakfast), calendar, check-in/out, folio payments, night audit</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>Spa and gym bookings, housekeeping status</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>Void a sent line, cancel a sent order</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>Manual price on a new booking, back-dated booking</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>Prices, room blocks, room types, menu, tables, printers</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>Roster, attendance, notifications log, linking Telegram</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>Booking tracker: view, targets and baseline, weekly review notes, Excel export</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>Reports, History, shift history, order history, CSV exports</td><td class="c no">—</td><td class="c part">own shift</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>Lighting control</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
-<tr><td>Users, settings pages, schedule import, device setup</td><td class="c no">—</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td></tr>
+<tr><td>Users, settings pages (including Tax rates), schedule import, device setup</td><td class="c no">—</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td></tr>
 </table></div>
 <p>Job functions add to this: ENGINEER closes tasks, THERAPIST reads the spa schedule, HR reads the roster and decides shift requests.</p>
 

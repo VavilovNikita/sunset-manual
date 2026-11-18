@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>What's new - Sunset Staff Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600&family=Work+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: hotel handbook. Sticky contents rail on the left (desktop), one reading column with full-width screenshots. Colours and faces are the Sunset Beach system's own (ink, coral, sea, sand; Fraunces + Work Sans). */
+:root {
+  --bg: #F7F2E6;
+  --paper: #FFFDF8;
+  --fg: #12282D;
+  --muted: #4E6267;
+  --line: #DCD3BE;
+  --accent: #C4521F;
+  --sea: #3F7468;
+  --amber: #8A5A00;
+  --note-bg: #EEF4F1;
+  --warn-bg: #FBEFE6;
+  --code-bg: #EFE8D6;
+  --shot-edge: #0F262B;
+  --display: "Fraunces", "Noto Serif Thai", Georgia, serif;
+  --body: "Work Sans", "Noto Sans Thai", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F262B; --paper: #153138; --fg: #F3ECDA; --muted: #A9B9B5; --line: #2A4A52;
+    --accent: #F07A47; --sea: #8FBFB2; --amber: #E8B44C; --note-bg: #183A3F; --warn-bg: #3A2A22; --code-bg: #1C3D45; --shot-edge: #2A4A52;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F262B; --paper: #153138; --fg: #F3ECDA; --muted: #A9B9B5; --line: #2A4A52;
+  --accent: #F07A47; --sea: #8FBFB2; --amber: #E8B44C; --note-bg: #183A3F; --warn-bg: #3A2A22; --code-bg: #1C3D45; --shot-edge: #2A4A52;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 48px; padding-block: 40px 80px; }
+@media (max-width: 900px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 24px 60px; } }
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); align-self: start; max-height: calc(100vh - 40px); overflow-y: auto; font-size: 14px; padding-right: 8px; }
+@media (max-width: 900px) { nav.toc { position: static; max-height: none; } }
+nav.toc details > summary { cursor: pointer; font-weight: 600; list-style: none; padding: 6px 0; }
+nav.toc details > summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.toc ol ol { padding-left: 14px; margin: 2px 0 8px; }
+nav.toc a { color: var(--muted); text-decoration: none; display: block; padding: 3px 0; border-radius: 4px; }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--accent); }
+nav.toc p.whatsnew { margin: 0 0 10px; }
+nav.toc p.whatsnew a { display: inline-block; border: 1px solid var(--line); padding: 4px 12px; border-radius: 999px; color: var(--fg); font-weight: 600; }
+nav.toc p.whatsnew a:hover, nav.toc p.whatsnew a:focus-visible { border-color: var(--accent); color: var(--accent); }
+nav.toc .lang { display: flex; gap: 8px; margin-bottom: 16px; }
+nav.toc .lang a { display: inline-block; border: 1px solid var(--line); padding: 4px 12px; border-radius: 999px; color: var(--fg); }
+nav.toc .lang a[aria-current] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+main { min-width: 0; }
+header.cover { padding-bottom: 8px; }
+.eyebrow { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--sea); font-weight: 600; }
+h1 { font-family: var(--display); font-style: italic; font-weight: 500; font-size: clamp(34px, 5vw, 52px); line-height: 1.1; margin: 10px 0 14px; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 3.2vw, 34px); line-height: 1.2; margin: 64px 0 12px; padding-top: 20px; border-top: 1px solid var(--line); text-wrap: balance; scroll-margin-top: 16px; }
+h2 .num { color: var(--accent); font-style: italic; margin-right: 10px; }
+h3 { font-family: var(--display); font-weight: 500; font-style: italic; font-size: 22px; margin: 36px 0 8px; scroll-margin-top: 16px; text-wrap: balance; }
+h4 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 22px 0 6px; }
+p, li { max-width: 72ch; }
+p { margin: 8px 0 12px; }
+ul, ol { padding-left: 22px; margin: 8px 0 14px; }
+li { margin: 4px 0; }
+.lede { font-size: 18px; color: var(--muted); max-width: 64ch; }
+.meta { font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 14px; }
+b, strong { font-weight: 600; }
+.ui { font-family: var(--body); font-weight: 600; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; font-size: .92em; white-space: nowrap; }
+code { font-family: var(--mono); font-size: .88em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+figure { margin: 18px 0 26px; }
+figure img { display: block; width: 100%; height: auto; border: 1px solid var(--shot-edge); border-radius: 8px; background: #0F262B; }
+figure.phone { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+figure.phone img { width: 280px; max-width: 100%; border-radius: 18px; }
+figure.phone figcaption { flex-basis: 100%; }
+figure.half img { max-width: 760px; }
+figcaption { font-size: 13.5px; color: var(--muted); margin-top: 8px; max-width: 80ch; }
+figcaption b { color: var(--fg); }
+.box { border-radius: 8px; padding: 14px 18px; margin: 16px 0; max-width: 78ch; }
+.box p:first-child { margin-top: 0; } .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+.rule { background: var(--note-bg); border-left: 3px solid var(--sea); }
+.warn { background: var(--warn-bg); border-left: 3px solid var(--accent); }
+.box .tag { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 4px; }
+.rule .tag { color: var(--sea); } .warn .tag { color: var(--accent); }
+.tbl { overflow-x: auto; margin: 14px 0 22px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--code-bg); }
+tr:last-child td { border-bottom: 0; }
+td.c, th.c { text-align: center; }
+.yes { color: var(--sea); font-weight: 700; } .no { color: var(--muted); } .part { color: var(--amber); font-weight: 700; }
+.steps { counter-reset: s; list-style: none; padding-left: 0; }
+.steps > li { counter-increment: s; position: relative; padding-left: 36px; }
+.steps > li::before { content: counter(s); position: absolute; left: 0; top: 1px; width: 24px; height: 24px; border-radius: 50%; background: var(--fg); color: var(--bg); font-size: 13px; font-weight: 600; display: grid; place-items: center; }
+.chat { background: #17212B; color: #E9EEF2; border-radius: 14px; padding: 16px; max-width: 440px; font-size: 14px; display: grid; gap: 10px; }
+.chat .msg { background: #182533; border-radius: 12px 12px 12px 4px; padding: 10px 12px; white-space: pre-line; }
+.chat .me { background: #2B5278; border-radius: 12px 12px 4px 12px; justify-self: end; }
+.chat .kb { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.chat .kb span { background: #243443; border-radius: 6px; padding: 6px; text-align: center; font-size: 13px; }
+.chat .kb span.wide { grid-column: 1 / -1; }
+.chat-wrap { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+.chat-cap { font-size: 13px; color: var(--muted); flex: 1 1 260px; min-width: 0; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.grid2 figure { margin: 0; }
+a { color: var(--accent); }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.top { font-size: 13px; }
+</style>
+
+<style>
+/* What's new pages: the release list, the "only in one language" mark and the previous/next links. */
+.lead { color: var(--muted); max-width: 62ch; margin: 0 0 24px; }
+ol.releases { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+a.rel { display: grid; gap: 2px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--fg); text-decoration: none; }
+a.rel:hover, a.rel:focus-visible { border-color: var(--accent); }
+a.rel .date { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--sea); font-weight: 600; }
+a.rel .rt { font-family: var(--display); font-size: 21px; font-weight: 500; }
+a.rel .rs { color: var(--muted); font-size: 15px; }
+.only { font-family: var(--body); font-size: 12px; font-weight: 600; border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; margin-left: 8px; color: var(--muted); white-space: nowrap; vertical-align: middle; }
+nav.toc p.back { margin: 0 0 14px; font-size: 14px; }
+nav.toc a[aria-current="page"] { color: var(--accent); font-weight: 600; }
+nav.toc details > summary a { color: var(--fg); }
+article.update h4 { margin: 22px 0 6px; }
+.pn { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin: 36px 0 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+.pn a { flex: 1 1 260px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; text-decoration: none; background: var(--paper); font-size: 14px; }
+.pn a.next { text-align: right; }
+.pn a:hover, .pn a:focus-visible { border-color: var(--accent); }
+</style>
+
+<style>.wrap[lang="th"] h1, .wrap[lang="th"] h3, .wrap[lang="th"] .num, .wrap[lang="th"] i { font-style: normal; } .wrap[lang="th"] h3 { font-weight: 600; } body { margin: 0; } img { max-width: 100%; }</style>
+</head>
+<body>
+<div class="wrap" lang="en">
+<nav class="toc" aria-label="Releases">
+<div class="lang"><a aria-current="page">English</a><a href="../../th/updates/2026-11-18-booking-tracker.html">ภาษาไทย</a></div>
+<p class="back"><a href="../index.html">&larr; Back to the manual</a></p>
+<details open><summary><a href="index.html">What's new</a></summary><ol><li><a href="2026-11-18-booking-tracker.html" aria-current="page">Booking tracker, breakfast and new channels</a></li></ol></details>
+</nav>
+<main>
+<article class="update"><p class="eyebrow">18 November 2026</p><h1>Booking tracker, breakfast and new channels</h1>
+<p>The "SBR Booking Tracker" workbook no longer has to be typed in by hand. Sunset works out the same tables from the live bookings, shows them in the admin and exports them to Excel.</p>
+<figure><img src="../../img/a-booking-tracker.jpg" width="1280" height="1290" alt="Booking tracker: results by month" loading="lazy"><figcaption>Reports → Reports → Booking tracker: results by month, with net room revenue, target and pickup.</figcaption></figure>
+
+<h4>What is new</h4>
+<ul>
+  <li><b>Booking tracker</b> tab in Reports: Results by month against a target and a baseline, Channel summary with charts, Booking trends (booking window and 12-week pace) and a Weekly review that is snapshotted automatically every Friday at 23:55. <span class="ui">Export xlsx</span> downloads it as an Excel file. <a href="../index.html#booking-tracker">Read how it is calculated</a>.</li>
+  <li><b>Breakfast on the booking:</b> guests per night and a rate of ฿250 or ฿350. It is only taken out of the room price in the tracker; nothing is charged to the guest. <a href="../index.html#booking-page">Booking page</a>.</li>
+  <li><b>New channels:</b> Ctrip / Trip.com, Hotelbeds and Travel agent. In the Market segment report all three count as OTA. <a href="../index.html#reports-tabs">Reports</a>.</li>
+  <li><b>Booked on</b> on the booking page: for SiteMinder bookings it is SiteMinder's own booking date. <a href="../index.html#siteminder">SiteMinder import</a>.</li>
+  <li><b>Tax rates</b> (Reports → Settings): the service charge and VAT percentages the tracker takes out of room prices. <a href="../index.html#tax-rates">Tax rates</a>.</li>
+</ul>
+
+<h4>Who it is for</h4>
+<ul>
+  <li><b>Managers and administrators:</b> the Booking tracker tab, targets and baseline, weekly review notes and the Excel export (MANAGER and above).</li>
+  <li><b>Front desk (CASHIER and above):</b> breakfast and the new channels on a booking.</li>
+  <li><b>Administrators:</b> Tax rates (ADMIN).</li>
+</ul>
+
+<div class="box warn"><span class="tag">Nothing changes for guests</span><p>The service charge and VAT in the tracker are a deduction for the analysis only. No guest bill, folio, receipt or POS total changes.</p></div>
+</article><div class="pn"></div><p class="top"><a href="../index.html">&larr; Back to the manual</a> &middot; <a href="index.html">What's new</a></p>
+</main>
+</div>
+</body>
+</html>

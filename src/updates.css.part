@@ -1,0 +1,19 @@
+<style>
+/* What's new pages: the release list, the "only in one language" mark and the previous/next links. */
+.lead { color: var(--muted); max-width: 62ch; margin: 0 0 24px; }
+ol.releases { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+a.rel { display: grid; gap: 2px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--fg); text-decoration: none; }
+a.rel:hover, a.rel:focus-visible { border-color: var(--accent); }
+a.rel .date { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--sea); font-weight: 600; }
+a.rel .rt { font-family: var(--display); font-size: 21px; font-weight: 500; }
+a.rel .rs { color: var(--muted); font-size: 15px; }
+.only { font-family: var(--body); font-size: 12px; font-weight: 600; border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; margin-left: 8px; color: var(--muted); white-space: nowrap; vertical-align: middle; }
+nav.toc p.back { margin: 0 0 14px; font-size: 14px; }
+nav.toc a[aria-current="page"] { color: var(--accent); font-weight: 600; }
+nav.toc details > summary a { color: var(--fg); }
+article.update h4 { margin: 22px 0 6px; }
+.pn { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin: 36px 0 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+.pn a { flex: 1 1 260px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; text-decoration: none; background: var(--paper); font-size: 14px; }
+.pn a.next { text-align: right; }
+.pn a:hover, .pn a:focus-visible { border-color: var(--accent); }
+</style>

@@ -49,6 +49,7 @@ out = f'''<title>{title}</title>
 <nav class="toc" aria-label="{toc_label}">
 <div class="lang">{switch}</div>
 {search_box}
+<!--WHATSNEW-->
 <details open><summary>{toc_label}</summary><ol>{"".join(toc)}</ol></details>
 </nav>
 <main>
@@ -58,12 +59,15 @@ out = f'''<title>{title}</title>
 <script>try{{if(window.matchMedia('(max-width: 900px)').matches){{var d=document.querySelector('nav.toc details');if(d)d.open=false;}}}}catch(e){{}}</script>
 ''' + search_js
 if standalone:
+    # "What's new" (built by tools/updates.py) sits at the top of the contents.
+    whatsnew = {"en": "What's new", "th": "มีอะไรใหม่"}[lang]
+    out = out.replace('<!--WHATSNEW-->', f'<p class="whatsnew"><a href="updates/index.html">{whatsnew}</a></p>')
     out = out.replace('src="img/', 'src="../img/').replace(' target="_blank" rel="noopener"', '').replace('</style>', 'body { margin: 0; } img { max-width: 100%; }\n</style>', 1)
     out = f'<!doctype html>\n<html lang="{lang}">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<meta name="robots" content="noindex, nofollow">\n' + out.replace('<meta name="claude:viewport-fit-sides" content="cover">\n', '', 1).replace('\n<div class="wrap"', '\n</head>\n<body>\n<div class="wrap"', 1) + '</body>\n</html>\n'
     import os; os.makedirs(sys.argv[4] + f"/{lang}", exist_ok=True)
     open(sys.argv[4] + f"/{lang}/index.html", "w", encoding="utf-8").write(out)
 else:
-    open(d + f"manual-{lang}.html", "w", encoding="utf-8").write(out)
+    open(d + f"manual-{lang}.html", "w", encoding="utf-8").write(out.replace('<!--WHATSNEW-->', ''))
 used = sorted(set(re.findall(r'src="(img/[^"]+)"', body)))
 pass
 print(len(out), len(used))

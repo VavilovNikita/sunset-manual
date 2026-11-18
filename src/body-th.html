@@ -2,7 +2,7 @@
   <div class="eyebrow">The Sunset Beach Resort &amp; Spa · คู่มือพนักงาน</div>
   <h1>คู่มือการใช้งานระบบ Sunset</h1>
   <p class="lede">วิธีทำงานในโรงแรมด้วยระบบ Sunset ได้แก่ งานต้อนรับ ห้องพัก ระบบขายหน้าร้าน (POS) ของร้านอาหาร สปา ฟิตเนส ตารางงานพนักงาน การแจ้งเตือนทาง Telegram และรายงาน ทุกหน้าจอแสดงตามที่เป็นอยู่จริงในปัจจุบัน พร้อมกฎที่ระบบบังคับใช้และเหตุผลของกฎเหล่านั้น</p>
-  <div class="meta"><span>ฉบับ: ตุลาคม 2026</span><span>สำหรับ: ฝ่ายต้อนรับ แคชเชียร์ พนักงานเสิร์ฟ สปา ช่าง ผู้จัดการ ผู้ดูแลระบบ</span><span>ชื่อและตัวเลขทั้งหมดในภาพเป็นข้อมูลตัวอย่าง</span></div>
+  <div class="meta"><span>ฉบับ: พฤศจิกายน 2026</span><span>สำหรับ: ฝ่ายต้อนรับ แคชเชียร์ พนักงานเสิร์ฟ สปา ช่าง ผู้จัดการ ผู้ดูแลระบบ</span><span>ชื่อและตัวเลขทั้งหมดในภาพเป็นข้อมูลตัวอย่าง</span></div>
 </header>
 
 <div class="box rule"><span class="tag">เกี่ยวกับฉบับภาษาไทย</span><p>หน้าจอในสำนักงานเป็นภาษาอังกฤษ คู่มือนี้จึงคงชื่อปุ่มและเมนูเป็นภาษาอังกฤษตามที่เห็นบนหน้าจอ (เช่น <span class="ui">Check in</span>) ส่วนบอท Telegram ใช้ภาษาไทยได้ ชื่อปุ่มในส่วนของบอทจึงเป็นภาษาไทยตามที่บอทแสดง</p></div>
@@ -131,7 +131,11 @@
   <li><b>Relocate to another room:</b> ย้ายแขกตั้งแต่วันที่เลือก ไปห้องประเภทเดียวกันหรือประเภทอื่น ตัวอย่างจะแสดงยอดรวมใหม่และส่วนต่าง การจองจะมีสองช่วงห้อง <span class="ui">Undo this relocation</span> คืนห้องและราคาเดิม</li>
   <li><b>Payment note:</b> สำหรับเลขใบเสร็จหรือเลขอ้างอิงการโอน ห้ามพิมพ์หมายเลขบัตร หมายเหตุที่ดูเหมือนหมายเลขบัตรจะถูกปฏิเสธ</li>
   <li><b>Linked to</b> เชื่อมการจองกับบัตรแขก (ดู <a href="#guests">Guests</a>)</li>
+  <li><b>Booked on</b> คือวันที่ทำการจอง สำหรับการจองจาก SiteMinder คือวันที่จองของ SiteMinder เอง ซึ่ง Booking tracker ใช้คำนวณช่วงเวลาจองล่วงหน้า สำหรับการจองอื่นคือวันที่บันทึกเข้าระบบ</li>
+  <li><b>Channel</b> คือแขกจองผ่านทางใด: Walk-in, Phone, Direct (website), Booking.com, Airbnb, Agoda, Expedia, Ctrip / Trip.com, Hotelbeds, Travel agent หรือ Other ส่วน Ctrip, Hotelbeds และ Travel agent เป็นของใหม่ การจองจาก SiteMinder ที่มีอยู่เดิมและเคยอยู่ใน Other จะถูกย้ายไปช่องทางเหล่านี้ เมื่อ SiteMinder ระบุชื่อช่องทางเหล่านี้</li>
+  <li><b>Breakfast</b> (ในฟอร์มสถานะ แล้วกด <span class="ui">Save</span> CASHIER ขึ้นไป): <i>Breakfast guests</i> คือจำนวนคนที่รับอาหารเช้าในแต่ละคืน และ <i>Rate per night</i> คือ ฿250 หรือ ฿350 ต่อคน เว้นจำนวนแขกว่างไว้หรือใส่ 0 หากไม่มีอาหารเช้า เมื่อมีแขกต้องเลือกอัตรา และจำนวนต้องไม่เกินจำนวนผู้เข้าพัก (ผู้ใหญ่ + เด็ก) ไม่มีอะไรถูกเรียกเก็บจากแขก: อาหารเช้าถูกหักออกจากราคาห้องใน <a href="#booking-tracker">Booking tracker</a> เท่านั้น SiteMinder ไม่เคยกำหนดค่านี้ จึงต้องพิมพ์ในการจองเอง</li>
 </ul>
+<figure><img src="img/a-booking-breakfast.jpg" alt="หน้าการจองพร้อมอาหารเช้าและช่องทาง" loading="lazy"><figcaption>การจอง Hotelbeds พร้อมอาหารเช้า 2 คน คนละ ฿250 ต่อคืน <i>Booked on</i> อยู่ในการ์ดด้านซ้าย ส่วน <i>Breakfast guests</i> และ <i>Rate per night</i> อยู่ในฟอร์มสถานะ</figcaption></figure>
 <figure><img src="img/a-booking-lucas.jpg" alt="การจองที่ย้ายห้องโดยมีสองห้อง" loading="lazy"><figcaption>การเข้าพักที่มีการย้ายห้อง: Deluxe Sea View 204 ถึงวันที่ 5 พ.ย. จากนั้น Garden Villa 101 แต่ละช่วงคงราคารายคืนของตัวเอง</figcaption></figure>
 
 <h3 id="folio">โฟลิโอและการชำระเงิน</h3>
@@ -186,6 +190,7 @@
   <li>การจองใหม่จะสร้างการจองโดยใช้ยอดรวมของ SiteMinder เป็นราคาที่ตกลง หลังผ่านการตรวจห้องว่างแบบเดียวกับการจองทั่วไป หากไม่มีห้องว่าง การนำเข้าจะถูกปฏิเสธและต้องมีคนจัดการการจองเกินเอง</li>
   <li>การจองที่เปลี่ยนแปลงจะปรับวันที่หรือจำนวนผู้เข้าพักผ่านขั้นตอนปกติ การจองที่ถูกยกเลิกจะยกเลิกการจองและปล่อยห้อง</li>
   <li>ชื่อประเภทห้องของ SiteMinder ถูกจับคู่กับประเภทห้องของ Sunset โดยผู้จัดการ ชื่อที่ไม่รู้จักจะถูกปฏิเสธ ระบบไม่เดา</li>
+  <li>ช่องทางในการจองคือช่องทางที่ SiteMinder รายงาน (Booking.com, Agoda, Expedia, Ctrip, Hotelbeds, Travel agent…) และวันที่จองของ SiteMinder ถูกเก็บเป็น <b>Booked on</b></li>
   <li>การจองเหล่านี้แสดง <i>SiteMinder</i> และหมายเลขอ้างอิงใต้ชื่อแขก ใน History จะแสดงผู้กระทำเป็น <b>SITEMINDER</b></li>
 </ul>
 
@@ -516,9 +521,10 @@
 <tr><td>Manager report</td><td>หนึ่งคืนเทียบกับวันเดียวกันของปีที่แล้ว: สถิติห้อง (ห้อง งดใช้งาน มีแขก ฟรี อัตราการเข้าพัก ADR RevPAR) แขก จำนวนการจอง รายได้ และพยากรณ์วันพรุ่งนี้</td></tr>
 <tr><td>Occupancy</td><td>อัตราการเข้าพัก ADR และ RevPAR ตามประเภทห้องในช่วงเวลาหนึ่ง</td></tr>
 <tr><td>Top production</td><td>ห้อง-คืนและรายได้ตามช่องทาง</td></tr>
-<tr><td>Market segment</td><td>ห้อง แขก และรายได้ตามกลุ่มลูกค้า (ตรง OTA walk-in ฟรี ใช้ภายใน)</td></tr>
+<tr><td>Market segment</td><td>ห้อง แขก และรายได้ตามกลุ่มลูกค้า (ตรง OTA walk-in ฟรี ใช้ภายใน) การจองจาก Booking.com, Airbnb, Agoda, Expedia, Ctrip, Hotelbeds และ Travel agent นับเป็น OTA ทั้งหมดในรายงานนี้ เพราะตัวแทนคือการขายผ่านคนกลาง</td></tr>
 <tr><td>Sales mix</td><td>จำนวนและรายได้ POS ตามแผนกและหมวดหมู่</td></tr>
 <tr><td>Guest LTV</td><td>การจอง จำนวนคืน รายได้ค่าห้อง และค่าใช้จ่ายลงบัญชีห้องของแขกแต่ละคน</td></tr>
+<tr><td>Booking tracker</td><td>ไฟล์ Excel Booking tracker ของโรงแรมจากข้อมูลจริง: ผลลัพธ์รายเดือนเทียบกับเป้าหมาย ช่องทางขาย แนวโน้มการจอง และการทบทวนรายสัปดาห์ <a href="#booking-tracker">รายละเอียดด้านล่าง</a></td></tr>
 </table></div>
 <figure><img src="img/a-reports.jpg" alt="Manager report" loading="lazy"><figcaption>Manager report สถิติห้องพัก</figcaption></figure>
 <div class="grid2">
@@ -528,6 +534,46 @@
 <figure><img src="img/a-reports-sales.jpg" alt="Sales mix" loading="lazy"><figcaption>สัดส่วนยอดขาย POS</figcaption></figure>
 </div>
 <p>แขกที่ยังเช็คอินอยู่หลังวันกำหนดออกนับเป็นห้องที่มีแขกในทุกรายงาน โดยไม่มีรายได้สำหรับคืนที่เกิน</p>
+
+<h3 id="booking-tracker">Booking tracker</h3>
+<p><b>Reports → Reports → Booking tracker</b> (MANAGER ขึ้นไป) คือไฟล์ Excel "SBR Booking Tracker" ของโรงแรม ที่คำนวณจากการจองจริงในระบบ แทนการพิมพ์ด้วยมือ ตอบคำถามว่า เดือนข้างหน้าเต็มแค่ไหน คิดเป็นรายได้ห้องเท่าไร เทียบกับเป้าหมายเป็นอย่างไร ช่องทางไหนทำรายได้ และแขกจองล่วงหน้านานแค่ไหน</p>
+<p>เลือก <b>From month</b> และ <b>To month</b> แล้วกด <span class="ui">View</span> ค่าเริ่มต้นคือฤดูกาลปัจจุบัน (พฤศจิกายนถึงเมษายน) ช่อง <b>Channels and trends for</b> จำกัด Channel summary และ Booking trends ให้เหลือเดือนที่เข้าพักเดือนเดียว ส่วน <span class="ui">Current season</span> กลับไปค่าเริ่มต้น</p>
+<figure><img src="img/a-booking-tracker.jpg" alt="Booking tracker: ผลลัพธ์รายเดือน" loading="lazy"><figcaption><b>Booking tracker</b> ช่วงเดือน ปุ่ม <span class="ui">Export xlsx</span> จากนั้น Results และ Breakdown ของแต่ละเดือน ข้อมูลตัวอย่าง</figcaption></figure>
+<h4>อะไรถูกนับ และคำนวณเงินอย่างไร</h4>
+<ul>
+  <li><b>นับเฉพาะการจองที่ Confirmed และ Paid</b> คำขอ (New) การจองที่ยกเลิก และ no-show ไม่ถูกนับ</li>
+  <li><b>การเข้าพักถูกแบ่งตามคืน</b> การจองตั้งแต่ 29 ธันวาคมถึง 3 มกราคม จะนับสามคืนเข้าเดือนธันวาคมและสามคืนเข้าเดือนมกราคม แต่ละคืนด้วยราคาที่ตกลงไว้ของคืนนั้น</li>
+  <li><b>Net room revenue</b> คือราคาที่หักค่าบริการ VAT และอาหารเช้าออกแล้ว: <i>ราคา ÷ (1 + ค่าบริการ) ÷ (1 + VAT) − อาหารเช้า</i> ตาราง <b>Breakdown</b> แสดงทุกขั้น: <i>Inclusive package</i>, <i>Service charge</i>, <i>VAT</i>, <i>Breakfast</i>, <i>Net room revenue</i> แต่ละขั้นปัดเศษเป็นสองตำแหน่งต่อการจองและต่อเดือน และตารางต่าง ๆ รวมเฉพาะตัวเลขที่ปัดแล้ว</li>
+  <li><b>Net ADR</b> คือ net room revenue หารด้วยจำนวนห้อง-คืนที่จอง</li>
+  <li><b>ค่าธรรมเนียมการออกก่อนกำหนดไม่รวมอยู่ด้วย</b> เพราะไม่ผูกกับคืนใดคืนหนึ่ง tracker (เช่นเดียวกับสถิติรายได้) จึงไม่นับ</li>
+</ul>
+<div class="box warn"><span class="tag">ค่าบริการไม่ได้เรียกเก็บจากแขก</span><p>ราคาห้องรวมค่าบริการ 10% และ VAT 7% อยู่แล้ว tracker หักออกเพื่อให้ได้ตัวเลขที่ไฟล์ต้องการเท่านั้น ไม่มีอะไรถูกเพิ่มในบิลของแขก โฟลิโอ POS หรือใบเสร็จ ระบบนี้ยังคงไม่มีค่าบริการสำหรับแขก</p></div>
+<h4>ส่วนต่าง ๆ</h4>
+<div class="tbl"><table>
+<tr><th>ส่วน</th><th>แสดง</th></tr>
+<tr><td><b>Results</b></td><td>หนึ่งแถวต่อเดือนและแถวรวม: <i>Available</i> ห้อง-คืนที่ขายได้ (ห้องปัจจุบันคูณจำนวนคืนของเดือน หักคืนที่ห้องถูกปิด) <i>Booked</i> <i>Occupancy</i> <i>Net room revenue</i> <i>Breakfast</i> <i>Net ADR</i> <i>Target</i> <i>Still needed</i> (เป้าหมายลบที่จองแล้ว) และ <i>Pickup vs baseline</i> (ที่จองแล้วลบ baseline ที่พิมพ์ไว้) ตามด้วย <b>Breakdown</b> และ <b>Inputs</b></td></tr>
+<tr><td><b>Channel summary</b></td><td>ห้อง-คืน รายได้สุทธิ net ADR และสัดส่วนคืนและรายได้ของแต่ละช่องทาง การจัดอันดับช่องทางตามรายได้สุทธิ และกราฟสองรูป</td></tr>
+<tr><td><b>Booking trends</b></td><td>ช่วงเวลาจองล่วงหน้าเฉลี่ย (จำนวนวันระหว่างวันที่ทำการจองกับวันเข้าพัก ถ่วงน้ำหนักตามห้อง-คืน) ห้อง-คืนในแต่ละช่วง และจังหวะการจอง 12 สัปดาห์ล่าสุด</td></tr>
+<tr><td><b>Weekly review</b></td><td>ภาพนิ่ง (snapshot) ของทุกเดือนที่เข้าพัก ถ่ายอัตโนมัติทุกวันศุกร์เวลา 23:55 พร้อม pickup นับจาก snapshot ก่อนหน้าของเดือนเดียวกัน</td></tr>
+</table></div>
+<figure><img src="img/a-booking-tracker-channels.jpg" alt="Booking tracker: Channel summary และกราฟ" loading="lazy"><figcaption><b>Channel summary</b> พร้อมอันดับและกราฟสองรูป ส่วน Booking trends อยู่ถัดลงไปในหน้าเดียวกัน</figcaption></figure>
+<h4>เป้าหมายและ baseline</h4>
+<p>ใน <b>Results → Inputs</b> แต่ละเดือนมีสามช่อง: <i>Target room nights</i>, <i>Baseline room nights</i> และ <i>Baseline net revenue</i> (ตัวเลขของปีก่อน หรือค่าเปรียบเทียบที่เลือกเอง) พิมพ์แล้วกด <span class="ui">Save</span> ที่แถวนั้น ช่องที่ว่างจะถูกล้างค่า ส่วนห้อง จำนวนคืน และคืนที่ถูกปิดในตารางเดียวกันมาจากระบบและพิมพ์ทับไม่ได้</p>
+<h4>Weekly review</h4>
+<ul>
+  <li>snapshot <b>ไม่เคยถูกคำนวณใหม่</b> คงตัวเลขตามวันศุกร์นั้น ถ้าเซิร์ฟเวอร์ปิดอยู่ตอน 23:55 วันศุกร์ snapshot จะถูกถ่ายเมื่อเซิร์ฟเวอร์กลับมาและมีเครื่องหมาย <i>late</i></li>
+  <li><i>Pickup nights</i> และ <i>Pickup revenue</i> คือส่วนที่เปลี่ยนจาก snapshot ก่อนหน้าของเดือนเดียวกัน</li>
+  <li><i>Reason / issue</i>, <i>Next action</i>, <i>Owner</i> และ <i>Due</i> กรอกหรือแก้ได้ในแต่ละแถว แล้วกด <span class="ui">Save</span> นี่คือสิ่งเดียวที่แก้ได้ History บันทึกว่าแก้ช่องใด ไม่บันทึกข้อความ</li>
+  <li>ก่อนถึงวันศุกร์แรกจะยังไม่มีอะไรแสดง: "No snapshot for these months yet"</li>
+</ul>
+<figure><img src="img/a-booking-tracker-review.jpg" alt="Booking tracker: Weekly review" loading="lazy"><figcaption><b>Weekly review</b> snapshot ของวันที่ 13 พ.ย. มีเครื่องหมาย <i>late</i> เพราะถ่ายหลังเวลาวันศุกร์ สี่คอลัมน์ทางขวาคือบันทึกที่คุณแก้ไขได้</figcaption></figure>
+<h4>Export xlsx</h4>
+<p><span class="ui">Export xlsx</span> ดาวน์โหลดตัวเลขเดียวกันเป็นไฟล์ Excel มีชีต <i>Results</i>, <i>Channel summary</i>, <i>Booking trends</i>, <i>Weekly review</i> และ <i>Bookings</i> (การจองที่อยู่เบื้องหลังตัวเลข) พร้อมกราฟ ใช้ช่วงเดือนและเดือนที่เข้าพักที่แสดงบนหน้าจออยู่ในขณะนั้น</p>
+<p>ถ้าโหลดซ้ำไม่สำเร็จ หน้าจอจะคงตัวเลขชุดล่าสุดไว้และบอกว่าโหลดเมื่อใด</p>
+
+<h3 id="tax-rates">Tax rates (ADMIN)</h3>
+<p><b>Reports → Settings → Tax rates</b> เก็บเปอร์เซ็นต์สองค่าที่ tracker หักออกจากราคาห้อง: <b>Service charge</b> และ <b>VAT</b> แต่ละค่ามีการ์ดและปุ่ม <span class="ui">Save</span> ของตัวเอง อัตราคือเปอร์เซ็นต์ตั้งแต่ 0 ถึง 99.99 ทศนิยมไม่เกินสองตำแหน่ง อัตราใหม่มีผลกับรายงานที่เปิดครั้งต่อไป ตลอดช่วงเวลาของรายงานนั้น อัตรา VAT ยังใช้ในสถิติรายได้ (Z410) เพื่อหัก VAT ออกจากราคา ไม่ใช่เพื่อบวกเพิ่ม การเปลี่ยนอัตราใดก็ไม่เปลี่ยนราคา ใบเสร็จ หรือยอดค้าง</p>
+<figure class="half"><img src="img/a-tax-rates.jpg" alt="ตั้งค่า Tax rates" loading="lazy"><figcaption>Tax rates (ADMIN): หนึ่งการ์ดสำหรับค่าบริการและหนึ่งการ์ดสำหรับ VAT บันทึกแยกกัน</figcaption></figure>
 
 <h3 id="history">History (บันทึกการตรวจสอบ)</h3>
 <p><b>Reports → History</b> (MANAGER ขึ้นไป) เป็นบันทึกแบบอ่านอย่างเดียวของการดำเนินการสำคัญ: การจอง การชำระ ราคา ออร์เดอร์และการยกเลิกรายการ กะ ผู้ใช้ การตั้งค่า ตารางงาน และการแก้ไขการลงเวลา กรองด้วยอีเมลพนักงาน การดำเนินการ ประเภทข้อมูล และวันที่ การดำเนินการที่ระบบทำเอง (เช่น คำขอจากเว็บไซต์หมดอายุ) แสดงเป็น <b>System</b> การดำเนินการผ่าน Telegram มีเครื่องหมาย "via Telegram"</p>
@@ -553,15 +599,16 @@
 <tr><td>รับออร์เดอร์ ส่งเข้าครัว พิมพ์ใบแจ้งยอดล่วงหน้า แจ้งปัญหาห้องพัก</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>ยกเลิกออร์เดอร์ที่ยังไม่เคยส่ง</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>ปิดออร์เดอร์ เปิดและปิดกะแคชเชียร์ของตนเอง</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
-<tr><td>การจอง ปฏิทิน เช็คอิน/เอาท์ ชำระเข้าโฟลิโอ ตรวจสอบปิดวัน</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>การจอง (รวมอาหารเช้า) ปฏิทิน เช็คอิน/เอาท์ ชำระเข้าโฟลิโอ ตรวจสอบปิดวัน</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>จองสปาและฟิตเนส สถานะงานแม่บ้าน</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>ยกเลิกรายการที่ส่งแล้ว ยกเลิกออร์เดอร์ที่ส่งแล้ว</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>ตั้งราคาเองในการจองใหม่ การจองย้อนหลัง</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>ราคา การปิดห้อง ประเภทห้อง เมนู โต๊ะ เครื่องพิมพ์</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>ตารางงาน การลงเวลา บันทึกการแจ้งเตือน การเชื่อม Telegram</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+<tr><td>Booking tracker: ดู เป้าหมายและ baseline บันทึก Weekly review ส่งออก Excel</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>รายงาน History ประวัติกะ ประวัติออร์เดอร์ การส่งออก CSV</td><td class="c no">—</td><td class="c part">กะของตน</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
 <tr><td>ควบคุมระบบไฟ</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
-<tr><td>ผู้ใช้ หน้าตั้งค่า นำเข้าตารางงาน ตั้งค่าอุปกรณ์</td><td class="c no">—</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td></tr>
+<tr><td>ผู้ใช้ หน้าตั้งค่า (รวม Tax rates) นำเข้าตารางงาน ตั้งค่าอุปกรณ์</td><td class="c no">—</td><td class="c no">—</td><td class="c no">—</td><td class="c yes">✓</td></tr>
 </table></div>
 <p>หน้าที่งานเพิ่มสิทธิ์จากตารางนี้: ENGINEER ปิดงานซ่อม THERAPIST ดูตารางสปา HR ดูตารางงานและตัดสินคำขอเปลี่ยนกะ</p>
 

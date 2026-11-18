@@ -44,6 +44,9 @@ nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
 nav.toc ol ol { padding-left: 14px; margin: 2px 0 8px; }
 nav.toc a { color: var(--muted); text-decoration: none; display: block; padding: 3px 0; border-radius: 4px; }
 nav.toc a:hover, nav.toc a:focus-visible { color: var(--accent); }
+nav.toc p.whatsnew { margin: 0 0 10px; }
+nav.toc p.whatsnew a { display: inline-block; border: 1px solid var(--line); padding: 4px 12px; border-radius: 999px; color: var(--fg); font-weight: 600; }
+nav.toc p.whatsnew a:hover, nav.toc p.whatsnew a:focus-visible { border-color: var(--accent); color: var(--accent); }
 nav.toc .lang { display: flex; gap: 8px; margin-bottom: 16px; }
 nav.toc .lang a { display: inline-block; border: 1px solid var(--line); padding: 4px 12px; border-radius: 999px; color: var(--fg); }
 nav.toc .lang a[aria-current] { background: var(--fg); color: var(--bg); border-color: var(--fg); }

@@ -1,0 +1,24 @@
+<!--
+title: Booking tracker อาหารเช้า และช่องทางใหม่
+summary: ไฟล์ Excel Booking tracker ของโรงแรมคำนวณจากการจองจริงแล้ว มีอาหารเช้าในการจอง ช่องทางใหม่ Ctrip, Hotelbeds และ Travel agent และอัตราภาษี
+-->
+<p>ไฟล์ "SBR Booking Tracker" ไม่ต้องพิมพ์ด้วยมืออีกต่อไป Sunset คำนวณตารางเดียวกันจากการจองจริง แสดงในหน้าผู้ดูแล และส่งออกเป็น Excel ได้</p>
+<figure><img src="{img}a-booking-tracker.jpg" alt="Booking tracker: ผลลัพธ์รายเดือน" loading="lazy"><figcaption>Reports → Reports → Booking tracker: ผลลัพธ์รายเดือน พร้อมรายได้ห้องสุทธิ เป้าหมาย และ pickup</figcaption></figure>
+
+<h4>มีอะไรใหม่</h4>
+<ul>
+  <li>แท็บ <b>Booking tracker</b> ใน Reports: Results รายเดือนเทียบกับเป้าหมายและ baseline, Channel summary พร้อมกราฟ, Booking trends (ช่วงเวลาจองล่วงหน้าและจังหวะการจอง 12 สัปดาห์) และ Weekly review ที่ถ่าย snapshot อัตโนมัติทุกวันศุกร์เวลา 23:55 ปุ่ม <span class="ui">Export xlsx</span> ดาวน์โหลดเป็นไฟล์ Excel <a href="{manual}#booking-tracker">อ่านวิธีคำนวณ</a></li>
+  <li><b>อาหารเช้าในการจอง:</b> จำนวนแขกต่อคืนและอัตรา ฿250 หรือ ฿350 ใช้หักออกจากราคาห้องใน tracker เท่านั้น ไม่มีอะไรถูกเรียกเก็บจากแขก <a href="{manual}#booking-page">หน้าการจอง</a></li>
+  <li><b>ช่องทางใหม่:</b> Ctrip / Trip.com, Hotelbeds และ Travel agent ในรายงาน Market segment ทั้งสามนับเป็น OTA <a href="{manual}#reports-tabs">รายงาน</a></li>
+  <li><b>Booked on</b> ในหน้าการจอง: สำหรับการจองจาก SiteMinder คือวันที่จองของ SiteMinder เอง <a href="{manual}#siteminder">การนำเข้าจาก SiteMinder</a></li>
+  <li><b>Tax rates</b> (Reports → Settings): เปอร์เซ็นต์ค่าบริการและ VAT ที่ tracker หักออกจากราคาห้อง <a href="{manual}#tax-rates">Tax rates</a></li>
+</ul>
+
+<h4>เหมาะกับใคร</h4>
+<ul>
+  <li><b>ผู้จัดการและผู้ดูแลระบบ:</b> แท็บ Booking tracker เป้าหมายและ baseline บันทึก Weekly review และการส่งออก Excel (MANAGER ขึ้นไป)</li>
+  <li><b>ฝ่ายต้อนรับ (CASHIER ขึ้นไป):</b> อาหารเช้าและช่องทางใหม่ในการจอง</li>
+  <li><b>ผู้ดูแลระบบ:</b> Tax rates (ADMIN)</li>
+</ul>
+
+<div class="box warn"><span class="tag">ไม่มีอะไรเปลี่ยนสำหรับแขก</span><p>ค่าบริการและ VAT ใน tracker เป็นการหักเพื่อการวิเคราะห์เท่านั้น บิล โฟลิโอ ใบเสร็จ และยอด POS ของแขกไม่เปลี่ยน</p></div>
