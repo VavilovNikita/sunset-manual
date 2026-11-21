@@ -16,4 +16,7 @@ article.update h4 { margin: 22px 0 6px; }
 .pn a { flex: 1 1 260px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; text-decoration: none; background: var(--paper); font-size: 14px; }
 .pn a.next { text-align: right; }
 .pn a:hover, .pn a:focus-visible { border-color: var(--accent); }
+h2.month { margin: 28px 0 10px; font-size: 22px; }
+article.update h3.area { margin: 30px 0 4px; padding-top: 14px; border-top: 1px solid var(--line); }
+article.update section h4 { margin: 14px 0 4px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--sea); }
 </style>

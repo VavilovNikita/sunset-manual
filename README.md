@@ -28,21 +28,32 @@ All names and figures in the screenshots are demo data from a local test deploym
 
 ## Adding a release note
 
-Every change staff will see gets a "What's new" entry for its release, next to the update of the manual section it changes.
+There is **one note per hotel week** (Monday to Sunday, Asia/Bangkok), `src/updates/<date of that Monday>-week.<lang>.html`. A change staff will see is written into the file of the current week, under its area, as **New** or **Fixed**; if the week has no file yet, create it (copy `2026-11-16-week.*` as a model). Do not start a second note in the same week: merge duplicates into one item (a feature and its later fixes are one line in New plus lines in Fixed).
 
-1. Create two files in `src/updates/`, one per language, named `YYYY-MM-DD-slug.en.html` and `YYYY-MM-DD-slug.th.html` (the date is the release's hotel date; copy `2026-11-18-booking-tracker.*` as a model). Each starts with a comment block, then the body:
+1. The file starts with a comment block, then the body. The title is "Week of 16 November 2026" (a week with one notable release may use its own title; the file is still one per week):
 
    ```
    <!--
-   title: Short title
+   title: Week of 16 November 2026
    summary: One line for the list.
    -->
-   <p>What is new, who it is for (roles), and links into the manual.</p>
+   <section data-area="front-desk">
+   <h4>New</h4>
+   <ul>
+     <li><b>What staff do differently.</b> Who it is for (CASHIER and above). <a href="{manual}#booking-page">Booking page</a>.</li>
+   </ul>
+   <h4>Fixed</h4>
+   <ul>
+     <li>One line per fix, no link unless a manual section changed.</li>
+   </ul>
+   </section>
    ```
 
-   In the body write `{manual}#section-id` for a link into the manual of the same language and `{img}name.jpg` for a screenshot from `site/img/`. Only the English file is needed to publish; a release without the other language is still listed there, marked "Thai only" / "English only" (the Thai is awaiting a native review in any case).
-2. Rebuild (the three commands above). This writes `site/<lang>/updates/index.html` (the list, newest first) and one page per release.
-3. Commit `src/` and `site/`, push, then on the VPS `git pull && ./deploy/publish.sh`.
+2. Sections follow the order of the admin menu: `front-desk`, `rooms`, `restaurant`, `spa`, `gym-lighting`, `staff`, `reports`, then `pos` (the phone) and `guest-site` only when they changed. Leave out an area with no changes. Inside a section: `<h4>New</h4>` first, then `<h4>Fixed</h4>`, each at most once (Thai: ใหม่ / แก้ไขแล้ว). The area heading is added by `updates.py`. Technical changes (code, tests) do not go in.
+3. Every New item names the roles it is for and links the manual section with `{manual}#section-id` (the same-language manual); `{img}name.jpg` is a screenshot from `site/img/`. Only the English file is needed to publish; a week without the other language is listed marked "Thai only" / "English only" (the Thai is awaiting a native review in any case).
+4. Rebuild (the three commands above). This writes `site/<lang>/updates/index.html` (the list, grouped by month, newest first, one row per week) and one page per week. `updates.py` stops with a clear message if a file is not named by a Monday, an area is unknown or out of menu order, or New/Fixed are missing or in the wrong order.
+5. `src/updates/redirects.txt` keeps the addresses of earlier release pages alive (a stub page sends on to the week that holds them); add a line there only if you ever rename or merge a week file.
+6. Commit `src/` and `site/`, push, then on the VPS `git pull && ./deploy/publish.sh`.
 
 The pages sit under `/manual/` like the rest, so the staff-session check in nginx covers them; no nginx change is needed (links are relative).
 

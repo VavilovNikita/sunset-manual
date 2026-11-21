@@ -1,0 +1,6 @@
+# Release pages from before the weekly notes: old address -> the week that now holds them.
+2026-11-18-booking-tracker -> 2026-11-16-week
+2026-11-21-paid-room-reopens-and-room-change-fixes -> 2026-11-16-week
+2026-11-21-room-changes-from-today -> 2026-11-16-week
+2026-11-21-tentative-notes-future-bookings -> 2026-11-16-week
+2026-11-22-money-format-and-fixes -> 2026-11-16-week

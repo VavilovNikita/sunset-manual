@@ -1,0 +1,59 @@
+<!--
+title: Week of 16 November 2026
+summary: Booking tracker and Future bookings reports, Tentative/Confirmed and booking notes, moving a guest to another room from today with a choice of rate, a paid room that reopens when its price grows, one money format.
+-->
+<section data-area="front-desk">
+<h4>New</h4>
+<ul>
+  <li><b>Tentative / Confirmed.</b> The new-booking form has two switches (Confirmed is preselected). The status list reads <i>Tentative</i> where it used to say NEW, in the Bookings list, the calendar, the booking page and the history. Front desk (CASHIER and above). <a href="{manual}#bookings">Booking status</a>.</li>
+  <li><b>Notes on a booking:</b> airport pickup, allergies, special requests. An optional field when you create a booking, a <i>Notes</i> card on the booking page and in the calendar panel, a note icon in the Bookings list and on arrivals on Today. The history says that notes changed, never what they say; guests never see them. Front desk (CASHIER and above). <a href="{manual}#booking-page">Booking page</a>.</li>
+  <li><b>Breakfast on the booking:</b> guests per night and a rate of ฿250 or ฿350. It is only taken out of the room price in the tracker; nothing is charged to the guest. Front desk (CASHIER and above). <a href="{manual}#booking-page">Booking page</a>.</li>
+  <li><b>New channels:</b> Ctrip / Trip.com, Hotelbeds and Travel agent; in the Market segment report all three count as OTA. <b>Booked on</b> on the booking page is SiteMinder's own booking date for SiteMinder bookings. Front desk (CASHIER and above). <a href="{manual}#reports-tabs">Reports</a>, <a href="{manual}#siteminder">SiteMinder import</a>.</li>
+  <li><b>Moving a guest to another room starts on any night, including the first.</b> A guest arriving today can change room type; the whole stay then moves. From a later night the stay is split and the nights already slept stay in the old room, which is marked dirty at once for a guest in the house. Front desk (CASHIER and above); a move that starts before today needs a manager. <a href="{manual}#booking-page">Booking page</a>.</li>
+  <li><b>Choose the rate when the room type changes.</b> The preview shows the current total, the new total and the difference for <i>Apply new rate</i> (paid upgrade or downgrade) and <i>Keep original rate</i> (complimentary upgrade, or a move the hotel caused). Only a manager (MANAGER and above) can keep the original rate; a cashier sees a note saying so, not a disabled choice. Within the same room type the price never changes.</li>
+  <li><b>The room list of the move marks taken rooms.</b> A room taken on the moved nights is shown unavailable with the reason, and the room the guest is in now is not offered. The server still has the last word when you apply.</li>
+  <li><b>Dragging a bar onto another room</b> (same dates, another room type, or a guest in the house) opens the same Relocate dialog, so the date and rate are confirmed before anything changes. A booking that began before the first day shown has a square left edge and a <b>&lsaquo;</b>. When dragging is off because the columns are narrow, a notice above the calendar says so with a <span class="ui">Make columns wider</span> button. <a href="{manual}#calendar">Calendar</a>.</li>
+  <li><b>A <i>Room paid</i> booking no longer hides a higher price.</b> Moving a guest to a dearer room at the new rate, extending the stay or repricing now warns in the preview (<i>Room paid will be reopened: the guest will owe ฿X</i>); the booking goes back to <i>Confirmed</i> and the difference shows as a balance due. Recording the payment marks the room paid again by itself. If the price goes down the room stays paid and the difference is a credit. What was already paid is never charged twice, and the ledger follows (the room settlement is reversed and posted again when the booking is paid again). Front desk (CASHIER and above). <a href="{manual}#booking-page">Booking page</a>.</li>
+  <li><b>Amounts read the same everywhere.</b> Whole baht have no decimals (฿8,000); when there are satang, always two digits (฿8,000.50). A manual price, the cash received, a rate in the Rates grid and the tracker targets take <i>8000,50</i> as well as <i>8000.50</i>. All roles.</li>
+</ul>
+<h4>Fixed</h4>
+<ul>
+  <li>Cashiers now choose the room when moving a guest, and a guest in the house must be given one (it could be sent to "no room assigned").</li>
+  <li>The booking page's history reads <i>Confirmed</i>, <i>Tentative</i>, <i>Room paid</i> instead of raw values; new entries write dates as 19 Nov 2026.</li>
+  <li>Dropping a booking on a free night of another room moves it there, whichever bars the pointer passed on the way; a drop between rooms, or a swap between two room types, says on the page what happened. The hint above the calendar says to double-click a booking (tap on a touchscreen) to open it.</li>
+  <li>The booking page's amount to collect follows the balance after a move or a price change (what you have already typed stays).</li>
+  <li>A cancelled booking has no <i>Stay: Expected</i> block and no <span class="ui">Change</span> for the dates.</li>
+  <li>The overpayment note no longer says the stay got shorter; it says the price fell after it was paid.</li>
+  <li>A guest checked in after the departure date shows the right amount owed straight away.</li>
+  <li>The room-move dialog's title sits inside its frame. The logo in the menu opens your own home page.</li>
+</ul>
+</section>
+
+<section data-area="staff">
+<h4>New</h4>
+<ul>
+  <li><b>Roster:</b> the row of dates and the employee column stay in view while you scroll the grid (and the Attendance table). Managers (MANAGER and above). <a href="{manual}#roster">Roster</a>.</li>
+</ul>
+<h4>Fixed</h4>
+<ul>
+  <li>Users: a row you edit stays in place; a new user is a Waiter by default and the temporary password can be shown or hidden.</li>
+  <li>The Roster switch for employees with no shifts says <i>hide them</i> or <i>show them</i>.</li>
+  <li>Attendance columns have the same width for every day.</li>
+</ul>
+</section>
+
+<section data-area="reports">
+<h4>New</h4>
+<figure><img src="{img}a-booking-tracker.jpg" alt="Booking tracker: results by month" loading="lazy"><figcaption>Reports → Reports → Booking tracker: results by month, with net room revenue, target and pickup.</figcaption></figure>
+<ul>
+  <li><b>Booking tracker</b> tab: Results by month against a target and a baseline, Channel summary with charts, Booking trends (booking window and 12-week pace) and a Weekly review that is snapshotted automatically every Friday at 23:55. <span class="ui">Export xlsx</span> downloads it as an Excel file. Managers and administrators (MANAGER and above). <a href="{manual}#booking-tracker">Read how it is calculated</a>.</li>
+  <li><b>Future bookings</b> tab: who arrives in a date range, by status (Tentative, Confirmed, Room paid), with counts, nights, room price, balance due and notes. <span class="ui">Export CSV</span> downloads it. Managers (MANAGER and above). <a href="{manual}#future-bookings">Future bookings</a>.</li>
+  <li><b>Tax rates</b> (Reports → Settings): the service charge and VAT percentages the tracker takes out of room prices. Administrators (ADMIN). <a href="{manual}#tax-rates">Tax rates</a>.</li>
+</ul>
+<h4>Fixed</h4>
+<ul>
+  <li>The Future bookings CSV names the channel as on screen (<i>Phone</i>, not PHONE).</li>
+</ul>
+</section>
+
+<div class="box warn"><span class="tag">Nothing changes for guests</span><p>The service charge and VAT in the tracker are a deduction for the analysis only: no guest bill, folio, receipt or POS total changes. Notes are never sent to the guest, and a booking staff enter as Tentative does not expire.</p></div>
