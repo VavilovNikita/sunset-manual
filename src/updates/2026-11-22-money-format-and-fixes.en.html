@@ -1,0 +1,16 @@
+<!--
+title: Money format, a comma in prices, and smaller fixes
+summary: Amounts show satang as two digits (฿8,000.50); a price can be typed with a comma; the room list when moving a guest marks taken rooms; Users and Roster labels.
+-->
+<p>Fixes after a full check of the screens.</p>
+
+<h4>What is new</h4>
+<ul>
+  <li><b>Amounts read the same everywhere.</b> Whole baht have no decimals (฿8,000); when there are satang, always two digits (฿8,000.50, not ฿8,000.5). It is the same rule the history uses.</li>
+  <li><b>A comma in a price.</b> A manual price, the cash received, a rate in the Rates grid and the tracker targets take <i>8000,50</i> as well as <i>8000.50</i>.</li>
+  <li><b>Moving a guest.</b> The room list of the Relocate dialog marks the rooms that are taken on the nights being moved, with the reason, and no longer offers the room the guest is already in. A cashier no longer sees the disabled <span class="ui">Keep original rate</span>, only the note that a manager can. Dropping a bar on a free night of another room is a move there, whichever bars the pointer passed on the way. <a href="{manual}#calendar">Calendar</a>.</li>
+  <li><b>Calendar.</b> A booking that began before the first day shown has a square left edge and a <b>&lsaquo;</b>.</li>
+  <li><b>Booking page.</b> The amount to collect follows the balance after a move or a price change (what you have already typed stays). A cancelled booking has no <i>Stay: Expected</i> block and no <span class="ui">Change</span> for the dates. The overpayment note no longer says the stay got shorter. A guest checked in after the departure date shows the right amount owed straight away.</li>
+  <li><b>History.</b> New entries write dates as 19 Nov 2026.</li>
+  <li><b>Users, Roster, menu.</b> A row you edit stays in place in Users; a new user is a Waiter by default and the temporary password can be shown or hidden; the Roster switch says <i>hide them</i> or <i>show them</i>; the logo opens your own home page.</li>
+</ul>
