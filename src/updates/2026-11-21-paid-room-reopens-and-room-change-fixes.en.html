@@ -1,0 +1,21 @@
+<!--
+title: A paid room reopens when its price grows, and other fixes to room changes
+summary: A Room paid booking whose price goes up is reopened and owes the difference; cashiers choose the room when moving a guest; the booking page shows readable history; dropping a booking never ends in nothing.
+-->
+<p>Fixes found while checking the room changes of the previous update.</p>
+
+<h4>What changed</h4>
+<ul>
+  <li><b>A <i>Room paid</i> booking no longer hides a higher price.</b> Moving a guest to a dearer room at the new rate, extending the stay or repricing used to show a settled folio with nothing to pay. Now the preview warns (<i>Room paid will be reopened: the guest will owe ฿X</i>), the booking goes back to <i>Confirmed</i>, and the difference shows as a balance due. Recording the payment marks the room paid again by itself. If the price goes down the room stays paid and the difference is a credit. What was already paid is never charged twice, including a room marked paid by hand before payments were recorded. <a href="{manual}#booking-page">Booking page</a>.</li>
+  <li><b>Cashiers choose the room when relocating.</b> The room picker was hidden from them, and an in-house guest could be sent to "no room assigned". Everyone who can move a guest now picks the room, and a guest in the house must be given one.</li>
+  <li><b>Readable history on the booking page.</b> It showed raw values such as <i>status CONFIRMED</i>; it now reads like the calendar panel (<i>Confirmed</i>, <i>Tentative</i>, <i>Room paid</i>).</li>
+  <li><b>Calendar drops never end in nothing.</b> Dragging a booking across other bookings to a free night used to cancel the drop silently; it now moves there. A drop between rooms, or a swap between two room types, says on the page what happened. The hint above the calendar now says to double-click a booking (tap on a touchscreen) to open it. <a href="{manual}#calendar">Calendar</a>.</li>
+  <li><b>Small things.</b> The Future bookings CSV names the channel as on screen (<i>Phone</i>, not PHONE); the room-move dialog's title sits inside its frame; Attendance columns have the same width for every day.</li>
+</ul>
+
+<h4>Who it is for</h4>
+<ul>
+  <li><b>Front desk (CASHIER and above):</b> choosing the room when moving a guest, the warning on a paid room.</li>
+  <li><b>Managers (MANAGER and above):</b> keeping the original rate, which changes no price and so leaves a paid room paid.</li>
+</ul>
+<div class="box warn"><span class="tag">A paid room</span><p>The previous update said a higher total on a Room paid booking only showed as a balance due, and that nothing was posted to the ledger. That is replaced: the booking is reopened, and the ledger follows (the room settlement is reversed and posted again when the booking is paid again).</p></div>
